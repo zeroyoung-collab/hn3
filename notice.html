@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>조회·종례 전달사항 · 호남고 3학년부</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --navy:#0B3E86; --navy2:#092f66; --gold:#F5B301; --gold-d:#c8920a;
+  --green:#1A9A3E; --red:#c0392b; --ink:#141a24; --soft:#3d4652; --line:#b9c4d4; --lt:#eef3fa;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Noto Sans KR',sans-serif;background:#f4f7fb;color:var(--ink);word-break:keep-all;min-height:100vh;display:flex;flex-direction:column}
+button{font-family:inherit;cursor:pointer}
+input,textarea,select{font-family:inherit;font-size:15px}
+header{background:linear-gradient(150deg,#0B3E86,#0d4b9e,#092f66);color:#fff;padding:20px 16px 16px;position:relative}
+header::after{content:"";position:absolute;left:0;right:0;bottom:0;height:4px;background:linear-gradient(90deg,var(--gold),var(--green))}
+.hwrap{max-width:680px;margin:0 auto}
+header .en{color:var(--gold);font-size:10.5px;font-weight:700;letter-spacing:.14em}
+header h1{font-size:20px;font-weight:900;letter-spacing:-.02em;margin-top:2px}
+header .sub{font-size:12.5px;color:#cfe0f7;margin-top:6px}
+header a.back{color:#cfe0f7;font-size:12.5px;text-decoration:none;position:absolute;right:16px;top:20px}
+main{max-width:680px;margin:0 auto;padding:16px 12px 50px;width:100%;flex:1}
+
+/* ── 작성 폼 ── */
+.write{background:#fff;border:2px solid var(--line);border-radius:14px;padding:14px;margin-bottom:18px}
+.write .tt{font-size:14px;font-weight:900;color:var(--navy);padding-left:11px;position:relative;margin-bottom:10px}
+.write .tt::before{content:"";position:absolute;left:0;top:2px;width:5px;height:15px;background:var(--gold);border-radius:3px}
+.wrow{display:flex;gap:8px;margin-bottom:8px;flex-wrap:wrap}
+.wrow input[type=date]{padding:9px 10px;border:2px solid var(--line);border-radius:9px;background:#fff}
+.wrow input[type=text]{flex:1;min-width:120px;padding:9px 12px;border:2px solid var(--line);border-radius:9px}
+.write textarea{width:100%;min-height:74px;padding:10px 12px;border:2px solid var(--line);border-radius:9px;resize:vertical;line-height:1.5}
+.write input:focus,.write textarea:focus{outline:none;border-color:var(--navy)}
+.wbtn{width:100%;margin-top:8px;padding:11px;background:var(--navy);color:#fff;border:none;border-radius:9px;font-size:15px;font-weight:700}
+.wbtn:disabled{opacity:.5}
+
+/* ── 목록 ── */
+.day{margin-bottom:16px}
+.dhead{display:flex;align-items:center;gap:8px;font-size:15px;font-weight:900;color:var(--navy);margin-bottom:8px}
+.dhead .today{font-size:11px;font-weight:900;background:var(--gold);color:var(--navy2);padding:2px 9px;border-radius:20px}
+.dhead .cnt{font-size:12px;color:var(--soft);font-weight:500}
+.item{background:#fff;border:2px solid var(--line);border-radius:12px;padding:12px 14px;margin-bottom:8px;display:flex;gap:10px;align-items:flex-start}
+.item.today-item{border-color:#d9c26a}
+.item .body{flex:1;min-width:0}
+.item .txt{font-size:14.5px;line-height:1.55;white-space:pre-wrap}
+.item .meta{font-size:12px;color:#8a94a3;margin-top:6px}
+.item .meta b{color:var(--soft)}
+.del{flex-shrink:0;background:none;border:none;color:#b9c4d4;font-size:15px;padding:2px 4px}
+.del:hover{color:var(--red)}
+.empty{text-align:center;color:#8a94a3;font-size:14px;padding:40px 0}
+footer{text-align:center;font-size:12px;color:#8a94a3;padding:18px 0 28px}
+footer b{color:var(--navy)}
+</style>
+</head>
+<body>
+<header><div class="hwrap">
+  <div class="en">HONAM HIGH SCHOOL · GRADE 3 · 2026</div>
+  <h1>조회·종례 전달사항</h1>
+  <div class="sub">누구나 쓸 수 있고, 모든 선생님 화면에 실시간 반영됩니다</div>
+  <a class="back" href="./">← 포털</a>
+</div></header>
+<main>
+  <div class="write">
+    <div class="tt">전달사항 등록</div>
+    <div class="wrow">
+      <input type="date" id="w-date">
+      <input type="text" id="w-author" placeholder="작성자 (예: 3학년부, 조영신)" maxlength="20">
+    </div>
+    <textarea id="w-text" placeholder="전달할 내용을 입력하세요. 예) 내일 원서 사진 파일 제출 마감입니다."></textarea>
+    <button class="wbtn" id="w-save">등록</button>
+  </div>
+  <div id="list"><div class="empty">불러오는 중…</div></div>
+</main>
+<footer>호남고등학교 3학년부 · 2026학년도 &nbsp;|&nbsp; 제작 · <b>호남고 조영신</b></footer>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-app.js";
+import { getFirestore, collection, onSnapshot, doc, setDoc, deleteDoc } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore.js";
+
+const app = initializeApp({ apiKey:"AIzaSyBotwjsJxit4SbOzXVVOov37Po97AieoxM", projectId:"sangdam-b97c1" });
+const db = getFirestore(app);
+const COL = "pw_hn3_notice";
+const $ = id => document.getElementById(id);
+const esc = s => String(s ?? "").replace(/[&<>"']/g, m => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[m]));
+
+const fmtDate = d => `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,"0")}-${String(d.getDate()).padStart(2,"0")}`;
+const todayStr = fmtDate(new Date());
+$("w-date").value = todayStr;
+
+const DOW = ["일","월","화","수","목","금","토"];
+function dateLabel(s){
+  const [y,m,d] = s.split("-").map(Number);
+  return `${m}월 ${d}일 (${DOW[new Date(y, m-1, d).getDay()]})`;
+}
+
+let ITEMS = [];
+onSnapshot(collection(db, COL), snap => {
+  ITEMS = [];
+  snap.forEach(d => ITEMS.push({id:d.id, ...d.data()}));
+  render();
+});
+
+function render(){
+  if (!ITEMS.length) { $("list").innerHTML = '<div class="empty">아직 등록된 전달사항이 없습니다.<br>첫 전달사항을 등록해 보세요.</div>'; return; }
+  const byDate = {};
+  for (const it of ITEMS) (byDate[it.date] = byDate[it.date] || []).push(it);
+  const dates = Object.keys(byDate).sort().reverse();
+  $("list").innerHTML = dates.map(dt => {
+    const items = byDate[dt].sort((a,b) => (a.ts||"") < (b.ts||"") ? -1 : 1);
+    const isToday = dt === todayStr;
+    return `<div class="day">
+      <div class="dhead">${dateLabel(dt)} ${isToday ? '<span class="today">오늘</span>' : ""}<span class="cnt">${items.length}건</span></div>
+      ${items.map(it => `<div class="item ${isToday ? "today-item" : ""}">
+        <div class="body">
+          <div class="txt">${esc(it.text)}</div>
+          <div class="meta"><b>${esc(it.author || "익명")}</b> · ${esc((it.ts||"").slice(11,16))}</div>
+        </div>
+        <button class="del" data-id="${it.id}" title="삭제">✕</button>
+      </div>`).join("")}
+    </div>`;
+  }).join("");
+  document.querySelectorAll(".del").forEach(b => b.onclick = async () => {
+    if (!confirm("이 전달사항을 삭제할까요?")) return;
+    try { await deleteDoc(doc(db, COL, b.dataset.id)); }
+    catch(e){ alert("삭제 실패: " + e.message); }
+  });
+}
+
+$("w-save").onclick = async () => {
+  const text = $("w-text").value.trim();
+  const date = $("w-date").value;
+  if (!text) { alert("내용을 입력해 주세요."); return; }
+  if (!date) { alert("날짜를 선택해 주세요."); return; }
+  $("w-save").disabled = true;
+  const now = new Date();
+  const ts = `${fmtDate(now)}T${String(now.getHours()).padStart(2,"0")}:${String(now.getMinutes()).padStart(2,"0")}:${String(now.getSeconds()).padStart(2,"0")}`;
+  try {
+    await setDoc(doc(db, COL, "n" + now.getTime()), { date, text, author: $("w-author").value.trim(), ts });
+    $("w-text").value = "";
+  } catch(e){ alert("등록 실패: " + e.message); }
+  $("w-save").disabled = false;
+};
+</script>
+</body>
+</html>
