@@ -62,7 +62,7 @@ footer b{color:var(--navy)}
 <header><div class="hwrap">
   <div class="en">HONAM HIGH SCHOOL · GRADE 3 · 2026</div>
   <h1>조회·종례 전달사항</h1>
-  <div class="sub">누구나 쓸 수 있고, 모든 선생님 화면에 실시간 반영됩니다</div>
+  <div class="sub">누구나 쓸 수 있고, 자동으로 갱신됩니다</div>
   <a class="back" href="./">← 포털</a>
 </div></header>
 <main>
@@ -80,13 +80,13 @@ footer b{color:var(--navy)}
 </main>
 <footer>호남고등학교 3학년부 · 2026학년도 &nbsp;|&nbsp; 제작 · <b>호남고 조영신</b></footer>
 
-<script type="module">
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-app.js";
-import { getFirestore, collection, onSnapshot, doc, setDoc, deleteDoc } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore.js";
-
-const app = initializeApp({ apiKey:"AIzaSyBotwjsJxit4SbOzXVVOov37Po97AieoxM", projectId:"sangdam-b97c1" });
-const db = getFirestore(app);
+<script>
+/* SDK 없이 REST 직접 호출 — 모바일 첫 화면 속도 최적화.
+   마지막 목록은 localStorage 캐시 → 재방문 시 즉시 표시, 15초 주기 자동 갱신 */
+const FS = "https://firestore.googleapis.com/v1/projects/sangdam-b97c1/databases/(default)/documents";
+const KEY = "AIzaSyBotwjsJxit4SbOzXVVOov37Po97AieoxM";
 const COL = "pw_hn3_notice";
+const CACHE_KEY = "hn3notice.cache.v1";
 const $ = id => document.getElementById(id);
 const esc = s => String(s ?? "").replace(/[&<>"']/g, m => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[m]));
 
@@ -101,11 +101,31 @@ function dateLabel(s){
 }
 
 let ITEMS = [];
-onSnapshot(collection(db, COL), snap => {
-  ITEMS = [];
-  snap.forEach(d => ITEMS.push({id:d.id, ...d.data()}));
-  render();
-});
+
+/* 1) 캐시가 있으면 즉시 그리기 */
+try { const c = localStorage.getItem(CACHE_KEY); if (c) { ITEMS = JSON.parse(c); render(); } } catch(e){}
+
+/* 2) 서버에서 최신 목록 가져오기 (+15초 주기 갱신) */
+const fv = f => f?.stringValue ?? "";
+async function refresh(){
+  try {
+    const res = await fetch(`${FS}/${COL}?pageSize=300&key=${KEY}`);
+    if (!res.ok) throw new Error("HTTP " + res.status);
+    const data = await res.json();
+    ITEMS = (data.documents || []).map(d => ({
+      id: d.name.split("/").pop(),
+      date: fv(d.fields?.date), text: fv(d.fields?.text),
+      author: fv(d.fields?.author), ts: fv(d.fields?.ts), ets: fv(d.fields?.ets)
+    }));
+    try { localStorage.setItem(CACHE_KEY, JSON.stringify(ITEMS)); } catch(e){}
+    render();
+  } catch(e) {
+    if (!ITEMS.length) $("list").innerHTML = '<div class="empty">목록을 불러오지 못했습니다. 잠시 후 새로고침해 주세요.</div>';
+  }
+}
+refresh();
+setInterval(refresh, 15000);
+document.addEventListener("visibilitychange", () => { if (!document.hidden) refresh(); });
 
 function render(){
   if (!ITEMS.length) { $("list").innerHTML = '<div class="empty">아직 등록된 전달사항이 없습니다.<br>첫 전달사항을 등록해 보세요.</div>'; return; }
@@ -140,8 +160,11 @@ function render(){
   });
   document.querySelectorAll(".del").forEach(b => b.onclick = async () => {
     if (!confirm("이 전달사항을 삭제할까요?")) return;
-    try { await deleteDoc(doc(db, COL, b.dataset.id)); }
-    catch(e){ alert("삭제 실패: " + e.message); }
+    try {
+      const res = await fetch(`${FS}/${COL}/${b.dataset.id}?key=${KEY}`, {method:"DELETE"});
+      if (!res.ok) throw new Error("HTTP " + res.status);
+      refresh();
+    } catch(e){ alert("삭제 실패: " + e.message); }
   });
 }
 
@@ -175,13 +198,22 @@ $("w-save").onclick = async () => {
   const now = new Date();
   const nowTs = `${fmtDate(now)}T${String(now.getHours()).padStart(2,"0")}:${String(now.getMinutes()).padStart(2,"0")}:${String(now.getSeconds()).padStart(2,"0")}`;
   try {
+    let id, payload;
     if (editId) {
       const orig = ITEMS.find(x => x.id === editId) || {};
-      await setDoc(doc(db, COL, editId), { date, text, author: $("w-author").value.trim(), ts: orig.ts || nowTs, ets: nowTs });
+      id = editId;
+      payload = { date, text, author: $("w-author").value.trim(), ts: orig.ts || nowTs, ets: nowTs };
     } else {
-      await setDoc(doc(db, COL, "n" + now.getTime()), { date, text, author: $("w-author").value.trim(), ts: nowTs });
+      id = "n" + now.getTime();
+      payload = { date, text, author: $("w-author").value.trim(), ts: nowTs };
     }
+    const fields = {};
+    for (const k in payload) fields[k] = { stringValue: payload[k] };
+    const res = await fetch(`${FS}/${COL}/${id}?key=${KEY}`,
+      { method:"PATCH", headers:{ "Content-Type":"application/json" }, body: JSON.stringify({ fields }) });
+    if (!res.ok) throw new Error("HTTP " + res.status);
     resetForm();
+    refresh();
   } catch(e){ alert("저장 실패: " + e.message); }
   $("w-save").disabled = false;
 };
