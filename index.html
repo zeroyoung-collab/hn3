@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>호남고 3학년부</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --navy:#0B3E86; --navy2:#092f66; --gold:#F5B301; --gold-d:#c8920a;
+  --green:#1A9A3E; --ink:#141a24; --soft:#3d4652; --line:#b9c4d4; --lt:#eef3fa;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Noto Sans KR',sans-serif;background:#f4f7fb;color:var(--ink);word-break:keep-all;min-height:100vh;display:flex;flex-direction:column}
+header{background:linear-gradient(150deg,#0B3E86,#0d4b9e,#092f66);color:#fff;padding:34px 20px 26px;text-align:center;position:relative}
+header::after{content:"";position:absolute;left:0;right:0;bottom:0;height:4px;background:linear-gradient(90deg,var(--gold),var(--green))}
+header .en{color:var(--gold);font-size:11px;font-weight:700;letter-spacing:.16em}
+header h1{font-size:26px;font-weight:900;letter-spacing:-.02em;margin-top:4px}
+header p{font-size:13.5px;color:#cfe0f7;margin-top:8px}
+main{max-width:640px;margin:0 auto;padding:26px 16px 40px;width:100%;flex:1}
+.sec{font-size:15px;font-weight:900;color:var(--navy);padding-left:12px;position:relative;margin:22px 0 10px}
+.sec::before{content:"";position:absolute;left:0;top:3px;width:6px;height:17px;background:var(--gold);border-radius:3px}
+.sec:first-child{margin-top:0}
+a.card{display:flex;align-items:center;gap:14px;background:#fff;border:2px solid var(--line);border-radius:14px;padding:16px;margin-bottom:10px;text-decoration:none;color:inherit;transition:border-color .15s, transform .1s}
+a.card:hover{border-color:var(--navy);transform:translateY(-1px)}
+.ic{width:46px;height:46px;border-radius:12px;background:var(--navy);color:#fff;display:flex;align-items:center;justify-content:center;font-size:21px;flex-shrink:0}
+.ic.g{background:var(--green)}
+.ct .t{font-weight:900;font-size:16px;color:var(--ink)}
+.ct .d{font-size:13px;color:var(--soft);margin-top:2px}
+.arrow{margin-left:auto;color:var(--line);font-size:20px;font-weight:900}
+a.card:hover .arrow{color:var(--navy)}
+.note{background:var(--lt);border:2px solid #cbd9ee;border-radius:12px;padding:12px 14px;font-size:13px;color:var(--soft);margin-top:18px}
+.note b{color:var(--navy)}
+footer{text-align:center;font-size:12px;color:#8a94a3;padding:20px 0 30px}
+footer b{color:var(--navy)}
+</style>
+</head>
+<body>
+<header>
+  <div class="en">HONAM HIGH SCHOOL · GRADE 3</div>
+  <h1>3학년부</h1>
+  <p>2027학년도 대입 · 이 주소 하나만 기억하시면 됩니다</p>
+</header>
+<main>
+  <div class="sec">선생님용</div>
+  <a class="card" href="https://zeroyoung-collab.github.io/hn-jinhak-2027/">
+    <div class="ic">🎓</div>
+    <div class="ct"><div class="t">대입 지원현황</div>
+    <div class="d">반별 지원 대학·전형·결과(합격/추합/불합) 입력·조회</div></div>
+    <div class="arrow">›</div>
+  </a>
+  <a class="card" href="https://zeroyoung-collab.github.io/hn-apply-2027/admin.html">
+    <div class="ic">🔑</div>
+    <div class="ct"><div class="t">원서접수 계정 현황판</div>
+    <div class="d">유웨이·진학사 계정 제출 현황 (반별 실시간)</div></div>
+    <div class="arrow">›</div>
+  </a>
+
+  <div class="sec">학생 배포용</div>
+  <a class="card" href="https://zeroyoung-collab.github.io/hn-apply-2027/">
+    <div class="ic g">📝</div>
+    <div class="ct"><div class="t">원서접수 계정 사전조사</div>
+    <div class="d">학생이 유웨이·진학사 계정을 입력하는 곳</div></div>
+    <div class="arrow">›</div>
+  </a>
+
+  <div class="note"><b>비밀번호 안내</b> — 선생님용 페이지는 공용 비밀번호(3학년부 단체방 공지)를 입력하고 들어가시면 됩니다.</div>
+</main>
+<footer>호남고등학교 3학년부 · 2027학년도 대입 &nbsp;|&nbsp; 제작 · <b>호남고 조영신</b></footer>
+</body>
+</html>
