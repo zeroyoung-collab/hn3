@@ -126,7 +126,10 @@ function render(){
   document.querySelectorAll(".copy").forEach(b => b.onclick = async () => {
     const it = ITEMS.find(x => x.id === b.dataset.id);
     if (!it) return;
-    try { await navigator.clipboard.writeText(it.text); b.textContent = "복사됨!"; setTimeout(() => b.textContent = "복사", 1500); }
+    // 점선(──────────)으로 감싼 블록이 있으면 그 안쪽만 복사 (단체방 붙여넣기용)
+    const parts = it.text.split(/─{5,}/);
+    const toCopy = parts.length >= 3 ? parts[1].trim() : it.text;
+    try { await navigator.clipboard.writeText(toCopy); b.textContent = "복사됨!"; setTimeout(() => b.textContent = "복사", 1500); }
     catch(e){ alert("복사 실패 — 길게 눌러 직접 복사해 주세요."); }
   });
   document.querySelectorAll(".del").forEach(b => b.onclick = async () => {
