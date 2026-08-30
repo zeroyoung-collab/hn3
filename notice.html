@@ -113,7 +113,7 @@ function render(){
       <div class="dhead">${dateLabel(dt)} ${isToday ? '<span class="today">오늘</span>' : ""}<span class="cnt">${items.length}건</span></div>
       ${items.map(it => `<div class="item ${isToday ? "today-item" : ""}">
         <div class="body">
-          <div class="txt">${esc(it.text)}</div>
+          <div class="txt">${esc(it.text).replace(/(https?:\/\/[^\s<]+)/g, '<a href="$1" target="_blank" style="color:var(--navy);font-weight:700;word-break:break-all">$1</a>')}</div>
           <div class="meta"><b>${esc(it.author || "익명")}</b> · ${esc((it.ts||"").slice(11,16))}</div>
         </div>
         <button class="del" data-id="${it.id}" title="삭제">✕</button>
