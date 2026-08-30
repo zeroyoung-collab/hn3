@@ -29,6 +29,8 @@ a.card:hover{border-color:var(--navy);transform:translateY(-1px)}
 .ct .d{font-size:13px;color:var(--soft);margin-top:2px}
 .arrow{margin-left:auto;color:var(--line);font-size:20px;font-weight:900}
 a.card:hover .arrow{color:var(--navy)}
+.due{display:inline-block;margin-left:8px;padding:2px 10px;border-radius:20px;background:var(--gold);color:var(--navy2);font-size:12px;font-weight:900;vertical-align:middle;white-space:nowrap}
+.due.over{background:#eceff4;color:var(--soft)}
 .note{background:var(--lt);border:2px solid #cbd9ee;border-radius:12px;padding:12px 14px;font-size:13px;color:var(--soft);margin-top:18px}
 .note b{color:var(--navy)}
 footer{text-align:center;font-size:12px;color:#8a94a3;padding:20px 0 30px}
@@ -59,14 +61,14 @@ footer b{color:var(--navy)}
   <div class="sec">학생·학부모 배포용</div>
   <a class="card" href="https://zeroyoung-collab.github.io/hn-apply-2027/">
     <div class="ic g">📝</div>
-    <div class="ct"><div class="t">원서접수 계정 사전조사</div>
-    <div class="d">학생이 유웨이·진학사 계정을 입력하는 곳</div></div>
+    <div class="ct"><div class="t">원서접수 계정 사전조사 <span class="due" id="due-apply"></span></div>
+    <div class="d">학생이 유웨이·진학사 계정을 입력하는 곳 — <b style="color:var(--gold-d)">9/6(일)까지 입력 완료</b></div></div>
     <div class="arrow">›</div>
   </a>
   <a class="card" href="https://late-frost-4579.zeroyoung.workers.dev/">
     <div class="ic g">✏️</div>
-    <div class="ct"><div class="t">주말 모의고사 수요조사</div>
-    <div class="d">토·일 응시 신청 — 선생님 집계는 폼 하단 🔒 (같은 비밀번호)</div></div>
+    <div class="ct"><div class="t">주말 모의고사 수요조사 <span class="due over">종료</span></div>
+    <div class="d">조사 종료 — 집계 확인은 폼 하단 🔒 (같은 비밀번호)</div></div>
     <div class="arrow">›</div>
   </a>
   <a class="card" href="https://celadon-chimera-b46997.netlify.app/">
@@ -79,5 +81,15 @@ footer b{color:var(--navy)}
   <div class="note"><b>비밀번호 안내</b> — 선생님용 페이지는 공용 비밀번호(3학년부 단체방 공지)를 입력하고 들어가시면 됩니다.</div>
 </main>
 <footer>호남고등학교 3학년부 · 2026학년도(2027학년도 대입) &nbsp;|&nbsp; 제작 · <b>호남고 조영신</b></footer>
+<script>
+(function(){
+  const el = document.getElementById("due-apply");
+  const due = new Date(2026, 8, 6, 23, 59, 59);   // 2026-09-06(일)
+  const today = new Date();
+  const days = Math.ceil((new Date(2026,8,6) - new Date(today.getFullYear(),today.getMonth(),today.getDate())) / 86400000);
+  if (today > due) { el.textContent = "마감"; el.classList.add("over"); }
+  else el.textContent = days === 0 ? "오늘 마감!" : "마감 9/6(일) · D-" + days;
+})();
+</script>
 </body>
 </html>
