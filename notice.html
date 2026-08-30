@@ -48,6 +48,8 @@ main{max-width:680px;margin:0 auto;padding:16px 12px 50px;width:100%;flex:1}
 .item .meta b{color:var(--soft)}
 .del{flex-shrink:0;background:none;border:none;color:#b9c4d4;font-size:15px;padding:2px 4px}
 .del:hover{color:var(--red)}
+.copy{flex-shrink:0;background:#fff;border:1.5px solid var(--line);border-radius:8px;color:var(--soft);font-size:12px;font-weight:700;padding:4px 10px}
+.copy:hover{border-color:var(--navy);color:var(--navy)}
 .empty{text-align:center;color:#8a94a3;font-size:14px;padding:40px 0}
 footer{text-align:center;font-size:12px;color:#8a94a3;padding:18px 0 28px}
 footer b{color:var(--navy)}
@@ -116,10 +118,17 @@ function render(){
           <div class="txt">${esc(it.text).replace(/(https?:\/\/[^\s<]+)/g, '<a href="$1" target="_blank" style="color:var(--navy);font-weight:700;word-break:break-all">$1</a>')}</div>
           <div class="meta"><b>${esc(it.author || "익명")}</b> · ${esc((it.ts||"").slice(11,16))}</div>
         </div>
+        <button class="copy" data-id="${it.id}">복사</button>
         <button class="del" data-id="${it.id}" title="삭제">✕</button>
       </div>`).join("")}
     </div>`;
   }).join("");
+  document.querySelectorAll(".copy").forEach(b => b.onclick = async () => {
+    const it = ITEMS.find(x => x.id === b.dataset.id);
+    if (!it) return;
+    try { await navigator.clipboard.writeText(it.text); b.textContent = "복사됨!"; setTimeout(() => b.textContent = "복사", 1500); }
+    catch(e){ alert("복사 실패 — 길게 눌러 직접 복사해 주세요."); }
+  });
   document.querySelectorAll(".del").forEach(b => b.onclick = async () => {
     if (!confirm("이 전달사항을 삭제할까요?")) return;
     try { await deleteDoc(doc(db, COL, b.dataset.id)); }
