@@ -34,6 +34,9 @@ main{max-width:680px;margin:0 auto;padding:16px 12px 50px;width:100%;flex:1}
 .write input:focus,.write textarea:focus{outline:none;border-color:var(--navy)}
 .wbtn{width:100%;margin-top:8px;padding:11px;background:var(--navy);color:#fff;border:none;border-radius:9px;font-size:15px;font-weight:700}
 .wbtn:disabled{opacity:.5}
+.wcancel{width:100%;margin-top:6px;padding:9px;background:#eceff4;color:var(--soft);border:none;border-radius:9px;font-size:14px;font-weight:700;display:none}
+.write.editing{border-color:var(--gold)}
+.write.editing .tt::before{background:var(--red)}
 
 /* ── 목록 ── */
 .day{margin-bottom:16px}
@@ -71,6 +74,7 @@ footer b{color:var(--navy)}
     </div>
     <textarea id="w-text" placeholder="전달할 내용을 입력하세요. 예) 내일 원서 사진 파일 제출 마감입니다."></textarea>
     <button class="wbtn" id="w-save">등록</button>
+    <button class="wcancel" id="w-cancel">수정 취소</button>
   </div>
   <div id="list"><div class="empty">불러오는 중…</div></div>
 </main>
@@ -115,10 +119,11 @@ function render(){
       <div class="dhead">${dateLabel(dt)} ${isToday ? '<span class="today">오늘</span>' : ""}<span class="cnt">${items.length}건</span></div>
       ${items.map(it => `<div class="item ${isToday ? "today-item" : ""}">
         <div class="body">
-          <div class="txt">${esc(it.text).replace(/(https?:\/\/[^\s<]+)/g, '<a href="$1" target="_blank" style="color:var(--navy);font-weight:700;word-break:break-all">$1</a>')}</div>
-          <div class="meta"><b>${esc(it.author || "익명")}</b> · ${esc((it.ts||"").slice(11,16))}</div>
+          <div class="txt">${esc(it.text).replace(/(https?:\/\/[^\s<)\]'"‘’]+)/g, '<a href="$1" target="_blank" style="color:var(--navy);font-weight:700;word-break:break-all">$1</a>')}</div>
+          <div class="meta"><b>${esc(it.author || "익명")}</b> · ${esc((it.ts||"").slice(11,16))}${it.ets ? " · 수정됨" : ""}</div>
         </div>
-        <button class="copy" data-id="${it.id}">복사</button>
+        <button class="copy" data-id="${it.id}" data-act="edit" style="color:var(--navy);border-color:#b9cdec">수정</button>
+        <button class="copy" data-id="${it.id}" data-act="copy">복사</button>
         <button class="del" data-id="${it.id}" title="삭제">✕</button>
       </div>`).join("")}
     </div>`;
@@ -126,6 +131,7 @@ function render(){
   document.querySelectorAll(".copy").forEach(b => b.onclick = async () => {
     const it = ITEMS.find(x => x.id === b.dataset.id);
     if (!it) return;
+    if (b.dataset.act === "edit") { startEdit(it); return; }
     // 점선(──────────)으로 감싼 블록이 있으면 그 안쪽만 복사 (단체방 붙여넣기용)
     const parts = it.text.split(/─{5,}/);
     const toCopy = parts.length >= 3 ? parts[1].trim() : it.text;
@@ -139,6 +145,27 @@ function render(){
   });
 }
 
+let editId = null;
+function startEdit(it){
+  editId = it.id;
+  $("w-date").value = it.date; $("w-author").value = it.author || ""; $("w-text").value = it.text;
+  document.querySelector(".write").classList.add("editing");
+  document.querySelector(".write .tt").textContent = "전달사항 수정 중";
+  $("w-save").textContent = "수정 완료";
+  $("w-cancel").style.display = "block";
+  window.scrollTo({top:0, behavior:"smooth"});
+  $("w-text").focus();
+}
+function resetForm(){
+  editId = null;
+  $("w-text").value = ""; $("w-date").value = todayStr;
+  document.querySelector(".write").classList.remove("editing");
+  document.querySelector(".write .tt").textContent = "전달사항 등록";
+  $("w-save").textContent = "등록";
+  $("w-cancel").style.display = "none";
+}
+$("w-cancel").onclick = resetForm;
+
 $("w-save").onclick = async () => {
   const text = $("w-text").value.trim();
   const date = $("w-date").value;
@@ -146,11 +173,16 @@ $("w-save").onclick = async () => {
   if (!date) { alert("날짜를 선택해 주세요."); return; }
   $("w-save").disabled = true;
   const now = new Date();
-  const ts = `${fmtDate(now)}T${String(now.getHours()).padStart(2,"0")}:${String(now.getMinutes()).padStart(2,"0")}:${String(now.getSeconds()).padStart(2,"0")}`;
+  const nowTs = `${fmtDate(now)}T${String(now.getHours()).padStart(2,"0")}:${String(now.getMinutes()).padStart(2,"0")}:${String(now.getSeconds()).padStart(2,"0")}`;
   try {
-    await setDoc(doc(db, COL, "n" + now.getTime()), { date, text, author: $("w-author").value.trim(), ts });
-    $("w-text").value = "";
-  } catch(e){ alert("등록 실패: " + e.message); }
+    if (editId) {
+      const orig = ITEMS.find(x => x.id === editId) || {};
+      await setDoc(doc(db, COL, editId), { date, text, author: $("w-author").value.trim(), ts: orig.ts || nowTs, ets: nowTs });
+    } else {
+      await setDoc(doc(db, COL, "n" + now.getTime()), { date, text, author: $("w-author").value.trim(), ts: nowTs });
+    }
+    resetForm();
+  } catch(e){ alert("저장 실패: " + e.message); }
   $("w-save").disabled = false;
 };
 </script>
