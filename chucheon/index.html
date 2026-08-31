@@ -27,9 +27,12 @@ body{ font-family:'Noto Sans KR',sans-serif; color:var(--ink);
 .topbar h1{ font-size:23px; font-weight:900; letter-spacing:-.02em;
   margin-top:9px; line-height:1.35; }
 .topbar .sub{ font-size:13.5px; color:#cfe0f7; margin-top:7px; font-weight:500; }
-.topbar .live{ display:inline-block; margin-top:12px; padding:4px 16px;
+.topbar .duebar{ display:inline-block; margin-top:12px; margin-right:8px; padding:4px 16px;
   background:var(--gold); color:var(--navy2); border:2px solid var(--navy2);
-  font-size:13px; font-weight:900; }
+  font-size:13.5px; font-weight:900; }
+.topbar .live{ display:inline-block; margin-top:12px; padding:4px 16px;
+  background:transparent; color:#cfe0f7; border:2px solid rgba(255,255,255,.55);
+  font-size:13px; font-weight:800; }
 .goldline{ height:6px; background:var(--gold); }
 
 .notice{ margin:20px 18px 0; border:2.5px solid var(--navy2); border-left:10px solid var(--gold);
@@ -112,7 +115,7 @@ td{ padding:8px 11px; font-size:13.5px; border-top:1px solid #e8e4d8; vertical-a
     <div class="school">호남고등학교 3학년부 · 담임 선생님 입력용</div>
     <h1>학교장추천 전형 명단 조사</h1>
     <div class="sub">학교장추천(학교추천·지역균형 등)이 필요한 전형에 지원할 학생을 입력해 주세요. 한 학생이 여러 대학이면 대학별로 한 건씩 추가하면 됩니다.</div>
-    <div class="live" id="live">연결 중…</div>
+    <div class="duebar" id="duebar"></div><div class="live" id="live">연결 중…</div>
   </div>
   <div class="goldline"></div>
 
@@ -211,6 +214,16 @@ const $ = id => document.getElementById(id);
 let db = null, rows = [], filter = "all";
 
 load();
+
+/* 마감 D-day 표시 — 2026-09-15(화) */
+(function(){
+  const el = $("duebar");
+  const due = new Date(2026, 8, 15, 23, 59, 59);
+  const today = new Date();
+  const days = Math.ceil((new Date(2026,8,15) - new Date(today.getFullYear(),today.getMonth(),today.getDate())) / 86400000);
+  if (today > due) el.textContent = "입력 기간이 지났습니다 — 추가·수정은 3학년부(조영신)에게 문의";
+  else el.textContent = days === 0 ? "⏰ 오늘(9/15)까지 입력해 주세요!" : `⏰ 9월 15일(화)까지 입력 완료 · D-${days}`;
+})();
 
 /* ── 명부 선택 ── */
 const ban = $("ban"), stu = $("stu");
