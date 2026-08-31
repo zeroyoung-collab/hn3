@@ -15,26 +15,8 @@
 body{ font-family:'Noto Sans KR',sans-serif; color:var(--ink); background:#f3efe6;
   word-break:keep-all; line-height:1.5; }
 
-/* ── 로그인 게이트 ── */
-.gate{ min-height:100vh; display:flex; align-items:center; justify-content:center; padding:20px; }
-.gbox{ background:#fff; border:3px solid var(--navy2); box-shadow:8px 8px 0 var(--gold);
-  width:100%; max-width:380px; overflow:hidden; }
-.gbox .ghd{ background:var(--navy); color:#fff; padding:24px 24px 20px; border-bottom:4px solid var(--gold); }
-.gbox .ghd .sc{ font-size:12px; font-weight:800; color:#cfe0f7; letter-spacing:.06em; }
-.gbox .ghd h1{ font-size:19px; font-weight:900; margin-top:6px; letter-spacing:-.02em; }
-.gbox .gbd{ padding:22px 24px 26px; }
-.gbox label{ font-size:13px; font-weight:800; color:var(--navy2); display:block; margin-bottom:7px; }
-.gbox input{ width:100%; padding:13px 14px; font-size:16px; font-family:inherit;
-  border:2.5px solid #cfc7b2; }
-.gbox input:focus{ outline:none; border-color:var(--navy); }
-.gbox button{ width:100%; margin-top:13px; padding:13px; font-size:15.5px; font-weight:900;
-  font-family:inherit; color:#fff; background:var(--navy);
-  border:2.5px solid var(--navy2); box-shadow:3px 3px 0 rgba(9,47,102,.45); cursor:pointer; }
-.gbox button:active{ transform:translate(1px,1px); box-shadow:1px 1px 0 rgba(9,47,102,.45); }
-.gerr{ display:none; margin-top:10px; font-size:13px; font-weight:700; color:#c0392b; }
-
 /* ── 대시보드 ── */
-.dash{ display:none; max-width:1180px; margin:0 auto; padding:0 16px 40px; }
+.dash{ max-width:1180px; margin:0 auto; padding:0 16px 40px; }
 .dtop{ background:var(--navy); color:#fff; margin:0 -16px; padding:22px 24px 18px; }
 .dtop .in{ max-width:1148px; margin:0 auto; display:flex; align-items:flex-end;
   justify-content:space-between; gap:14px; flex-wrap:wrap; }
@@ -85,21 +67,6 @@ td{ padding:9px 12px; font-size:13.5px; border-top:1px solid #e8e4d8; vertical-a
 </head>
 <body>
 
-<div class="gate" id="gate">
-  <div class="gbox">
-    <div class="ghd">
-      <div class="sc">호남고등학교 3학년부 · 교사 전용</div>
-      <h1>학교장추천 전형 명단<br>현황판</h1>
-    </div>
-    <div class="gbd">
-      <label for="gpw">확인용 비밀번호</label>
-      <input type="password" id="gpw" placeholder="비밀번호 입력" autocomplete="off">
-      <div class="gerr" id="gerr">비밀번호가 올바르지 않습니다.</div>
-      <button id="gbtn">확인</button>
-    </div>
-  </div>
-</div>
-
 <div class="dash" id="dash">
   <div class="dtop"><div class="in">
     <div>
@@ -145,7 +112,6 @@ const firebaseConfig = {
   appId: "1:389048360844:web:675f4f6ce8d54a873140a9"
 };
 const FS_COL = "pw_chucheon_rows";
-const PASS = "honam1234";
 
 const ROSTER = {
  "1": {t:"이지원"}, "2": {t:"신채린"}, "3": {t:"류정현"},
@@ -154,19 +120,7 @@ const ROSTER = {
 
 const $ = id => document.getElementById(id);
 let rows = [], view = "univ", unsub = null;
-
-/* 게이트 */
-function tryLogin(){
-  if ($("gpw").value === PASS) {
-    sessionStorage.setItem("ccAdmin", "1");
-    $("gate").style.display = "none"; $("dash").style.display = "block"; load();
-  } else { $("gerr").style.display = "block"; $("gpw").select(); }
-}
-$("gbtn").addEventListener("click", tryLogin);
-$("gpw").addEventListener("keydown", e => { if (e.key === "Enter") tryLogin(); });
-if (sessionStorage.getItem("ccAdmin") === "1") {
-  $("gate").style.display = "none"; $("dash").style.display = "block"; load();
-}
+load();
 
 /* Firestore 실시간 구독 — 담임 선생님이 입력하는 즉시 반영 */
 function load(){
