@@ -15,10 +15,10 @@
 html{ -webkit-text-size-adjust:100%; }
 body{ font-family:'Noto Sans KR',sans-serif; color:var(--ink);
   background:#f3efe6; word-break:keep-all; line-height:1.55; }
-
-/* ── 본문 ── */
-.app{ max-width:720px; margin:0 auto; background:#fff; min-height:100vh;
+.app{ max-width:760px; margin:0 auto; background:#fff; min-height:100vh;
   border-left:2.5px solid var(--navy2); border-right:2.5px solid var(--navy2); }
+
+/* ── 상단 ── */
 .topbar{ background:var(--navy); color:#fff; padding:26px 22px 22px; }
 .topbar .school{ display:flex; align-items:center; gap:9px;
   font-size:13px; font-weight:800; color:#cfe0f7; letter-spacing:.06em; }
@@ -35,6 +35,7 @@ body{ font-family:'Noto Sans KR',sans-serif; color:var(--ink);
   font-size:13px; font-weight:800; }
 .goldline{ height:6px; background:var(--gold); }
 
+/* ── 안내 ── */
 .notice{ margin:20px 18px 0; border:2.5px solid var(--navy2); border-left:10px solid var(--gold);
   padding:13px 15px; background:#fff; font-size:13.5px; color:var(--soft); }
 .notice b{ color:var(--navy); }
@@ -78,11 +79,23 @@ input:disabled,select:disabled{ background:#eee9dd; color:#9a917c; }
 .btn:active{ transform:translate(2px,2px); box-shadow:2px 2px 0 var(--gold); }
 .btn:disabled{ background:#b9c4d4; border-color:#9aa4b1; box-shadow:none; cursor:not-allowed; }
 
-/* ── 입력 현황 ── */
-.fbar{ display:flex; gap:7px; margin-top:12px; flex-wrap:wrap; }
+/* ── 현황: 보기 전환 + 내보내기 ── */
+.viewbar{ display:flex; align-items:flex-end; gap:6px; margin-top:14px;
+  border-bottom:3px solid var(--navy2); flex-wrap:wrap; }
+.viewbar .tab{ padding:9px 18px; font-size:14px; font-weight:900; font-family:inherit;
+  border:2.5px solid #b3aa90; border-bottom:none; background:#efe9da; color:var(--soft); cursor:pointer; }
+.viewbar .tab.on{ background:var(--navy); border-color:var(--navy2); color:#fff; }
+.viewbar .sp{ margin-left:auto; display:flex; gap:6px; padding-bottom:6px; }
+.viewbar .xbtn{ padding:6px 12px; font-size:12.5px; font-weight:800; font-family:inherit;
+  border:2px solid var(--navy2); background:#fff; color:var(--navy); cursor:pointer; }
+.viewbar .xbtn:active{ background:var(--lt); }
+.statline{ margin-top:11px; font-size:13px; font-weight:700; color:var(--soft); }
+.statline b{ color:var(--navy); }
+.fbar{ display:flex; gap:7px; margin-top:11px; flex-wrap:wrap; }
 .fbar button{ padding:6px 13px; font-size:13px; font-weight:800; font-family:inherit;
   border:2px solid #b3aa90; background:#fff; color:var(--soft); cursor:pointer; }
 .fbar button.on{ background:var(--navy); border-color:var(--navy2); color:#fff; }
+
 .card{ background:#fff; border:2.5px solid var(--navy2); margin-top:14px; overflow:hidden; box-shadow:4px 4px 0 rgba(9,47,102,.9); }
 .card .chd{ display:flex; align-items:center; gap:9px; padding:10px 14px;
   background:var(--navy); border-bottom:2.5px solid var(--navy2); }
@@ -163,7 +176,17 @@ td{ padding:8px 11px; font-size:13.5px; border-top:1px solid #e8e4d8; vertical-a
 
     <div class="sect">
       <div class="sect-tt">입력 현황 <span class="en">LIVE</span></div>
-      <div class="sect-desc">모든 반의 입력 내용이 실시간으로 표시됩니다. 잘못 넣은 건은 삭제 후 다시 추가하세요.</div>
+      <div class="sect-desc">모든 반의 입력 내용이 실시간으로 공유됩니다. 잘못 넣은 건은 삭제 후 다시 추가하세요.</div>
+
+      <div class="viewbar">
+        <button class="tab on" id="tabBan">반별 보기</button>
+        <button class="tab" id="tabUniv">대학별 명단</button>
+        <span class="sp">
+          <button class="xbtn" id="copyBtn">표 복사</button>
+          <button class="xbtn" id="xlsxBtn">엑셀 다운로드</button>
+        </span>
+      </div>
+      <div class="statline" id="statline"></div>
       <div class="fbar" id="fbar"></div>
       <div id="area"></div>
     </div>
@@ -186,6 +209,7 @@ td{ padding:8px 11px; font-size:13.5px; border-top:1px solid #e8e4d8; vertical-a
   <option value="교원대"><option value="공주대"><option value="전주교대"><option value="한국항공대">
 </datalist>
 
+<script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-app.js";
 import { getFirestore, collection, addDoc, deleteDoc, doc, onSnapshot } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore.js";
@@ -211,7 +235,7 @@ const ROSTER = {
 };
 
 const $ = id => document.getElementById(id);
-let db = null, rows = [], filter = "all";
+let db = null, rows = [], view = "ban", filter = "all";
 
 load();
 
@@ -302,8 +326,45 @@ async function delRow(id, label){
   catch (e) { alert("삭제에 실패했습니다. 잠시 후 다시 시도해 주세요."); }
 }
 
-/* ── 입력 현황 ── */
+/* ── 대학명 정규화 — "전북대학교"와 "전북대"를 같은 대학으로 묶음 ── */
+function univKey(u){ return String(u).replace(/\s+/g, "").replace(/대학교$/, "대"); }
+
+/* 대학별 그룹 (가나다순) */
+function byUniv(){
+  const m = new Map();
+  for (const r of rows) {
+    const k = univKey(r.univ);
+    if (!m.has(k)) m.set(k, { name: r.univ, list: [] });
+    const g = m.get(k);
+    if (r.univ.length < g.name.length) g.name = r.univ;
+    g.list.push(r);
+  }
+  m.forEach(g => g.list.sort((a, b) =>
+    (a.grad - b.grad) || (a.ban - b.ban) || (a.num - b.num) || a.name.localeCompare(b.name, "ko")));
+  return [...m.values()].sort((a, b) => a.name.localeCompare(b.name, "ko"));
+}
+
+/* ── 탭 ── */
+$("tabBan").addEventListener("click", () => { view = "ban"; syncTabs(); render(); });
+$("tabUniv").addEventListener("click", () => { view = "univ"; syncTabs(); render(); });
+function syncTabs(){
+  $("tabBan").classList.toggle("on", view === "ban");
+  $("tabUniv").classList.toggle("on", view === "univ");
+  $("fbar").style.display = view === "ban" ? "flex" : "none";
+}
+
 function render(){
+  const groups = byUniv();
+  const cur = new Set(rows.filter(r => !r.grad).map(r => r.ban + "-" + r.num)).size;
+  const grad = new Set(rows.filter(r => r.grad).map(r => r.name)).size;
+  $("statline").innerHTML = rows.length
+    ? `대학 <b>${groups.length}곳</b> · 재학생 <b>${cur}명</b> · 졸업생 <b>${grad}명</b> · 총 <b>${rows.length}건</b>`
+    : "";
+  if (view === "ban") renderBan(); else renderUniv(groups);
+}
+
+/* ── 반별 보기 ── */
+function renderBan(){
   const keys = [...Object.keys(ROSTER), "졸"];
   $("fbar").innerHTML = ['<button data-b="all" class="' + (filter==="all"?"on":"") + '">전체</button>']
     .concat(keys.map(b => `<button data-b="${b}" class="${filter===b?"on":""}">${b === "졸" ? "졸업생" : b + "반"}</button>`)).join("");
@@ -336,9 +397,79 @@ function render(){
   }
   if (!html) html = `<div class="emptymsg">아직 입력된 건이 없습니다. 위에서 첫 학생을 추가해 주세요.</div>`;
   $("area").innerHTML = html;
+  bindDel();
+}
+
+/* ── 대학별 명단 (추천 명단 양식 순서) ── */
+function renderUniv(groups){
+  if (!groups.length) {
+    $("area").innerHTML = `<div class="emptymsg">아직 입력된 건이 없습니다. 위에서 첫 학생을 추가해 주세요.</div>`;
+    return;
+  }
+  $("area").innerHTML = groups.map(g => `
+    <div class="card">
+      <div class="chd"><span class="tt">${esc(g.name)}</span><span class="n">신청 ${g.list.length}명</span></div>
+      <div class="tscroll"><table>
+        <thead><tr><th style="width:110px">이름</th><th>전형(학과)</th><th style="width:80px">비고</th><th style="width:100px">소속</th><th style="width:70px">삭제</th></tr></thead>
+        <tbody>${g.list.map(s => `
+          <tr><td><span class="stname">${esc(s.name)}</span></td>
+          <td>${esc(s.major)}</td>
+          <td>${s.grad ? '<span class="taggrad">졸업생</span>' : ""}</td>
+          <td class="stnum">${s.grad ? "—" : s.ban + "반 " + String(s.num).padStart(2,"0") + "번"}</td>
+          <td><button class="delbtn" data-id="${s.id}" data-lb="${esc(s.name)} · ${esc(g.name)}">삭제</button></td></tr>`).join("")}
+        </tbody></table></div>
+    </div>`).join("");
+  bindDel();
+}
+
+function bindDel(){
   $("area").querySelectorAll(".delbtn").forEach(btn =>
     btn.addEventListener("click", () => delRow(btn.dataset.id, btn.dataset.lb)));
 }
+
+/* ── 내보내기: 추천 명단 HWP 양식 열 순서 ──
+   대학 / 본교 추천 인원(공란) / 최대 추천 인원(공란) / 이름 / 전형(학과) / 비고 */
+function exportRows(){
+  const out = [["대학","본교 추천 인원","최대 추천 인원","이름","전형(학과)","비고","소속"]];
+  for (const g of byUniv())
+    for (const s of g.list)
+      out.push([g.name, "", "", s.name, s.major, s.grad ? "졸업생" : "",
+        s.grad ? "" : s.ban + "반 " + s.num + "번"]);
+  return out;
+}
+
+/* 반별 시트: 반/번호/이름/대학/전형(학과)/비고/입력시각 */
+function banRows(){
+  const out = [["반","번호","이름","대학","전형(학과)","비고","입력시각"]];
+  const sorted = [...rows].sort((a, b) =>
+    (a.grad - b.grad) || (a.ban - b.ban) || (a.num - b.num) ||
+    a.name.localeCompare(b.name, "ko") || a.univ.localeCompare(b.univ, "ko"));
+  for (const r of sorted)
+    out.push([r.grad ? "졸업생" : r.ban, r.grad ? "" : r.num, r.name, r.univ, r.major,
+      r.grad ? "졸업생" : "", r.ts]);
+  return out;
+}
+
+$("xlsxBtn").addEventListener("click", () => {
+  if (!rows.length) { alert("아직 입력된 건이 없습니다."); return; }
+  const wb = XLSX.utils.book_new();
+  const ws1 = XLSX.utils.aoa_to_sheet(exportRows());
+  ws1["!cols"] = [{wch:16},{wch:12},{wch:12},{wch:10},{wch:30},{wch:8},{wch:12}];
+  XLSX.utils.book_append_sheet(wb, ws1, "대학별 명단");
+  const ws2 = XLSX.utils.aoa_to_sheet(banRows());
+  ws2["!cols"] = [{wch:8},{wch:6},{wch:10},{wch:16},{wch:30},{wch:8},{wch:12}];
+  XLSX.utils.book_append_sheet(wb, ws2, "반별 입력");
+  XLSX.writeFile(wb, "학교장추천_전형_명단.xlsx");
+});
+
+$("copyBtn").addEventListener("click", async () => {
+  const tsv = exportRows().map(r => r.join("\t")).join("\n");
+  try {
+    await navigator.clipboard.writeText(tsv);
+    $("copyBtn").textContent = "복사 완료 ✓";
+    setTimeout(() => $("copyBtn").textContent = "표 복사", 1800);
+  } catch(e){ alert("복사에 실패했습니다. CSV 다운로드를 이용해 주세요."); }
+});
 </script>
 </body>
 </html>
