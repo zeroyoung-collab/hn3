@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>학교장추천 전형 지원 수요조사 · 호남고등학교</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --navy:#0B3E86; --navy2:#092f66; --gold:#F5B301; --gold-d:#c8920a;
+  --green:#1A9A3E; --ink:#141a24; --soft:#3d4652; --line:#b9c4d4; --lt:#eef3fa;
+}
+*{ margin:0; padding:0; box-sizing:border-box; }
+html{ -webkit-text-size-adjust:100%; }
+body{
+  font-family:'Noto Sans KR',sans-serif; color:var(--ink);
+  background:#f3efe6; word-break:keep-all; line-height:1.55;
+}
+.wrap{ max-width:560px; margin:0 auto; background:#fff; min-height:100vh;
+  border-left:2.5px solid var(--navy2); border-right:2.5px solid var(--navy2); }
+
+/* ── 상단 ── */
+.topbar{ background:var(--navy); color:#fff; padding:26px 22px 22px; }
+.topbar .school{ display:flex; align-items:center; gap:9px;
+  font-size:13px; font-weight:800; color:#cfe0f7; letter-spacing:.06em; }
+.topbar .school::before{ content:""; width:10px; height:10px;
+  background:var(--gold); border:2px solid #fff; }
+.topbar h1{ font-size:23px; font-weight:900; letter-spacing:-.02em;
+  margin-top:9px; line-height:1.35; }
+.topbar .sub{ font-size:13.5px; color:#cfe0f7; margin-top:7px; font-weight:500; }
+.topbar .duebar{ display:inline-block; margin-top:12px; padding:4px 16px;
+  background:var(--gold); color:var(--navy2); border:2px solid var(--navy2);
+  font-size:13.5px; font-weight:900; }
+.goldline{ height:6px; background:var(--gold); }
+
+/* ── 안내 ── */
+.notice{ margin:20px 18px 0; border:2.5px solid var(--navy2); border-left:10px solid var(--gold);
+  padding:13px 15px; background:#fff; font-size:13.5px; color:var(--soft); }
+.notice b{ color:var(--navy); }
+.notice ul{ margin:6px 0 0 17px; }
+.notice li{ margin-top:3px; }
+
+/* ── 폼 공통 ── */
+form{ padding:6px 18px 26px; }
+.sect{ margin-top:28px; }
+.sect-tt{ display:flex; align-items:center; gap:9px; font-size:16.5px;
+  font-weight:900; color:var(--navy); letter-spacing:-.01em; }
+.sect-tt::before{ content:""; width:14px; height:14px;
+  background:var(--gold); border:2px solid var(--navy2); flex-shrink:0; }
+.sect-tt .en{ font-size:11px; font-weight:800; color:var(--gold-d);
+  letter-spacing:.14em; margin-left:auto; }
+.sect-desc{ font-size:13px; color:var(--soft); margin:5px 0 0 23px; }
+.field{ margin-top:13px; }
+.field label{ display:block; font-size:13.5px; font-weight:800;
+  color:var(--navy2); margin-bottom:6px; }
+.field label .req{ color:#c0392b; }
+select,input[type=text]{
+  width:100%; padding:13px 14px; font-size:16px; font-family:inherit;
+  border:2.5px solid #cfc7b2; background:#fff;
+  color:var(--ink); font-weight:500; -webkit-appearance:none; appearance:none; border-radius:0;
+}
+select{ background:#fff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='9'%3E%3Cpath d='M1 1l6 6 6-6' stroke='%230B3E86' stroke-width='2.2' fill='none' stroke-linecap='round'/%3E%3C/svg%3E") no-repeat right 14px center; padding-right:38px; }
+select:focus,input:focus{ outline:none; border-color:var(--navy); }
+input:disabled,select:disabled{ background:#eee9dd; color:#9a917c; }
+.row2{ display:grid; grid-template-columns:1fr 1fr; gap:10px; }
+.row2 > div{ min-width:0; }
+
+/* ── 지원 대학 블록 ── */
+.entry{ margin-top:16px; border:2.5px solid var(--navy2); box-shadow:4px 4px 0 rgba(9,47,102,.9); }
+.entry-hd{ display:flex; align-items:center; gap:10px; padding:11px 15px;
+  background:var(--navy); border-bottom:2.5px solid var(--navy2); }
+.entry-hd .nm{ font-size:14.5px; font-weight:900; color:#fff; }
+.entry-hd .del{ margin-left:auto; border:2px solid rgba(255,255,255,.55);
+  background:transparent; color:#fff; font-family:inherit; font-size:12px;
+  font-weight:800; padding:4px 11px; cursor:pointer; }
+.entry-bd{ padding:4px 15px 16px; }
+.addbtn{ width:100%; margin-top:16px; padding:13px; font-size:15px; font-weight:900;
+  font-family:inherit; color:var(--navy); background:#fff;
+  border:2.5px dashed var(--navy); cursor:pointer; }
+.addbtn:active{ background:var(--lt); }
+.addbtn:disabled{ color:#9a917c; border-color:#cfc7b2; cursor:not-allowed; }
+
+/* ── 지원 계획 없음 ── */
+.nonebox{ margin-top:16px; border:2.5px solid #b3aa90; padding:13px 15px; }
+.nonebox label{ display:flex; align-items:flex-start; gap:9px;
+  font-size:14px; font-weight:800; color:var(--ink); cursor:pointer; }
+.nonebox input{ width:19px; height:19px; accent-color:var(--navy); flex-shrink:0; margin-top:1px; }
+.nonebox .hint{ font-size:12.5px; color:var(--soft); font-weight:500; margin:5px 0 0 28px; }
+#entryArea.off{ opacity:.4; pointer-events:none; }
+
+/* ── 제출 ── */
+.btn{ width:100%; margin-top:24px; padding:16px; font-size:17px; font-weight:900;
+  font-family:inherit; color:#fff; letter-spacing:-.01em;
+  background:var(--navy); border:2.5px solid var(--navy2);
+  box-shadow:4px 4px 0 var(--gold); cursor:pointer; }
+.btn:active{ transform:translate(2px,2px); box-shadow:2px 2px 0 var(--gold); }
+.btn:disabled{ background:#b9c4d4; border-color:#9aa4b1; box-shadow:none; cursor:not-allowed; }
+
+/* ── 확인 모달 ── */
+.modal{ display:none; position:fixed; inset:0; background:rgba(9,24,48,.55);
+  z-index:50; padding:20px; overflow-y:auto; }
+.modal.on{ display:flex; align-items:center; justify-content:center; }
+.mbox{ background:#fff; border:3px solid var(--navy2); box-shadow:6px 6px 0 var(--gold); max-width:460px; width:100%; padding:22px 20px; }
+.mbox h2{ font-size:18px; font-weight:900; color:var(--navy); }
+.mbox .mdesc{ font-size:13px; color:var(--soft); margin-top:4px; }
+.ck{ margin-top:13px; border:2px solid var(--navy2); }
+.ck .ck-hd{ background:var(--navy); padding:8px 13px; font-size:13px; font-weight:900; color:#fff; }
+.ck table{ width:100%; border-collapse:collapse; }
+.ck td{ padding:8px 13px; font-size:14px; border-top:1px solid #e3e0d5; }
+.ck td:first-child{ width:96px; color:var(--soft); font-weight:700; font-size:12.5px; }
+.ck td:last-child{ font-weight:700; word-break:break-all; }
+.mbtns{ display:grid; grid-template-columns:1fr 1.4fr; gap:9px; margin-top:16px; }
+.mbtns button{ padding:13px; font-size:15px; font-weight:900; font-family:inherit; cursor:pointer; }
+.mb-back{ border:2.5px solid #b3aa90; background:#fff; color:var(--soft); }
+.mb-go{ border:2.5px solid var(--navy2); background:var(--navy); color:#fff; box-shadow:3px 3px 0 var(--gold); }
+.mb-go:active{ transform:translate(1px,1px); box-shadow:1px 1px 0 var(--gold); }
+
+/* ── 완료 ── */
+.done{ display:none; padding:70px 26px; text-align:center; }
+.done .mark{ width:64px; height:64px; margin:0 auto;
+  background:var(--green); color:#fff; font-size:32px; font-weight:900;
+  border:3px solid #0f7a2d; box-shadow:4px 4px 0 var(--gold);
+  display:flex; align-items:center; justify-content:center; }
+.done h2{ font-size:21px; font-weight:900; color:var(--navy); margin-top:20px; }
+.done p{ font-size:14px; color:var(--soft); margin-top:9px; }
+
+/* ── 푸터 ── */
+.foot{ background:var(--navy2); color:#cfe0f7; text-align:center;
+  font-size:12px; padding:15px; border-top:4px solid var(--gold); }
+.foot b{ color:var(--gold); }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="topbar">
+    <div class="school">호남고등학교 3학년부</div>
+    <h1>학교장추천 전형<br>지원 수요조사</h1>
+    <div class="sub">학교장추천(학교추천·지역균형 등)이 필요한 전형에 지원할 계획이 있는 학생은 대학과 모집단위를 제출해 주세요.</div>
+    <div class="duebar">⏰ 담임선생님이 안내한 기한까지 제출해 주세요</div>
+  </div>
+  <div class="goldline"></div>
+
+  <div class="notice">
+    <b>제출 전에 꼭 읽어 주세요</b>
+    <ul>
+      <li><b>학교장추천이 필요한 전형</b>(학교추천·지역균형·추천형 등)만 적습니다. 일반 학생부종합·교과 전형은 적지 않아도 됩니다.</li>
+      <li>아직 확정하지 않았더라도 <b>고려 중이면 모두</b> 적어 주세요. 대학별 추천 인원을 조정하는 데 필요합니다.</li>
+      <li>계획이 바뀌면 <b>다시 제출</b>하면 됩니다. (가장 최근 제출만 반영)</li>
+      <li>지원 계획이 없어도 <b>"지원 계획 없음"에 체크 후 제출</b>해 주세요.</li>
+    </ul>
+  </div>
+
+  <form id="frm" autocomplete="off">
+
+    <div class="sect">
+      <div class="sect-tt">본인 확인 <span class="en">STUDENT</span></div>
+      <div class="field row2">
+        <div>
+          <label for="ban">반 <span class="req">*</span></label>
+          <select id="ban" required></select>
+        </div>
+        <div>
+          <label for="stu">이름 <span class="req">*</span></label>
+          <select id="stu" required disabled><option value="">반을 먼저 선택</option></select>
+        </div>
+      </div>
+    </div>
+
+    <div class="sect">
+      <div class="sect-tt">지원 예정 대학 <span class="en">UNIVERSITY</span></div>
+      <div class="sect-desc">학교장추천이 필요한 전형 기준으로, 대학과 모집단위(학과)를 입력하세요. 최대 6개까지 추가할 수 있습니다.</div>
+
+      <div id="entryArea"></div>
+      <button type="button" class="addbtn" id="addBtn">＋ 대학 추가</button>
+
+      <div class="nonebox">
+        <label><input type="checkbox" id="noneChk"> 학교장추천 전형 지원 계획 없음</label>
+        <div class="hint">학교장추천이 필요한 전형에 지원할 계획이 없는 경우에만 체크하세요.</div>
+      </div>
+    </div>
+
+    <button type="submit" class="btn" id="sbtn">입력 내용 확인하기</button>
+  </form>
+
+  <div class="modal" id="modal">
+    <div class="mbox">
+      <h2>이대로 제출할까요?</h2>
+      <div class="mdesc">제출 후에도 다시 제출하면 최신 내용으로 바뀝니다.</div>
+      <div id="ckarea"></div>
+      <div class="mbtns">
+        <button type="button" class="mb-back" id="mback">다시 수정</button>
+        <button type="button" class="mb-go" id="mgo">제출하기</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="done" id="done">
+    <div class="mark">✓</div>
+    <h2>제출이 완료되었습니다</h2>
+    <p>제출해 주셔서 감사합니다.<br>지원 계획이 바뀌면 다시 제출하면 됩니다. (최신 제출 기준)</p>
+  </div>
+
+  <div class="foot">호남고등학교 3학년부 · 2027학년도 대입 &nbsp;|&nbsp; 제작 · <b>호남고 조영신</b></div>
+</div>
+
+<datalist id="univList">
+  <option value="서울대"><option value="연세대"><option value="고려대"><option value="서강대">
+  <option value="성균관대"><option value="한양대"><option value="중앙대"><option value="경희대">
+  <option value="한국외대"><option value="서울시립대"><option value="건국대"><option value="동국대">
+  <option value="홍익대"><option value="숙명여대"><option value="이화여대"><option value="국민대">
+  <option value="숭실대"><option value="세종대"><option value="단국대"><option value="아주대">
+  <option value="인하대"><option value="가천대"><option value="경기대"><option value="가톨릭대">
+  <option value="전북대"><option value="전남대"><option value="충남대"><option value="충북대">
+  <option value="경북대"><option value="부산대"><option value="원광대"><option value="조선대">
+  <option value="군산대"><option value="우석대"><option value="전주대"><option value="한밭대">
+  <option value="교원대"><option value="공주대"><option value="전주교대"><option value="한국항공대">
+</datalist>
+
+<script>
+/* Firestore 백엔드 (상담예약 공용 프로젝트 재사용, pw_* 규칙 허용) */
+const FS_BASE = "https://firestore.googleapis.com/v1/projects/sangdam-b97c1/databases/(default)/documents";
+const FS_KEY  = "AIzaSyBotwjsJxit4SbOzXVVOov37Po97AieoxM";
+const FS_COL  = "pw_chucheon_students";
+const MAX_ENTRY = 6;
+
+const ROSTER = {
+ "1": {t:"이지원", s:[[1,"김은찬"],[2,"김청우"],[3,"김하준"],[4,"김현서"],[5,"박예준"],[6,"박태영"],[7,"신이현"],[8,"양하랑"],[9,"윤도현"],[10,"이경엽"],[11,"이은겸"],[12,"이정우"],[13,"이창헌"],[14,"이태희"],[15,"이현호"],[16,"장민준"],[17,"장연범"],[18,"전주형"],[19,"정승재"],[20,"조예찬"],[21,"최성우"]]},
+ "2": {t:"신채린", s:[[1,"강민광"],[2,"고의정"],[3,"권현서"],[4,"노승우"],[5,"박민수"],[6,"박지후"],[7,"박철웅"],[8,"백지훈"],[9,"송호준"],[10,"안석현"],[11,"안수현"],[12,"양채완"],[13,"오영현"],[14,"오지우"],[15,"유성민"],[16,"이서우"],[17,"이서진"],[18,"이승로"],[19,"이승주"],[20,"임명찬"],[21,"임현후"]]},
+ "3": {t:"류정현", s:[[1,"김균태"],[2,"김민석"],[3,"김성윤"],[4,"김승준"],[5,"김윤호"],[6,"김지환"],[7,"김형민"],[8,"노동완"],[9,"민환"],[10,"박재현"],[11,"박태희"],[12,"손연우"],[13,"신지용"],[14,"안정언"],[15,"안준성"],[16,"이대용"],[17,"이산"],[18,"이성훈"],[19,"이한샘"],[20,"정승욱"],[21,"홍종성"]]},
+ "4": {t:"박정민", s:[[1,"강동훈"],[2,"강정우"],[3,"김건우"],[4,"김관유"],[5,"김동윤"],[6,"김민준"],[7,"김세진"],[8,"김영준"],[9,"김현준"],[10,"문관후"],[11,"문준우"],[12,"박윤환"],[13,"박지강"],[14,"유동언"],[15,"유지안"],[16,"이호열"],[17,"한석"],[18,"허정관"]]},
+ "5": {t:"심요섭", s:[[1,"강현수"],[2,"김도훈"],[3,"김성빈"],[4,"김예찬"],[5,"서민웅"],[6,"신재민"],[7,"오영일"],[8,"유승범"],[9,"유호성"],[10,"이성빈"],[11,"이승준"],[12,"이승진"],[13,"임태훈"],[14,"장준호"],[15,"전재훈"],[16,"정윤우"],[17,"최예건"],[18,"추민석"],[19,"홍경서"]]},
+ "6": {t:"조영신", s:[[1,"강태균"],[2,"김기현"],[3,"김준서"],[4,"김태영"],[5,"박민서"],[6,"박세훈"],[7,"서지완"],[8,"신수한"],[9,"신현민"],[10,"유시형"],[11,"유호준"],[12,"이도윤"],[13,"이준영"],[14,"정승환"],[15,"조승원"],[16,"조원준"],[17,"진현우"],[18,"하승범"]]}
+};
+
+const $ = id => document.getElementById(id);
+const ban = $("ban"), stu = $("stu");
+
+ban.innerHTML = '<option value="">선택</option>' +
+  Object.keys(ROSTER).map(r => `<option value="${r}">${r}반 (담임 ${ROSTER[r].t})</option>`).join("");
+
+ban.addEventListener("change", () => {
+  const r = ban.value;
+  if (!r) { stu.disabled = true; stu.innerHTML = '<option value="">반을 먼저 선택</option>'; return; }
+  stu.disabled = false;
+  stu.innerHTML = '<option value="">선택</option>' +
+    ROSTER[r].s.map(([n, nm]) => `<option value="${n}|${nm}">${String(n).padStart(2,"0")}번 ${nm}</option>`).join("");
+});
+
+/* ── 지원 대학 입력 블록 ── */
+const area = $("entryArea"), addBtn = $("addBtn"), noneChk = $("noneChk");
+
+function addEntry(){
+  const n = area.children.length;
+  if (n >= MAX_ENTRY) return;
+  const div = document.createElement("div");
+  div.className = "entry";
+  div.innerHTML = `
+    <div class="entry-hd"><span class="nm">지원 대학</span>
+      <button type="button" class="del">삭제</button></div>
+    <div class="entry-bd">
+      <div class="field">
+        <label>대학명 <span class="req">*</span></label>
+        <input type="text" class="e-univ" list="univList" placeholder="예) 전북대" autocapitalize="off">
+      </div>
+      <div class="field">
+        <label>모집단위(학과) <span class="req">*</span></label>
+        <input type="text" class="e-major" placeholder="예) 기계공학과" autocapitalize="off">
+      </div>
+    </div>`;
+  div.querySelector(".del").addEventListener("click", () => { div.remove(); relabel(); });
+  area.appendChild(div);
+  relabel();
+}
+function relabel(){
+  [...area.children].forEach((d, i) => d.querySelector(".nm").textContent = `지원 대학 ${i + 1}`);
+  addBtn.disabled = area.children.length >= MAX_ENTRY || noneChk.checked;
+}
+addBtn.addEventListener("click", addEntry);
+addEntry();   /* 첫 블록 기본 표시 */
+
+noneChk.addEventListener("change", () => {
+  area.classList.toggle("off", noneChk.checked);
+  addBtn.disabled = noneChk.checked || area.children.length >= MAX_ENTRY;
+});
+
+function collectEntries(){
+  return [...area.children].map(d => ({
+    univ: d.querySelector(".e-univ").value.trim(),
+    major: d.querySelector(".e-major").value.trim()
+  })).filter(e => e.univ || e.major);
+}
+
+function esc(s){ return String(s == null ? "" : s).replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c])); }
+
+let payload = null;
+
+$("frm").addEventListener("submit", e => {
+  e.preventDefault();
+  if (!ban.value || !stu.value) { alert("반과 이름을 선택해 주세요."); return; }
+
+  let entries = [];
+  if (!noneChk.checked) {
+    entries = collectEntries();
+    if (!entries.length) { alert("지원 예정 대학을 입력하거나, 지원 계획 없음에 체크해 주세요."); return; }
+    for (const en of entries) {
+      if (!en.univ || !en.major) { alert("대학명과 모집단위를 모두 입력해 주세요."); return; }
+    }
+  }
+
+  const [num, name] = stu.value.split("|");
+  payload = { ban: ban.value, num, name, none: noneChk.checked, entries };
+
+  let ckhtml = `<div class="ck"><div class="ck-hd">학생</div><table><tr><td>학생</td><td>3학년 ${payload.ban}반 ${num}번 ${esc(name)}</td></tr></table></div>`;
+  if (payload.none) {
+    ckhtml += `<div class="ck"><div class="ck-hd">지원 계획</div><table><tr><td>상태</td><td>학교장추천 전형 지원 계획 없음</td></tr></table></div>`;
+  } else {
+    ckhtml += entries.map((en, i) =>
+      `<div class="ck"><div class="ck-hd">지원 대학 ${i + 1}</div><table>
+        <tr><td>대학명</td><td>${esc(en.univ)}</td></tr>
+        <tr><td>모집단위</td><td>${esc(en.major)}</td></tr></table></div>`).join("");
+  }
+  $("ckarea").innerHTML = ckhtml;
+  $("modal").classList.add("on");
+});
+
+$("mback").addEventListener("click", () => $("modal").classList.remove("on"));
+
+$("mgo").addEventListener("click", async () => {
+  const btn = $("mgo"); btn.disabled = true; btn.textContent = "제출 중…";
+  try {
+    const now = new Date();
+    const ts = String(now.getMonth()+1).padStart(2,"0") + "-" + String(now.getDate()).padStart(2,"0")
+      + " " + String(now.getHours()).padStart(2,"0") + ":" + String(now.getMinutes()).padStart(2,"0");
+    const S = v => ({ stringValue: String(v == null ? "" : v) });
+    const B = v => ({ booleanValue: !!v });
+    const fields = {
+      ban:S(payload.ban), num:S(payload.num), name:S(payload.name), ts:S(ts),
+      none:B(payload.none), entriesJson:S(JSON.stringify(payload.entries))
+    };
+    /* 문서 ID = 반-번호 → 같은 학생이 다시 제출하면 최신 내용으로 덮어씀 */
+    const res = await fetch(`${FS_BASE}/${FS_COL}/${payload.ban}-${payload.num}?key=${FS_KEY}`,
+      { method:"PATCH", headers:{ "Content-Type":"application/json" }, body: JSON.stringify({ fields }) });
+    if (!res.ok) throw new Error("HTTP " + res.status);
+    $("modal").classList.remove("on");
+    $("frm").style.display = "none";
+    document.querySelector(".notice").style.display = "none";
+    $("done").style.display = "block";
+    window.scrollTo(0, 0);
+  } catch (err) {
+    alert("제출에 실패했습니다. 잠시 후 다시 시도해 주세요.");
+    btn.disabled = false; btn.textContent = "제출하기";
+  }
+});
+</script>
+</body>
+</html>
