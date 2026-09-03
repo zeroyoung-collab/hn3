@@ -1,0 +1,946 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>수시 6장 지원현황 조사 · 호남고 3학년부</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --navy:#0B3E86; --navy2:#092f66; --gold:#F5B301; --gold-d:#c8920a;
+  --red:#c0392b; --red-d:#a33025;
+  --ink:#141a24; --soft:#3d4652; --line:#b9c4d4; --lt:#eef3fa;
+}
+*{ margin:0; padding:0; box-sizing:border-box; }
+html{ -webkit-text-size-adjust:100%; }
+body{ font-family:'Noto Sans KR',sans-serif; color:var(--ink);
+  background:#f3efe6; word-break:keep-all; line-height:1.55; }
+.app{ max-width:860px; margin:0 auto; background:#fff; min-height:100vh;
+  border-left:2.5px solid var(--navy2); border-right:2.5px solid var(--navy2); }
+
+/* ── 상단 ── */
+.topbar{ background:var(--navy); color:#fff; padding:26px 22px 22px; }
+.topbar .school{ display:flex; align-items:center; gap:9px;
+  font-size:13px; font-weight:800; color:#cfe0f7; letter-spacing:.06em; }
+.topbar .school::before{ content:""; width:10px; height:10px;
+  background:var(--gold); border:2px solid #fff; }
+.topbar h1{ font-size:23px; font-weight:900; letter-spacing:-.02em;
+  margin-top:9px; line-height:1.35; }
+.topbar .sub{ font-size:13.5px; color:#cfe0f7; margin-top:7px; font-weight:500; }
+.topbar .duebar{ display:inline-block; margin-top:12px; margin-right:8px; padding:4px 16px;
+  background:var(--gold); color:var(--navy2); border:2px solid var(--navy2);
+  font-size:13.5px; font-weight:900; }
+.topbar .live{ display:inline-block; margin-top:12px; padding:4px 16px;
+  background:transparent; color:#cfe0f7; border:2px solid rgba(255,255,255,.55);
+  font-size:13px; font-weight:800; }
+.goldline{ height:6px; background:var(--gold); }
+
+/* ── 안내 ── */
+.notice{ margin:20px 18px 0; border:2.5px solid var(--navy2); border-left:10px solid var(--gold);
+  padding:13px 15px; background:#fff; font-size:13.5px; color:var(--soft); }
+.notice b{ color:var(--navy); }
+.notice ul{ margin:6px 0 0 17px; }
+.notice li{ margin-top:3px; }
+
+.pad{ padding:6px 18px 30px; }
+.sect{ margin-top:26px; }
+.sect-tt{ display:flex; align-items:center; gap:9px; font-size:16.5px;
+  font-weight:900; color:var(--navy); letter-spacing:-.01em; }
+.sect-tt::before{ content:""; width:14px; height:14px;
+  background:var(--gold); border:2px solid var(--navy2); flex-shrink:0; }
+.sect-tt .en{ font-size:11px; font-weight:800; color:var(--gold-d);
+  letter-spacing:.14em; margin-left:auto; }
+.sect-desc{ font-size:13px; color:var(--soft); margin:5px 0 0 23px; }
+
+/* ── 입력 폼 ── */
+.formbox{ margin-top:14px; border:2.5px solid var(--navy2);
+  box-shadow:4px 4px 0 rgba(9,47,102,.9); padding:4px 16px 18px; }
+.field{ margin-top:13px; }
+.field label{ display:block; font-size:13.5px; font-weight:800;
+  color:var(--navy2); margin-bottom:6px; }
+.field label .req{ color:var(--red); }
+select,input[type=text]{
+  width:100%; padding:11px 13px; font-size:15.5px; font-family:inherit;
+  border:2.5px solid #cfc7b2; background:#fff;
+  color:var(--ink); font-weight:500; -webkit-appearance:none; appearance:none; border-radius:0;
+}
+select{ background:#fff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='9'%3E%3Cpath d='M1 1l6 6 6-6' stroke='%230B3E86' stroke-width='2.2' fill='none' stroke-linecap='round'/%3E%3C/svg%3E") no-repeat right 12px center; padding-right:34px; }
+select:focus,input:focus{ outline:none; border-color:var(--navy); }
+input:disabled,select:disabled{ background:#eee9dd; color:#9a917c; }
+.row2{ display:grid; grid-template-columns:1fr 1fr; gap:10px; }
+.row2 > div{ min-width:0; }
+.field label .lite{ font-weight:600; color:var(--soft); font-size:12px; }
+#prio{ border-color:var(--navy); font-weight:700; }
+.orline{ display:flex; align-items:center; gap:10px; margin-top:16px;
+  font-size:12px; font-weight:800; color:#9a917c; }
+.orline::before,.orline::after{ content:""; flex:1; height:2px; background:#e2dbc8; }
+.star{ color:var(--gold-d); font-weight:900; }
+.gr{ display:inline-block; font-size:11.5px; font-weight:900; color:#fff;
+  background:var(--navy2); border:2px solid var(--navy2); padding:0 6px; white-space:nowrap; }
+.gr i{ font-style:normal; font-weight:700; color:#c6d8f3; }
+.chd .gr{ background:transparent; border-color:rgba(255,255,255,.6); }
+.chd .gr i{ color:#cfe0f7; }
+.min{ display:inline-block; font-size:11.5px; font-weight:800; color:#8e44ad;
+  border:2px solid #8e44ad; background:#faf5fd; padding:0 6px; white-space:nowrap; }
+.min.none{ color:#8a8270; border-color:#c9c0a8; background:#f7f4ea; }
+.cap{ font-weight:800; color:var(--navy2); white-space:nowrap; }
+.clash{ background:#fff8e2; }
+.tight{ font-size:12px; color:var(--soft); font-weight:700; }
+tr.clash td:first-child{ box-shadow:inset 5px 0 0 var(--gold); }
+.clashnote{ font-size:12px; font-weight:800; color:var(--gold-d);
+  padding:7px 14px; background:#fff8e2; border-bottom:2px solid var(--gold-d); }
+.edit2{ border:2px solid var(--navy); background:#fff; color:var(--navy);
+  font-family:inherit; font-size:11.5px; font-weight:800; padding:3px 9px; cursor:pointer; }
+.edit2:active{ background:var(--lt); }
+
+/* ── 6장 카드 그리드 ── */
+.gridwrap{ margin-top:16px; }
+.gridhead{ display:flex; align-items:center; gap:8px; flex-wrap:wrap;
+  border-top:3px solid var(--navy2); padding-top:12px; }
+.gridhead .who{ font-size:15px; font-weight:900; color:var(--navy2); }
+.gridhead .cnt{ margin-left:auto; font-size:12.5px; font-weight:800; color:var(--soft); }
+.gridhead .cnt b{ color:var(--navy); }
+.gridhead .cnt.full b{ color:#1A7F37; }
+.slot{ border:2.5px solid #cfc7b2; border-left:9px solid var(--navy); margin-top:10px; padding:9px 11px 12px; }
+.slot.think{ border-left-color:var(--gold-d); background:#fffdf5; }
+.slot .sh{ display:flex; align-items:center; gap:8px; font-size:12.5px; font-weight:900;
+  color:var(--navy2); margin-bottom:7px; }
+.slot.think .sh{ color:var(--gold-d); }
+.slot .sh .badge{ border:2px solid currentColor; padding:0 7px; font-size:11px; }
+.slot .sh .clr{ margin-left:auto; border:2px solid #c9c0a8; background:#fff; color:#8a8270;
+  font-family:inherit; font-size:11px; font-weight:800; padding:2px 8px; cursor:pointer; }
+.slot .sh .clr:active{ background:#f2eee2; }
+.sgrid{ display:grid; grid-template-columns:1.1fr 1.6fr 0.9fr; gap:8px; }
+.sgrid2{ display:grid; grid-template-columns:110px 1fr; gap:8px; margin-top:8px; }
+@media (max-width:640px){ .sgrid{ grid-template-columns:1fr; } .sgrid2{ grid-template-columns:100px 1fr; } }
+.addthink{ margin-top:10px; width:100%; padding:9px; font-size:13px; font-weight:800;
+  font-family:inherit; border:2.5px dashed var(--gold-d); background:#fffdf5;
+  color:var(--gold-d); cursor:pointer; }
+.btn{ width:100%; margin-top:16px; padding:14px; font-size:16px; font-weight:900;
+  font-family:inherit; color:#fff; letter-spacing:-.01em;
+  background:var(--navy); border:2.5px solid var(--navy2);
+  box-shadow:4px 4px 0 var(--gold); cursor:pointer; }
+.btn:active{ transform:translate(2px,2px); box-shadow:2px 2px 0 var(--gold); }
+.btn:disabled{ background:#b9c4d4; border-color:#9aa4b1; box-shadow:none; cursor:not-allowed; }
+.btn.ghost{ background:#fff; color:var(--red-d); border-color:var(--red);
+  box-shadow:none; margin-top:9px; padding:10px; font-size:13.5px; }
+.savehint{ font-size:12.5px; color:var(--soft); margin-top:9px; text-align:center; font-weight:600; }
+.pickmsg{ margin-top:14px; border:2.5px dashed var(--navy); background:var(--lt);
+  padding:14px 15px; font-size:13.5px; color:var(--navy2); font-weight:700; }
+
+/* ── 현황 ── */
+.viewbar{ display:flex; align-items:flex-end; gap:6px; margin-top:14px;
+  border-bottom:3px solid var(--navy2); flex-wrap:wrap; }
+.viewbar .tab{ padding:9px 15px; font-size:13.5px; font-weight:900; font-family:inherit;
+  border:2.5px solid #b3aa90; border-bottom:none; background:#efe9da; color:var(--soft); cursor:pointer; }
+.viewbar .tab.on{ background:var(--navy); border-color:var(--navy2); color:#fff; }
+.viewbar .sp{ margin-left:auto; display:flex; gap:6px; padding-bottom:6px; }
+.viewbar .xbtn{ padding:6px 12px; font-size:12.5px; font-weight:800; font-family:inherit;
+  border:2px solid var(--navy2); background:#fff; color:var(--navy); cursor:pointer; }
+.viewbar .xbtn:active{ background:var(--lt); }
+.statline{ margin-top:11px; font-size:13px; font-weight:700; color:var(--soft); }
+.statline b{ color:var(--navy); }
+.fbar{ display:flex; gap:7px; margin-top:11px; flex-wrap:wrap; }
+.fbar button{ padding:6px 13px; font-size:13px; font-weight:800; font-family:inherit;
+  border:2px solid #b3aa90; background:#fff; color:var(--soft); cursor:pointer; }
+.fbar button.on{ background:var(--navy); border-color:var(--navy2); color:#fff; }
+
+.card{ background:#fff; border:2.5px solid var(--navy2); margin-top:14px;
+  overflow:hidden; box-shadow:4px 4px 0 rgba(9,47,102,.9); }
+.card .chd{ display:flex; align-items:center; gap:9px; padding:10px 14px;
+  background:var(--navy); border-bottom:2.5px solid var(--navy2); }
+.card .chd .tt{ font-size:14.5px; font-weight:900; color:#fff; }
+.card .chd .sm{ font-weight:700; font-size:12px; color:#cfe0f7; }
+.card .chd .n{ margin-left:auto; font-size:12px; font-weight:800; color:#cfe0f7; white-space:nowrap; }
+.card .chd .n.full{ color:var(--gold); }
+.card .chd .edit{ border:2px solid rgba(255,255,255,.6); background:transparent; color:#fff;
+  font-family:inherit; font-size:11.5px; font-weight:800; padding:2px 9px; cursor:pointer; }
+.tscroll{ overflow-x:auto; }
+table{ width:100%; border-collapse:collapse; min-width:520px; }
+th{ background:var(--navy2); color:#fff; font-size:12px; font-weight:700;
+  padding:8px 11px; text-align:left; white-space:nowrap; }
+td{ padding:8px 11px; font-size:13.5px; border-top:1px solid #e8e4d8; vertical-align:top; }
+tr.thinkrow td{ background:#fffdf5; }
+.no{ font-weight:900; color:var(--navy2); white-space:nowrap; }
+.no.t{ color:var(--gold-d); }
+.stname{ font-weight:900; color:var(--navy2); white-space:nowrap; }
+.stnum{ font-size:11.5px; color:var(--soft); white-space:nowrap; }
+.uv{ font-weight:900; color:var(--navy); }
+.tag{ display:inline-block; font-size:11px; font-weight:800; padding:0 6px;
+  border:2px solid var(--line); color:var(--soft); white-space:nowrap; }
+.tag.k교과{ border-color:#2f7d32; color:#2f7d32; }
+.tag.k종합{ border-color:var(--navy); color:var(--navy); }
+.tag.k논술{ border-color:#8e44ad; color:#8e44ad; }
+.tag.k실기{ border-color:#c0392b; color:#c0392b; }
+.tagthink{ display:inline-block; font-size:11px; font-weight:800; color:var(--gold-d);
+  border:2px solid var(--gold-d); background:#fff8e2; padding:0 6px; }
+.bar{ height:9px; background:#e8e4d8; border:1.5px solid var(--navy2); margin-top:5px; }
+.bar > i{ display:block; height:100%; background:var(--navy); }
+.bar > i.full{ background:#1A7F37; }
+.emptymsg{ margin-top:14px; border:2.5px dashed var(--gold-d); background:#fff;
+  padding:13px 15px; font-size:13.5px; color:var(--soft); }
+
+.foot{ background:var(--navy2); color:#cfe0f7; text-align:center;
+  font-size:12px; padding:15px; border-top:4px solid var(--gold); }
+.foot b{ color:var(--gold); }
+</style>
+</head>
+<body>
+
+<div class="app" id="app">
+  <div class="topbar">
+    <div class="school">호남고등학교 3학년부 · 담임 선생님 입력용</div>
+    <h1>수시 6장 지원현황 조사</h1>
+    <div class="sub">학생별로 실제 지원할 <b>6장</b>과, 아직 저울질 중인 <b>고민 카드</b>를 함께 입력해 주세요. 경쟁률을 보고 막판에 바꿀 후보까지 적어 두면 눈치작전 때 바로 씁니다.</div>
+    <div class="duebar" id="duebar"></div><div class="live" id="live">연결 중…</div>
+  </div>
+  <div class="goldline"></div>
+
+  <div class="notice">
+    <b>입력 안내</b>
+    <ul>
+      <li>맨 위 <b>우선 조사 대상</b>에서 학생을 고르면 바로 열립니다. 명단에 없는 학생은 아래 반·이름으로 찾으세요.</li>
+      <li>학생을 고르면 <b>지원 1~6번 칸</b>과 <b>고민 카드 칸</b>이 열립니다. 한 학생 것을 다 적고 <b>저장</b>을 누르세요.</li>
+      <li>지원 칸은 <b>1번이 최상향, 6번이 안정</b> 순서로 적어 주시면 대학별 집계가 훨씬 쓸모 있습니다.</li>
+      <li>대학이 아직 안 정해진 칸은 <b>비워 두세요</b>. 나중에 학생을 다시 고르면 이어서 채울 수 있습니다.</li>
+      <li>고민 카드는 실제 6장에 포함되지 않는 <b>교체 후보</b>입니다. 원서접수 기간 경쟁률 보고 갈아탈 곳을 적어 주세요.</li>
+      <li>학과 칸에는 전형명과 모집단위를 같이 적어 주세요. 예) 학교추천 · 기계공학과</li>
+      <li><b>모집인원</b>과 <b>수능 최저</b>도 같이 적어 주세요. 최저는 <b>2합 5</b>, <b>3합 7</b>처럼 짧게, 없으면 <b>없음</b>으로 적으면 됩니다.</li>
+    </ul>
+  </div>
+
+  <div class="pad">
+    <div class="sect">
+      <div class="sect-tt">학생 선택 <span class="en">STUDENT</span></div>
+      <div class="formbox">
+        <div class="field">
+          <label for="prio">우선 조사 대상 <span class="lite">— 3학년부 지정 19명 · 고르면 바로 열립니다</span></label>
+          <select id="prio"></select>
+        </div>
+        <div class="orline"><span>또는 반·이름으로 찾기</span></div>
+        <div class="field row2" id="rosterRow">
+          <div>
+            <label for="ban">반 <span class="req">*</span></label>
+            <select id="ban"></select>
+          </div>
+          <div>
+            <label for="stu">이름 <span class="req">*</span></label>
+            <select id="stu" disabled><option value="">반을 먼저 선택</option></select>
+          </div>
+        </div>
+        <div id="pickmsg" class="pickmsg">학생을 선택하면 지원 카드 6장이 열립니다.</div>
+
+        <div class="gridwrap" id="gridwrap" style="display:none">
+          <div class="gridhead">
+            <span class="who" id="whoLabel"></span>
+            <span class="cnt" id="cntLabel"></span>
+          </div>
+          <div id="slots"></div>
+          <button type="button" class="addthink" id="addThink">+ 고민 카드 한 칸 더</button>
+          <button type="button" class="btn" id="saveBtn">이 학생 지원현황 저장</button>
+          <div class="savehint" id="saveHint">저장하면 모든 선생님 화면에 바로 반영됩니다.</div>
+          <button type="button" class="btn ghost" id="wipeBtn">이 학생 입력 전체 삭제</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="sect">
+      <div class="sect-tt">지원 현황 <span class="en">LIVE</span></div>
+      <div class="sect-desc">모든 반의 입력 내용이 실시간으로 공유됩니다.</div>
+
+      <div class="viewbar">
+        <button class="tab on" id="tabStu">학생별</button>
+        <button class="tab" id="tabUniv">대학별</button>
+        <button class="tab" id="tabProg">진행률</button>
+        <span class="sp">
+          <button class="xbtn" id="copyBtn">표 복사</button>
+          <button class="xbtn" id="xlsxBtn">엑셀 다운로드</button>
+        </span>
+      </div>
+      <div class="statline" id="statline"></div>
+      <div class="fbar" id="fbar"></div>
+      <div id="area"></div>
+    </div>
+  </div>
+
+  <div class="foot">호남고등학교 3학년부 · 2027학년도 수시 &nbsp;|&nbsp; 제작 · <b>호남고 박정민</b></div>
+</div>
+
+<datalist id="univList">
+  <option value="서울대"><option value="연세대"><option value="고려대"><option value="서강대">
+  <option value="성균관대"><option value="한양대"><option value="중앙대"><option value="경희대">
+  <option value="한국외대"><option value="서울시립대"><option value="건국대"><option value="동국대">
+  <option value="홍익대"><option value="숙명여대"><option value="이화여대"><option value="국민대">
+  <option value="숭실대"><option value="세종대"><option value="단국대"><option value="아주대">
+  <option value="인하대"><option value="가천대"><option value="경기대"><option value="가톨릭대">
+  <option value="서울과학기술대"><option value="한양대 ERICA"><option value="KAIST"><option value="UNIST">
+  <option value="GIST"><option value="DGIST"><option value="POSTECH"><option value="한국항공대">
+  <option value="전북대"><option value="전남대"><option value="충남대"><option value="충북대">
+  <option value="경북대"><option value="부산대"><option value="강원대"><option value="제주대">
+  <option value="원광대"><option value="조선대"><option value="군산대"><option value="우석대">
+  <option value="전주대"><option value="한밭대"><option value="공주대"><option value="순천향대">
+  <option value="교원대"><option value="전주교대"><option value="광주교대"><option value="경인교대">
+</datalist>
+
+<datalist id="minList">
+  <option value="없음"><option value="2합 4"><option value="2합 5"><option value="2합 6"><option value="2합 7">
+  <option value="3합 5"><option value="3합 6"><option value="3합 7"><option value="3합 8"><option value="3합 9">
+  <option value="4합 8"><option value="4합 9"><option value="4합 10"><option value="4합 11">
+  <option value="국수영탐 중 2개 합 5"><option value="국수 포함 2합 5"><option value="수학 포함 2합 5">
+  <option value="한국사 4등급 이내"><option value="영어 2등급 이내">
+</datalist>
+
+<script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-app.js";
+import { getFirestore, collection, addDoc, deleteDoc, doc, onSnapshot } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore.js";
+
+/* Firestore 백엔드 (상담예약 공용 프로젝트 재사용, pw_* 규칙 허용) */
+const firebaseConfig = {
+  apiKey: "AIzaSyBotwjsJxit4SbOzXVVOov37Po97AieoxM",
+  authDomain: "sangdam-b97c1.firebaseapp.com",
+  projectId: "sangdam-b97c1",
+  storageBucket: "sangdam-b97c1.firebasestorage.app",
+  messagingSenderId: "389048360844",
+  appId: "1:389048360844:web:675f4f6ce8d54a873140a9"
+};
+const FS_COL = "pw_susi6_rows";
+
+/* ── 입력 마감일 — 여기 숫자만 바꾸면 상단 D-day가 따라갑니다 (월은 0부터) ── */
+const DUE = { y:2026, m:8, d:3, label:"9월 3일(목)" };
+
+const FIX = 6;            /* 확정 지원 칸 수 */
+const THINK_MAX = 4;      /* 고민 카드 최대 칸 수 */
+const TYPES = ["교과","종합","논술","실기·특기","기타"];
+
+const ROSTER = {
+ "1": {t:"이지원", s:[[1,"김은찬"],[2,"김청우"],[3,"김하준"],[4,"김현서"],[5,"박예준"],[6,"박태영"],[7,"신이현"],[8,"양하랑"],[9,"윤도현"],[10,"이경엽"],[11,"이은겸"],[12,"이정우"],[13,"이창헌"],[14,"이태희"],[15,"이현호"],[16,"장민준"],[17,"장연범"],[18,"전주형"],[19,"정승재"],[20,"조예찬"],[21,"최성우"]]},
+ "2": {t:"신채린", s:[[1,"강민광"],[2,"고의정"],[3,"권현서"],[4,"노승우"],[5,"박민수"],[6,"박지후"],[7,"박철웅"],[8,"백지훈"],[9,"송호준"],[10,"안석현"],[11,"안수현"],[12,"양채완"],[13,"오영현"],[14,"오지우"],[15,"유성민"],[16,"이서우"],[17,"이서진"],[18,"이승로"],[19,"이승주"],[20,"임명찬"],[21,"임현후"]]},
+ "3": {t:"류정현", s:[[1,"김균태"],[2,"김민석"],[3,"김성윤"],[4,"김승준"],[5,"김윤호"],[6,"김지환"],[7,"김형민"],[8,"노동완"],[9,"민환"],[10,"박재현"],[11,"박태희"],[12,"손연우"],[13,"신지용"],[14,"안정언"],[15,"안준성"],[16,"이대용"],[17,"이산"],[18,"이성훈"],[19,"이한샘"],[20,"정승욱"],[21,"홍종성"]]},
+ "4": {t:"박정민", s:[[1,"강동훈"],[2,"강정우"],[3,"김건우"],[4,"김관유"],[5,"김동윤"],[6,"김민준"],[7,"김세진"],[8,"김영준"],[9,"김현준"],[10,"문관후"],[11,"문준우"],[12,"박윤환"],[13,"박지강"],[14,"유동언"],[15,"유지안"],[16,"이호열"],[17,"한석"],[18,"허정관"]]},
+ "5": {t:"심요섭", s:[[1,"강현수"],[2,"김도훈"],[3,"김성빈"],[4,"김예찬"],[5,"서민웅"],[6,"신재민"],[7,"오영일"],[8,"유승범"],[9,"유호성"],[10,"이성빈"],[11,"이승준"],[12,"이승진"],[13,"임태훈"],[14,"장준호"],[15,"전재훈"],[16,"정윤우"],[17,"최예건"],[18,"추민석"],[19,"홍경서"]]},
+ "6": {t:"조영신", s:[[1,"강태균"],[2,"김기현"],[3,"김준서"],[4,"김태영"],[5,"박민서"],[6,"박세훈"],[7,"서지완"],[8,"신수한"],[9,"신현민"],[10,"유시형"],[11,"유호준"],[12,"이도윤"],[13,"이준영"],[14,"정승환"],[15,"조승원"],[16,"조원준"],[17,"진현우"],[18,"하승범"]]}
+};
+
+/* ── 우선 조사 대상 (3학년부 지정 19명) — "반-번호" ── */
+const PRIORITY = [
+  "1-2","1-5",              /* 김청우 박예준 */
+  "2-4","2-10","2-11",      /* 노승우 안석현 안수현 */
+  "3-10","3-13",            /* 박재현 신지용 */
+  "4-2","4-4","4-7","4-15","4-16",   /* 강정우 김관유 김세진 유지안 이호열 */
+  "5-2","5-3","5-5","5-16", /* 김도훈 김성빈 서민웅 정윤우 */
+  "6-5","6-13","6-18"       /* 박민서 이준영 하승범 */
+];
+
+/* ── 내신 등급 — "반|번호": [전과목, 국수영사과] ──
+   출처: dashboard.html NAESHIN (1~2학년 + 3학년 1학기 누적, 학점 가중)
+   석차등급 과목만 산출 · 진로선택(성취도 A/B/C)과 논리학(P/F)은 제외        */
+const GRADES = {
+  "1|2":  [1.50, 1.44],   /* 김청우 */
+  "1|5":  [2.94, 3.01],   /* 박예준 */
+  "2|4":  [2.86, 2.77],   /* 노승우 */
+  "2|10": [2.85, 2.95],   /* 안석현 */
+  "2|11": [1.69, 1.59],   /* 안수현 */
+  "3|10": [1.78, 1.53],   /* 박재현 */
+  "3|13": [1.79, 1.84],   /* 신지용 */
+  "4|2":  [2.79, 2.73],   /* 강정우 */
+  "4|4":  [2.17, 2.16],   /* 김관유 */
+  "4|7":  [2.88, 2.83],   /* 김세진 */
+  "4|15": [1.05, 1.05],   /* 유지안 */
+  "4|16": [1.96, 1.96],   /* 이호열 */
+  "5|2":  [2.65, 2.66],   /* 김도훈 */
+  "5|3":  [2.42, 2.44],   /* 김성빈 */
+  "5|5":  [1.64, 1.59],   /* 서민웅 */
+  "5|16": [2.08, 2.02],   /* 정윤우 */
+  "6|5":  [2.71, 2.61],   /* 박민서 */
+  "6|13": [2.76, 2.70],   /* 이준영 */
+  "6|18": [2.03, 2.07]    /* 하승범 */
+};
+
+const PKEY = PRIORITY.map(k => k.replace("-", "|"));
+const PSET = new Set(PKEY);
+const PLIST = PKEY.map(k => {
+  const [b, n] = k.split("|");
+  const hit = (ROSTER[b] ? ROSTER[b].s : []).find(x => String(x[0]) === n);
+  return { key:k, ban:b, num:n, name: hit ? hit[1] : "(명부 없음)" };
+});
+
+const $ = id => document.getElementById(id);
+let db = null, rows = [], view = "stu", filter = "prio";
+let cur = null;            /* {key, ban, num, name} */
+let thinkCount = 2;        /* 화면에 열린 고민 칸 수 */
+
+const esc = s => String(s == null ? "" : s).replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const keyOf = r => r.ban + "|" + r.num;
+const univKey = u => String(u).replace(/\s+/g, "").replace(/대학교$/, "대");
+const isPrio = r => PSET.has(keyOf(r));
+const gradeOf = k => GRADES[k] || null;
+const gradeNum = k => { const g = gradeOf(k); return g ? Number(g[0]) : 99; };
+function gradeTag(k){
+  const g = gradeOf(k);
+  if (!g) return "";
+  return `<span class="gr" title="전과목 ${g[0]} / 국수영사과 ${g[1] != null ? g[1] : "—"}">${g[0]}${g[1] != null ? ` <i>${g[1]}</i>` : ""}</span>`;
+}
+
+load();
+
+/* ── 마감 D-day ── */
+(function(){
+  const el = $("duebar");
+  const due = new Date(DUE.y, DUE.m, DUE.d, 23, 59, 59);
+  const today = new Date();
+  const days = Math.ceil((new Date(DUE.y,DUE.m,DUE.d) - new Date(today.getFullYear(),today.getMonth(),today.getDate())) / 86400000);
+  if (today > due) el.textContent = "입력 기간이 지났습니다 — 변경은 3학년부(박정민)에게 문의";
+  else if (days === 0) el.textContent = "⏰ 오늘까지 입력해 주세요!";
+  else el.textContent = `⏰ ${DUE.label}까지 입력 완료 · D-${days}`;
+})();
+
+/* ── 명부 선택 ── */
+const ban = $("ban"), stu = $("stu");
+ban.innerHTML = '<option value="">선택</option>' +
+  Object.keys(ROSTER).map(r => `<option value="${r}">${r}반 (담임 ${ROSTER[r].t})</option>`).join("");
+ban.addEventListener("change", () => {
+  const r = ban.value;
+  if (!r) { stu.disabled = true; stu.innerHTML = '<option value="">반을 먼저 선택</option>'; setStudent(null); return; }
+  stu.disabled = false;
+  stu.innerHTML = '<option value="">선택</option>' +
+    ROSTER[r].s.map(([n, nm]) => `<option value="${n}|${nm}">${String(n).padStart(2,"0")}번 ${nm}</option>`).join("");
+  setStudent(null);
+});
+stu.addEventListener("change", () => {
+  if (!stu.value) { setStudent(null); return; }
+  const [n, nm] = stu.value.split("|");
+  setStudent({ ban: ban.value, num: n, name: nm });
+});
+/* ── 우선 대상 바로가기 ── */
+function buildPrio(){
+  const sel = $("prio"), keep = sel.value;
+  const byBan = {};
+  for (const p of PLIST) (byBan[p.ban] = byBan[p.ban] || []).push(p);
+  let h = '<option value="">우선 대상 학생 선택</option>';
+  for (const b of Object.keys(byBan)) {
+    h += `<optgroup label="${b}반 (담임 ${ROSTER[b].t})">`;
+    for (const p of byBan[b]) {
+      const mine = rows.filter(r => keyOf(r) === p.key);
+      const f = mine.filter(r => !r.think).length, t = mine.length - f;
+      const st = !mine.length ? "미입력" : (f >= FIX ? "6장 완료" + (t ? ` · 고민 ${t}` : "") : `${f}/6`);
+      const g = gradeOf(p.key);
+      h += `<option value="${p.key}">${String(p.num).padStart(2,"0")}번 ${p.name}${g ? ` [${g[0]}]` : ""} — ${st}</option>`;
+    }
+    h += "</optgroup>";
+  }
+  sel.innerHTML = h;
+  sel.value = keep;
+}
+$("prio").addEventListener("change", () => {
+  const k = $("prio").value;
+  if (!k) return;
+  const p = PLIST.find(x => x.key === k);
+  if (!p) return;
+  ban.value = p.ban;
+  stu.disabled = false;
+  stu.innerHTML = '<option value="">선택</option>' +
+    ROSTER[p.ban].s.map(([n, nm]) => `<option value="${n}|${nm}">${String(n).padStart(2,"0")}번 ${nm}</option>`).join("");
+  stu.value = p.num + "|" + p.name;
+  setStudent({ ban:p.ban, num:p.num, name:p.name });
+  $("gridwrap").scrollIntoView({ behavior:"smooth", block:"start" });
+});
+
+/* ── 실시간 구독 ── */
+function load(){
+  db = getFirestore(initializeApp(firebaseConfig));
+  onSnapshot(collection(db, FS_COL), snap => {
+    rows = [];
+    snap.forEach(d => {
+      const v = d.data() || {};
+      if (!v.name || !v.univ) return;
+      rows.push({ id:d.id, ban:String(v.ban || ""), num:String(v.num || ""),
+        name:v.name, slot:Number(v.slot || 0), think:!!v.think,
+        univ:v.univ, major:v.major || "", type:v.type || "",
+        cap:v.cap || "", min:v.min || "", ts:v.ts || "" });
+    });
+    $("live").textContent = "● 실시간 연결됨 · 총 " + rows.length + "건";
+    buildPrio();
+    render();
+  }, () => { $("live").textContent = "연결 오류 — 새로고침 해주세요"; });
+}
+
+/* ── 학생 선택 → 카드 그리드 ── */
+function setStudent(s){
+  cur = s ? { ...s, key: keyOf(s) } : null;
+  if (!cur) {
+    $("gridwrap").style.display = "none";
+    $("pickmsg").style.display = "block";
+    return;
+  }
+  $("pickmsg").style.display = "none";
+  $("gridwrap").style.display = "block";
+  const p = PSET.has(cur.key);
+  $("prio").value = p ? cur.key : "";
+  $("whoLabel").innerHTML =
+    `${p ? '<span class="star">★</span> ' : ""}${cur.ban}반 ${String(cur.num).padStart(2,"0")}번 ${esc(cur.name)}`
+    + (gradeOf(cur.key) ? " " + gradeTag(cur.key) : "");
+  const mine = rows.filter(r => keyOf(r) === cur.key);
+  const tk = mine.filter(r => r.think).length;
+  thinkCount = Math.min(THINK_MAX, Math.max(2, tk));
+  buildSlots();
+  fillSlots(mine);
+  updateCount();
+}
+
+function slotHTML(i, think){
+  const label = think ? `고민 ${i - FIX}` : `지원 ${i}`;
+  const badge = think ? "교체 후보" : (i === 1 ? "최상향" : i === FIX ? "안정" : "");
+  return `<div class="slot${think ? " think" : ""}" data-slot="${i}" data-think="${think ? 1 : 0}">
+    <div class="sh"><span>${label}</span>${badge ? `<span class="badge">${badge}</span>` : ""}
+      <button type="button" class="clr">지우기</button></div>
+    <div class="sgrid">
+      <input type="text" class="i-univ" list="univList" placeholder="대학명" autocapitalize="off">
+      <input type="text" class="i-major" placeholder="전형 · 모집단위" autocapitalize="off">
+      <select class="i-type"><option value="">유형</option>${TYPES.map(t => `<option value="${t}">${t}</option>`).join("")}</select>
+    </div>
+    <div class="sgrid2">
+      <input type="text" class="i-cap" inputmode="numeric" placeholder="모집인원">
+      <input type="text" class="i-min" list="minList" placeholder="수능 최저 — 예) 2합 5 (탐1)" autocapitalize="off">
+    </div></div>`;
+}
+
+function buildSlots(){
+  let h = "";
+  for (let i = 1; i <= FIX; i++) h += slotHTML(i, false);
+  for (let i = FIX + 1; i <= FIX + thinkCount; i++) h += slotHTML(i, true);
+  $("slots").innerHTML = h;
+  $("addThink").style.display = thinkCount >= THINK_MAX ? "none" : "block";
+  $("slots").querySelectorAll(".slot").forEach(el => {
+    el.querySelector(".clr").addEventListener("click", () => {
+      el.querySelectorAll("input").forEach(f => f.value = "");
+      el.querySelector(".i-type").value = "";
+      updateCount();
+    });
+    el.querySelectorAll("input,select").forEach(f => f.addEventListener("input", updateCount));
+  });
+}
+
+function fillSlots(mine){
+  for (const r of mine) {
+    const el = $("slots").querySelector(`.slot[data-slot="${r.slot}"]`);
+    if (!el) continue;
+    el.querySelector(".i-univ").value = r.univ;
+    el.querySelector(".i-major").value = r.major;
+    el.querySelector(".i-type").value = TYPES.includes(r.type) ? r.type : "";
+    el.querySelector(".i-cap").value = r.cap || "";
+    el.querySelector(".i-min").value = r.min || "";
+  }
+}
+
+$("addThink").addEventListener("click", () => {
+  if (thinkCount >= THINK_MAX) return;
+  const keep = readSlots();
+  thinkCount++;
+  buildSlots();
+  fillSlots(keep.map(x => ({ ...x, univ:x.univ, major:x.major, type:x.type })));
+  updateCount();
+});
+
+function readSlots(){
+  const out = [];
+  $("slots").querySelectorAll(".slot").forEach(el => {
+    const univ = el.querySelector(".i-univ").value.trim();
+    if (!univ) return;
+    out.push({
+      slot: Number(el.dataset.slot),
+      think: el.dataset.think === "1",
+      univ,
+      major: el.querySelector(".i-major").value.trim(),
+      type: el.querySelector(".i-type").value,
+      cap: el.querySelector(".i-cap").value.trim(),
+      min: el.querySelector(".i-min").value.trim()
+    });
+  });
+  return out;
+}
+
+function updateCount(){
+  const list = readSlots();
+  const f = list.filter(x => !x.think).length, t = list.length - f;
+  const el = $("cntLabel");
+  el.classList.toggle("full", f === FIX);
+  el.innerHTML = `지원 <b>${f}/6</b> · 고민 <b>${t}</b>`;
+}
+
+/* ── 저장 (기존 행과 비교해 바뀐 것만 반영) ── */
+$("saveBtn").addEventListener("click", async () => {
+  if (!cur) return;
+  const want = readSlots();
+  if (!want.length && !rows.some(r => keyOf(r) === cur.key)) {
+    alert("입력된 대학이 없습니다. 최소 한 칸은 채워 주세요.");
+    return;
+  }
+  const missMajor = want.find(x => !x.major);
+  if (missMajor && !confirm(`${missMajor.univ} — 전형·모집단위가 비어 있습니다. 그대로 저장할까요?`)) return;
+
+  const btn = $("saveBtn"); btn.disabled = true; btn.textContent = "저장 중…";
+  try {
+    const have = rows.filter(r => keyOf(r) === cur.key);
+    const same = (a, b) => a.univ === b.univ && a.major === b.major && a.type === b.type
+      && a.think === b.think && (a.cap || "") === (b.cap || "") && (a.min || "") === (b.min || "");
+    const dels = [], adds = [];
+    const used = new Set();
+    for (const h of have) {
+      const w = want.find(x => x.slot === h.slot);
+      if (w && same(w, h)) { used.add(w.slot); } else { dels.push(h.id); }
+    }
+    for (const w of want) if (!used.has(w.slot)) adds.push(w);
+
+    const now = new Date();
+    const ts = String(now.getMonth()+1).padStart(2,"0") + "-" + String(now.getDate()).padStart(2,"0")
+      + " " + String(now.getHours()).padStart(2,"0") + ":" + String(now.getMinutes()).padStart(2,"0");
+
+    await Promise.all(dels.map(id => deleteDoc(doc(db, FS_COL, id))));
+    await Promise.all(adds.map(w => addDoc(collection(db, FS_COL), {
+      ban:cur.ban, num:cur.num, name:cur.name,
+      slot:w.slot, think:w.think, univ:w.univ, major:w.major, type:w.type,
+      cap:w.cap, min:w.min, ts
+    })));
+
+    $("saveHint").textContent = `저장 완료 ✓  (${cur.name} · 변경 ${dels.length + adds.length}건)`;
+    setTimeout(() => $("saveHint").textContent = "저장하면 모든 선생님 화면에 바로 반영됩니다.", 3000);
+  } catch (e) {
+    alert("저장에 실패했습니다. 잠시 후 다시 시도해 주세요.");
+  }
+  btn.disabled = false; btn.textContent = "이 학생 지원현황 저장";
+});
+
+$("wipeBtn").addEventListener("click", async () => {
+  if (!cur) return;
+  const have = rows.filter(r => keyOf(r) === cur.key);
+  if (!have.length) { alert("저장된 입력이 없습니다."); return; }
+  if (!confirm(`${cur.name} 학생의 ${have.length}건을 모두 삭제할까요?`)) return;
+  try {
+    await Promise.all(have.map(h => deleteDoc(doc(db, FS_COL, h.id))));
+    buildSlots(); updateCount();
+  } catch (e) { alert("삭제에 실패했습니다. 잠시 후 다시 시도해 주세요."); }
+});
+
+/* ── 집계 ── */
+function students(){
+  const m = new Map();
+  for (const r of rows) {
+    const k = keyOf(r);
+    if (!m.has(k)) m.set(k, { key:k, ban:r.ban, num:r.num, name:r.name, list:[] });
+    m.get(k).list.push(r);
+  }
+  m.forEach(g => g.list.sort((a,b) => a.slot - b.slot));
+  return [...m.values()].sort((a,b) =>
+    (a.ban - b.ban) || (a.num - b.num) || a.name.localeCompare(b.name,"ko"));
+}
+
+function byUniv(){
+  const m = new Map();
+  for (const r of rows) {
+    const k = univKey(r.univ);
+    if (!m.has(k)) m.set(k, { name:r.univ, list:[] });
+    const g = m.get(k);
+    if (r.univ.length < g.name.length) g.name = r.univ;
+    g.list.push(r);
+  }
+  /* 같은 모집단위끼리 묶고(경합 많은 학과 먼저), 그 안에서 등급순 */
+  m.forEach(g => {
+    const mc = {};
+    for (const r of g.list) if (!r.think) {
+      const k = r.major.replace(/\s+/g,"");
+      mc[k] = (mc[k] || 0) + 1;
+    }
+    const size = r => mc[r.major.replace(/\s+/g,"")] || 0;
+    g.list.sort((a,b) =>
+      (a.think - b.think) ||
+      (size(b) - size(a)) ||
+      a.major.localeCompare(b.major, "ko") ||
+      (gradeNum(keyOf(a)) - gradeNum(keyOf(b))) ||
+      (a.ban - b.ban) || (a.num - b.num));
+  });
+  return [...m.values()].sort((a,b) => {
+    const fa = a.list.filter(x => !x.think).length, fb = b.list.filter(x => !x.think).length;
+    return (fb - fa) || (b.list.length - a.list.length) || a.name.localeCompare(b.name,"ko");
+  });
+}
+
+/* ── 탭 ── */
+$("tabStu").addEventListener("click", () => { view = "stu"; syncTabs(); render(); });
+$("tabUniv").addEventListener("click", () => { view = "univ"; syncTabs(); render(); });
+$("tabProg").addEventListener("click", () => { view = "prog"; syncTabs(); render(); });
+function syncTabs(){
+  $("tabStu").classList.toggle("on", view === "stu");
+  $("tabUniv").classList.toggle("on", view === "univ");
+  $("tabProg").classList.toggle("on", view === "prog");
+  $("fbar").style.display = view === "univ" ? "none" : "flex";
+}
+
+function render(){
+  const sts = students();
+  const done = sts.filter(s => s.list.filter(r => !r.think).length >= FIX).length;
+  const think = rows.filter(r => r.think).length;
+  const pdone = PLIST.filter(p => {
+    const s = sts.find(x => x.key === p.key);
+    return s && s.list.filter(r => !r.think).length >= FIX;
+  }).length;
+  $("statline").innerHTML =
+    `★ 우선 대상 <b>${pdone}/${PLIST.length}명</b> 완료` + (rows.length
+      ? ` &nbsp;|&nbsp; 전체 학생 <b>${sts.length}명</b> · 6장 완료 <b>${done}명</b> · 대학 <b>${byUniv().length}곳</b> · 지원 <b>${rows.length - think}건</b> · 고민 <b>${think}건</b>`
+      : " &nbsp;|&nbsp; 아직 입력 없음");
+  if (view === "univ") renderUniv();
+  else { renderFilterBar(); view === "stu" ? renderStu(sts) : renderProg(sts); }
+}
+
+function renderFilterBar(){
+  const keys = Object.keys(ROSTER);
+  $("fbar").innerHTML = [
+    `<button data-b="prio" class="${filter==="prio"?"on":""}">★ 우선 대상 ${PLIST.length}명</button>`,
+    `<button data-b="all" class="${filter==="all"?"on":""}">전체</button>`]
+    .concat(keys.map(b => `<button data-b="${b}" class="${filter===b?"on":""}">${b}반</button>`)).join("");
+  $("fbar").querySelectorAll("button").forEach(btn =>
+    btn.addEventListener("click", () => { filter = btn.dataset.b; render(); }));
+}
+
+function minTag(v){
+  if (!v) return '<span class="stnum">—</span>';
+  const none = /^(없음|미적용|없|x|X|-)$/.test(v.trim());
+  return `<span class="min${none ? " none" : ""}">${esc(v)}</span>`;
+}
+
+function typeTag(t){
+  if (!t) return "";
+  const cls = t.startsWith("실기") ? "실기" : t;
+  return `<span class="tag k${cls}">${esc(t)}</span>`;
+}
+
+/* ── 학생별 ── */
+function renderStu(sts){
+  const list = sts.filter(s =>
+    filter === "all" ? true :
+    filter === "prio" ? PSET.has(s.key) : s.ban === filter);
+  if (!list.length) {
+    $("area").innerHTML = `<div class="emptymsg">${filter === "prio"
+      ? "우선 대상 학생 중 아직 입력된 건이 없습니다. 위 <b>우선 조사 대상</b>에서 학생을 골라 주세요."
+      : "아직 입력된 학생이 없습니다. 위에서 학생을 골라 지원 카드를 채워 주세요."}</div>`;
+    return;
+  }
+  $("area").innerHTML = list.map(s => {
+    const f = s.list.filter(r => !r.think).length;
+    const tr = s.list.map(r => `<tr class="${r.think ? "thinkrow" : ""}">
+      <td class="no${r.think ? " t" : ""}">${r.think ? "고민 " + (r.slot - FIX) : r.slot}</td>
+      <td class="uv">${esc(r.univ)}</td>
+      <td>${esc(r.major)}</td>
+      <td>${typeTag(r.type)}${r.think ? ' <span class="tagthink">교체후보</span>' : ""}</td>
+      <td class="cap">${r.cap ? esc(r.cap) + "명" : "—"}</td>
+      <td>${minTag(r.min)}</td></tr>`).join("");
+    return `<div class="card">
+      <div class="chd">
+        <span class="tt">${PSET.has(s.key) ? '<span class="star">★</span> ' : ""}${esc(s.name)}</span>
+        <span class="sm">${s.ban}반 ${String(s.num).padStart(2,"0")}번</span>
+        ${gradeTag(s.key)}
+        <span class="n${f >= FIX ? " full" : ""}">지원 ${f}/6${s.list.length - f ? " · 고민 " + (s.list.length - f) : ""}</span>
+        <button class="edit" data-key="${esc(s.key)}">수정</button>
+      </div>
+      <div class="tscroll"><table>
+        <thead><tr><th style="width:70px">순번</th><th style="width:120px">대학</th><th>전형 · 모집단위</th><th style="width:125px">유형</th><th style="width:70px">모집</th><th style="width:120px">수능 최저</th></tr></thead>
+        <tbody>${tr}</tbody></table></div></div>`;
+  }).join("");
+  $("area").querySelectorAll(".edit").forEach(b =>
+    b.addEventListener("click", () => jumpTo(b.dataset.key)));
+}
+
+function jumpTo(key){
+  const s = students().find(x => x.key === key);
+  if (!s) return;
+  ban.value = s.ban; ban.dispatchEvent(new Event("change"));
+  stu.value = s.num + "|" + s.name;
+  setStudent({ ban:s.ban, num:s.num, name:s.name });
+  $("gridwrap").scrollIntoView({ behavior:"smooth", block:"center" });
+}
+
+/* ── 대학별 ── */
+function renderUniv(){
+  const groups = byUniv();
+  if (!groups.length) {
+    $("area").innerHTML = `<div class="emptymsg">아직 입력된 건이 없습니다.</div>`;
+    return;
+  }
+  $("area").innerHTML = groups.map(g => {
+    const f = g.list.filter(x => !x.think).length, t = g.list.length - f;
+
+    /* 같은 모집단위에 2명 이상 = 교내 경합 */
+    const mcount = {}, mcap = {}, mname = {};
+    for (const s of g.list) if (!s.think) {
+      const mk = s.major.replace(/\s+/g,"");
+      mcount[mk] = (mcount[mk] || 0) + 1;
+      mname[mk] = s.major;
+      if (s.cap && !mcap[mk]) mcap[mk] = s.cap;
+    }
+    const clashKeys = Object.keys(mcount).filter(k => mcount[k] > 1);
+
+    const tr = g.list.map(s => {
+      const clash = !s.think && mcount[s.major.replace(/\s+/g,"")] > 1;
+      return `<tr class="${s.think ? "thinkrow" : ""}${clash ? " clash" : ""}">
+      <td><span class="stname">${PSET.has(keyOf(s)) ? '<span class="star">★</span> ' : ""}${esc(s.name)}</span>
+        <br><span class="stnum">${s.ban}반 ${String(s.num).padStart(2,"0")}번</span></td>
+      <td style="white-space:nowrap">${gradeTag(keyOf(s)) || '<span class="stnum">—</span>'}</td>
+      <td>${esc(s.major)}</td>
+      <td>${typeTag(s.type)}</td>
+      <td class="cap">${s.cap ? esc(s.cap) + "명" : "—"}</td>
+      <td>${minTag(s.min)}</td>
+      <td class="no${s.think ? " t" : ""}">${s.think ? "고민" : s.slot + "순위"}</td></tr>`;
+    }).join("");
+
+    return `<div class="card">
+      <div class="chd"><span class="tt">${esc(g.name)}</span>
+        <span class="n">지원 ${f}명${t ? " · 고민 " + t + "명" : ""}</span></div>
+      ${clashKeys.length ? `<div class="clashnote">교내 경합 — ${clashKeys.map(k =>
+        `${esc(mname[k])} <b>우리 학교 ${mcount[k]}명</b>${mcap[k] ? ` / 모집 ${esc(mcap[k])}명` : ""}`).join(" &nbsp;·&nbsp; ")}</div>` : ""}
+      <div class="tscroll"><table style="min-width:700px">
+        <thead><tr><th style="width:115px">학생</th><th style="width:80px">내신</th><th>전형 · 모집단위</th><th style="width:95px">유형</th><th style="width:65px">모집</th><th style="width:115px">수능 최저</th><th style="width:70px">순번</th></tr></thead>
+        <tbody>${tr}</tbody></table></div></div>`;
+  }).join("");
+}
+
+/* ── 진행률 ── */
+function renderProg(sts){
+  if (filter === "prio") { renderProgPrio(sts); return; }
+  const keys = filter === "all" ? Object.keys(ROSTER) : [filter];
+  let html = "";
+  for (const b of keys) {
+    const list = sts.filter(s => s.ban === b);
+    if (!list.length && filter === "all") continue;
+    const done = list.filter(s => s.list.filter(r => !r.think).length >= FIX).length;
+    const tr = list.length ? list.map(s => {
+      const f = s.list.filter(r => !r.think).length, t = s.list.length - f;
+      const pct = Math.round(f / FIX * 100);
+      return `<tr><td><span class="stname">${esc(s.name)}</span>
+          <br><span class="stnum">${String(s.num).padStart(2,"0")}번</span></td>
+        <td style="min-width:150px"><b style="color:${f >= FIX ? "#1A7F37" : "var(--navy)"}">${f} / 6</b>
+          <div class="bar"><i class="${f >= FIX ? "full" : ""}" style="width:${pct}%"></i></div></td>
+        <td>${t ? `<span class="tagthink">고민 ${t}장</span>` : '<span class="stnum">—</span>'}</td>
+        <td class="stnum">${esc(s.list.map(r => r.univ).filter((v,i,a) => a.indexOf(v) === i).join(", "))}</td></tr>`;
+    }).join("") : `<tr><td colspan="4" style="color:#9aa4b1">아직 입력된 학생이 없습니다.</td></tr>`;
+    html += `<div class="card">
+      <div class="chd"><span class="tt">${b}반</span>
+        <span class="sm">담임 ${ROSTER[b].t}</span>
+        <span class="n${done === list.length && list.length ? " full" : ""}">입력 ${list.length}명 · 완료 ${done}명</span></div>
+      <div class="tscroll"><table>
+        <thead><tr><th style="width:110px">학생</th><th style="width:160px">지원 진행</th><th style="width:90px">고민</th><th>대학</th></tr></thead>
+        <tbody>${tr}</tbody></table></div></div>`;
+  }
+  $("area").innerHTML = html || `<div class="emptymsg">아직 입력된 학생이 없습니다.</div>`;
+}
+
+/* 우선 대상 19명 — 미입력 학생까지 전부 표시 */
+function renderProgPrio(sts){
+  const done = [], part = [], none = [];
+  const tr = PLIST.map(p => {
+    const s = sts.find(x => x.key === p.key);
+    const list = s ? s.list : [];
+    const f = list.filter(r => !r.think).length, t = list.length - f;
+    (f >= FIX ? done : list.length ? part : none).push(p);
+    const pct = Math.round(f / FIX * 100);
+    return `<tr${list.length ? "" : ' style="background:#faf7ef"'}>
+      <td><span class="stname">${esc(p.name)}</span>
+        <br><span class="stnum">${p.ban}반 ${String(p.num).padStart(2,"0")}번</span></td>
+      <td style="white-space:nowrap">${gradeTag(p.key) || '<span class="stnum">—</span>'}</td>
+      <td style="min-width:150px">
+        <b style="color:${f >= FIX ? "#1A7F37" : list.length ? "var(--navy)" : "#a99f88"}">${list.length ? f + " / 6" : "미입력"}</b>
+        <div class="bar"><i class="${f >= FIX ? "full" : ""}" style="width:${pct}%"></i></div></td>
+      <td>${t ? `<span class="tagthink">고민 ${t}장</span>` : '<span class="stnum">—</span>'}</td>
+      <td class="stnum">${esc(list.filter(r => !r.think).map(r => r.univ).join(", ")) || "—"}</td>
+      <td><button class="edit2" data-key="${esc(p.key)}">입력</button></td></tr>`;
+  }).join("");
+
+  $("area").innerHTML = `<div class="card">
+    <div class="chd"><span class="tt">★ 우선 조사 대상</span>
+      <span class="sm">3학년부 지정</span>
+      <span class="n${done.length === PLIST.length ? " full" : ""}">완료 ${done.length} · 입력중 ${part.length} · 미입력 ${none.length}</span></div>
+    ${none.length ? `<div class="clashnote">아직 손 안 댄 학생 ${none.length}명 — ${none.map(p => p.ban + "반 " + p.name).join(", ")}</div>` : ""}
+    <div class="tscroll"><table style="min-width:660px">
+      <thead><tr><th style="width:110px">학생</th><th style="width:80px">내신</th><th style="width:150px">지원 진행</th><th style="width:85px">고민</th><th>지원 대학</th><th style="width:60px"></th></tr></thead>
+      <tbody>${tr}</tbody></table></div></div>`;
+
+  $("area").querySelectorAll(".edit2").forEach(b =>
+    b.addEventListener("click", () => { $("prio").value = b.dataset.key; $("prio").dispatchEvent(new Event("change")); }));
+}
+
+/* ── 내보내기 ── */
+function wideRows(){
+  const head = ["반","번호","이름","우선대상","내신(전과목)","내신(국수영사과)","지원수"];
+  for (let i = 1; i <= FIX; i++) head.push(i + "지망 대학", i + "지망 전형·모집단위", i + "지망 유형", i + "지망 모집인원", i + "지망 수능최저");
+  for (let i = 1; i <= THINK_MAX; i++) head.push("고민" + i + " 대학", "고민" + i + " 전형·모집단위", "고민" + i + " 수능최저");
+  const out = [head];
+  for (const s of students()) {
+    const g = gradeOf(s.key);
+    const r = [s.ban, s.num, s.name,
+      PSET.has(s.key) ? "★" : "", g ? g[0] : "", g && g[1] != null ? g[1] : "",
+      s.list.filter(x => !x.think).length];
+    for (let i = 1; i <= FIX; i++) {
+      const x = s.list.find(y => y.slot === i);
+      r.push(x ? x.univ : "", x ? x.major : "", x ? x.type : "", x ? x.cap : "", x ? x.min : "");
+    }
+    for (let i = 1; i <= THINK_MAX; i++) {
+      const x = s.list.find(y => y.slot === FIX + i);
+      r.push(x ? x.univ : "", x ? x.major : "", x ? x.min : "");
+    }
+    out.push(r);
+  }
+  return out;
+}
+
+function longRows(){
+  const out = [["반","번호","이름","내신","구분","순번","대학","전형·모집단위","유형","모집인원","수능최저","입력시각"]];
+  for (const s of students())
+    for (const r of s.list)
+      out.push([s.ban, s.num, s.name,
+        gradeOf(s.key) ? gradeOf(s.key)[0] : "",
+        r.think ? "고민" : "지원", r.think ? r.slot - FIX : r.slot, r.univ, r.major, r.type,
+        r.cap, r.min, r.ts]);
+  return out;
+}
+
+function univRows(){
+  const nm = x => x.name + (gradeOf(keyOf(x)) ? `(${gradeOf(keyOf(x))[0]})` : "");
+  const out = [["대학","지원 인원","고민 인원","합계","학생 명단(지원·등급순)","학생 명단(고민)"]];
+  for (const g of byUniv()) {
+    const f = g.list.filter(x => !x.think), t = g.list.filter(x => x.think);
+    out.push([g.name, f.length, t.length, g.list.length,
+      f.map(nm).join(", "), t.map(nm).join(", ")]);
+  }
+  return out;
+}
+
+$("xlsxBtn").addEventListener("click", () => {
+  if (!rows.length) { alert("아직 입력된 건이 없습니다."); return; }
+  const wb = XLSX.utils.book_new();
+  const ws1 = XLSX.utils.aoa_to_sheet(wideRows());
+  ws1["!cols"] = [{wch:6},{wch:6},{wch:10},{wch:8},{wch:11},{wch:12},{wch:7}].concat(
+    Array.from({length:FIX}, () => [{wch:14},{wch:26},{wch:9},{wch:10},{wch:18}]).flat(),
+    Array.from({length:THINK_MAX}, () => [{wch:14},{wch:26},{wch:18}]).flat());
+  XLSX.utils.book_append_sheet(wb, ws1, "학생별 6장");
+  const ws2 = XLSX.utils.aoa_to_sheet(univRows());
+  ws2["!cols"] = [{wch:16},{wch:9},{wch:9},{wch:8},{wch:40},{wch:30}];
+  XLSX.utils.book_append_sheet(wb, ws2, "대학별 집계");
+  const ws3 = XLSX.utils.aoa_to_sheet(longRows());
+  ws3["!cols"] = [{wch:6},{wch:6},{wch:10},{wch:8},{wch:7},{wch:6},{wch:16},{wch:30},{wch:9},{wch:10},{wch:18},{wch:12}];
+  XLSX.utils.book_append_sheet(wb, ws3, "전체 목록");
+  XLSX.writeFile(wb, "수시_6장_지원현황.xlsx");
+});
+
+$("copyBtn").addEventListener("click", async () => {
+  if (!rows.length) { alert("아직 입력된 건이 없습니다."); return; }
+  const src = view === "univ" ? univRows() : wideRows();
+  const tsv = src.map(r => r.join("\t")).join("\n");
+  try {
+    await navigator.clipboard.writeText(tsv);
+    $("copyBtn").textContent = "복사 완료 ✓";
+    setTimeout(() => $("copyBtn").textContent = "표 복사", 1800);
+  } catch(e){ alert("복사에 실패했습니다. 엑셀 다운로드를 이용해 주세요."); }
+});
+</script>
+</body>
+</html>

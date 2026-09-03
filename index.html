@@ -53,6 +53,11 @@ footer{text-align:center;font-size:12.5px;font-weight:800;color:var(--navy);padd
     <div class="d">아침·종례 때 전달할 내용을 함께 쓰는 게시판 (실시간)</div></div>
     <div class="arrow">→</div>
   </a>
+  <a class="card" href="https://zeroyoung-collab.github.io/hn3/susi6/">
+    <div class="ct"><div class="t">수시 6장 지원현황 조사 <span class="due" id="due-susi6"></span></div>
+    <div class="d">담임 선생님이 학생별 지원 6장 + 고민 카드를 입력 — 실시간 공유·엑셀 다운로드</div></div>
+    <div class="arrow">→</div>
+  </a>
   <a class="card" href="https://zeroyoung-collab.github.io/hn3/chucheon/">
     <div class="ct"><div class="t">학교장추천 입력 및 현황판 <span class="due" id="due-chu"></span></div>
     <div class="d">담임 선생님이 대학·전형(학과)을 입력 — 대학별 명단·엑셀 다운로드 포함</div></div>
@@ -97,6 +102,14 @@ footer{text-align:center;font-size:12.5px;font-weight:800;color:var(--navy);padd
   const days = Math.ceil((new Date(2026,8,6) - new Date(today.getFullYear(),today.getMonth(),today.getDate())) / 86400000);
   if (today > due) { el.textContent = "마감"; el.classList.add("over"); }
   else el.textContent = days === 0 ? "오늘 마감!" : "마감 9/6(일) · D-" + days;
+})();
+(function(){
+  const el = document.getElementById("due-susi6");
+  const due = new Date(2026, 8, 3, 23, 59, 59);   // 2026-09-03(목)
+  const today = new Date();
+  const days = Math.ceil((new Date(2026,8,3) - new Date(today.getFullYear(),today.getMonth(),today.getDate())) / 86400000);
+  if (today > due) { el.textContent = "마감"; el.classList.add("over"); }
+  else el.textContent = days === 0 ? "오늘 마감!" : "마감 9/3(목) · D-" + days;
 })();
 (function(){
   const el = document.getElementById("due-chu");
