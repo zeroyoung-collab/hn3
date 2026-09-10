@@ -239,14 +239,14 @@ let db = null, rows = [], view = "ban", filter = "all";
 
 load();
 
-/* 마감 D-day 표시 — 2026-09-15(화) */
+/* 마감 D-day 표시 — 2026-09-14(월) */
 (function(){
   const el = $("duebar");
-  const due = new Date(2026, 8, 15, 23, 59, 59);
+  const due = new Date(2026, 8, 14, 23, 59, 59);
   const today = new Date();
-  const days = Math.ceil((new Date(2026,8,15) - new Date(today.getFullYear(),today.getMonth(),today.getDate())) / 86400000);
+  const days = Math.ceil((new Date(2026,8,14) - new Date(today.getFullYear(),today.getMonth(),today.getDate())) / 86400000);
   if (today > due) el.textContent = "입력 기간이 지났습니다 — 추가·수정은 3학년부(조영신)에게 문의";
-  else el.textContent = days === 0 ? "⏰ 오늘(9/15)까지 입력해 주세요!" : `⏰ 9월 15일(화)까지 입력 완료 · D-${days}`;
+  else el.textContent = days === 0 ? "⏰ 오늘(9/14)까지 입력해 주세요!" : `⏰ 9월 14일(월)까지 입력 완료 · D-${days}`;
 })();
 
 /* ── 명부 선택 ── */
