@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>과기원 지원현황 조사 · 호남고 3학년부</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --navy:#0B3E86; --navy2:#092f66; --gold:#F5B301; --gold-d:#c8920a;
+  --green:#1A9A3E; --ink:#141a24; --soft:#3d4652; --line:#b9c4d4; --lt:#eef3fa;
+}
+*{ margin:0; padding:0; box-sizing:border-box; }
+html{ -webkit-text-size-adjust:100%; }
+body{ font-family:'Noto Sans KR',sans-serif; color:var(--ink);
+  background:#f3efe6; word-break:keep-all; line-height:1.55; }
+.app{ max-width:760px; margin:0 auto; background:#fff; min-height:100vh;
+  border-left:2.5px solid var(--navy2); border-right:2.5px solid var(--navy2); }
+
+.topbar{ background:var(--navy); color:#fff; padding:26px 22px 22px; }
+.topbar .school{ display:flex; align-items:center; gap:9px;
+  font-size:13px; font-weight:800; color:#cfe0f7; letter-spacing:.06em; }
+.topbar .school::before{ content:""; width:10px; height:10px;
+  background:var(--gold); border:2px solid #fff; }
+.topbar h1{ font-size:23px; font-weight:900; letter-spacing:-.02em;
+  margin-top:9px; line-height:1.35; }
+.topbar .sub{ font-size:13.5px; color:#cfe0f7; margin-top:7px; font-weight:500; }
+.topbar .duebar{ display:inline-block; margin-top:12px; margin-right:8px; padding:4px 16px;
+  background:var(--gold); color:var(--navy2); border:2px solid var(--navy2);
+  font-size:13.5px; font-weight:900; }
+.topbar .live{ display:inline-block; margin-top:12px; padding:4px 16px;
+  background:transparent; color:#cfe0f7; border:2px solid rgba(255,255,255,.55);
+  font-size:13px; font-weight:800; }
+.goldline{ height:6px; background:var(--gold); }
+
+.notice{ margin:20px 18px 0; border:2.5px solid var(--navy2); border-left:10px solid var(--gold);
+  padding:13px 15px; background:#fff; font-size:13.5px; color:var(--soft); }
+.notice b{ color:var(--navy); }
+.notice ul{ margin:6px 0 0 17px; }
+.notice li{ margin-top:3px; }
+
+.pad{ padding:6px 18px 30px; }
+.sect{ margin-top:26px; }
+.sect-tt{ display:flex; align-items:center; gap:9px; font-size:16.5px;
+  font-weight:900; color:var(--navy); letter-spacing:-.01em; }
+.sect-tt::before{ content:""; width:14px; height:14px;
+  background:var(--gold); border:2px solid var(--navy2); flex-shrink:0; }
+.sect-tt .en{ font-size:11px; font-weight:800; color:var(--gold-d);
+  letter-spacing:.14em; margin-left:auto; }
+.sect-desc{ font-size:13px; color:var(--soft); margin:5px 0 0 23px; }
+
+.formbox{ margin-top:14px; border:2.5px solid var(--navy2); box-shadow:4px 4px 0 rgba(9,47,102,.9); padding:4px 16px 18px; }
+.field{ margin-top:13px; }
+.field label{ display:block; font-size:13.5px; font-weight:800;
+  color:var(--navy2); margin-bottom:6px; }
+.field label .req{ color:#c0392b; }
+select,input[type=text]{
+  width:100%; padding:12px 14px; font-size:16px; font-family:inherit;
+  border:2.5px solid #cfc7b2; background:#fff;
+  color:var(--ink); font-weight:500; -webkit-appearance:none; appearance:none; border-radius:0;
+}
+select{ background:#fff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='9'%3E%3Cpath d='M1 1l6 6 6-6' stroke='%230B3E86' stroke-width='2.2' fill='none' stroke-linecap='round'/%3E%3C/svg%3E") no-repeat right 14px center; padding-right:38px; }
+select:focus,input:focus{ outline:none; border-color:var(--navy); }
+input:disabled,select:disabled{ background:#eee9dd; color:#9a917c; }
+.row2{ display:grid; grid-template-columns:1fr 1fr; gap:10px; }
+.row2 > div{ min-width:0; }
+.gradchk{ display:flex; align-items:center; gap:8px; margin-top:13px;
+  font-size:14px; font-weight:800; color:var(--ink); cursor:pointer; }
+.gradchk input{ width:18px; height:18px; accent-color:var(--navy); }
+.gradchk .hint{ font-size:12px; color:var(--soft); font-weight:500; }
+.btn{ width:100%; margin-top:18px; padding:14px; font-size:16px; font-weight:900;
+  font-family:inherit; color:#fff; letter-spacing:-.01em;
+  background:var(--navy); border:2.5px solid var(--navy2);
+  box-shadow:4px 4px 0 var(--gold); cursor:pointer; }
+.btn:active{ transform:translate(2px,2px); box-shadow:2px 2px 0 var(--gold); }
+.btn:disabled{ background:#b9c4d4; border-color:#9aa4b1; box-shadow:none; cursor:not-allowed; }
+
+.viewbar{ display:flex; align-items:flex-end; gap:6px; margin-top:14px;
+  border-bottom:3px solid var(--navy2); flex-wrap:wrap; }
+.viewbar .tab{ padding:9px 18px; font-size:14px; font-weight:900; font-family:inherit;
+  border:2.5px solid #b3aa90; border-bottom:none; background:#efe9da; color:var(--soft); cursor:pointer; }
+.viewbar .tab.on{ background:var(--navy); border-color:var(--navy2); color:#fff; }
+.viewbar .sp{ margin-left:auto; display:flex; gap:6px; padding-bottom:6px; }
+.viewbar .xbtn{ padding:6px 12px; font-size:12.5px; font-weight:800; font-family:inherit;
+  border:2px solid var(--navy2); background:#fff; color:var(--navy); cursor:pointer; }
+.viewbar .xbtn:active{ background:var(--lt); }
+.statline{ margin-top:11px; font-size:13px; font-weight:700; color:var(--soft); }
+.statline b{ color:var(--navy); }
+.fbar{ display:flex; gap:7px; margin-top:11px; flex-wrap:wrap; }
+.fbar button{ padding:6px 13px; font-size:13px; font-weight:800; font-family:inherit;
+  border:2px solid #b3aa90; background:#fff; color:var(--soft); cursor:pointer; }
+.fbar button.on{ background:var(--navy); border-color:var(--navy2); color:#fff; }
+
+.card{ background:#fff; border:2.5px solid var(--navy2); margin-top:14px; overflow:hidden; box-shadow:4px 4px 0 rgba(9,47,102,.9); }
+.card .chd{ display:flex; align-items:center; gap:9px; padding:10px 14px;
+  background:var(--navy); border-bottom:2.5px solid var(--navy2); }
+.card .chd .tt{ font-size:14.5px; font-weight:900; color:#fff; }
+.card .chd .n{ margin-left:auto; font-size:12px; font-weight:700; color:#cfe0f7; white-space:nowrap; }
+.tscroll{ overflow-x:auto; }
+table{ width:100%; border-collapse:collapse; min-width:620px; }
+th{ background:var(--navy2); color:#fff; font-size:12px; font-weight:700;
+  padding:8px 11px; text-align:left; white-space:nowrap; }
+td{ padding:8px 11px; font-size:13.5px; border-top:1px solid #e8e4d8; vertical-align:middle; }
+.stname{ font-weight:900; color:var(--navy2); white-space:nowrap; }
+.stnum{ font-size:11.5px; color:var(--soft); white-space:nowrap; }
+.taggrad{ display:inline-block; font-size:11px; font-weight:800; color:#8a5a00;
+  border:2px solid var(--gold-d); padding:0 6px; }
+.trackname{ font-weight:700; white-space:nowrap; }
+.memocell{ font-size:12px; color:var(--soft); }
+.rsel{ width:auto; min-width:88px; padding:5px 26px 5px 8px; font-size:12.5px; font-weight:700;
+  background-position:right 8px center; border-width:2px; }
+.rsel.done-ok{ border-color:var(--green); color:var(--green); }
+.rsel.done-no{ border-color:#c0392b; color:#c0392b; }
+.rwrap{ display:flex; gap:5px; flex-wrap:nowrap; }
+.delbtn{ border:2px solid #c0392b; background:#fff; color:#a33025;
+  font-family:inherit; font-size:12px; font-weight:800; padding:3px 10px; cursor:pointer; }
+.delbtn:active{ background:#fdeeee; }
+.emptymsg{ margin-top:14px; border:2.5px dashed var(--gold-d); background:#fff;
+  padding:13px 15px; font-size:13.5px; color:var(--soft); }
+
+.foot{ background:var(--navy2); color:#cfe0f7; text-align:center;
+  font-size:12px; padding:15px; border-top:4px solid var(--gold); }
+.foot b{ color:var(--gold); }
+</style>
+</head>
+<body>
+
+<div class="app" id="app">
+  <div class="topbar">
+    <div class="school">호남고등학교 3학년부 · 담임 선생님 입력용</div>
+    <h1>과기원 지원현황 조사</h1>
+    <div class="sub">KAIST · GIST · DGIST · UNIST · 켄텍에 <b>원서를 접수한 학생</b>을 입력해 주세요. 과기원은 수시 6회 제한과 무관하므로 지원 건을 빠짐없이 모아 진학지도 자료로 씁니다.</div>
+    <div class="duebar">2027학년도 대입 · 원서 접수 건 전부 입력</div><div class="live" id="live">연결 중…</div>
+  </div>
+  <div class="goldline"></div>
+
+  <div class="notice">
+    <b>입력 안내</b>
+    <ul>
+      <li>한 학생이 여러 과기원에 지원했으면 <b>대학별로 한 건씩</b> 추가합니다.</li>
+      <li>결과(서류·최종·등록)는 지금 비워 두고, <b>발표 후(11~12월)에 현황표에서 바로 선택</b>하면 됩니다.</li>
+      <li>불합격도 소중한 데이터입니다 — 결과가 나오면 <b>불합격까지 꼭</b> 기록해 주세요.</li>
+      <li>잘못 입력한 건은 현황표에서 바로 <b>삭제</b>할 수 있습니다.</li>
+    </ul>
+  </div>
+
+  <div class="pad">
+    <div class="sect">
+      <div class="sect-tt">지원 건 입력 <span class="en">ADD</span></div>
+      <div class="formbox">
+        <label class="gradchk"><input type="checkbox" id="gradChk"> 졸업생
+          <span class="hint">— 졸업생은 이름을 직접 입력</span></label>
+        <div class="field row2" id="rosterRow">
+          <div>
+            <label for="ban">반 <span class="req">*</span></label>
+            <select id="ban"></select>
+          </div>
+          <div>
+            <label for="stu">이름 <span class="req">*</span></label>
+            <select id="stu" disabled><option value="">반을 먼저 선택</option></select>
+          </div>
+        </div>
+        <div class="field" id="gradRow" style="display:none">
+          <label for="gradName">졸업생 이름 <span class="req">*</span></label>
+          <input type="text" id="gradName" placeholder="예) 홍길동">
+        </div>
+        <div class="field">
+          <label for="track">지원 대학 · 전형 <span class="req">*</span></label>
+          <select id="track"></select>
+        </div>
+        <div class="field">
+          <label for="memo">비고 <span style="font-weight:500;color:var(--soft)">(선택)</span></label>
+          <input type="text" id="memo" placeholder="예) 학교장추천 대상자, 반도체 계약학과 등" autocapitalize="off">
+        </div>
+        <button type="button" class="btn" id="addBtn">지원 건 추가</button>
+      </div>
+    </div>
+
+    <div class="sect">
+      <div class="sect-tt">지원 현황 <span class="en">LIVE</span></div>
+      <div class="sect-desc">모든 반의 입력이 실시간으로 공유됩니다. 발표가 나면 결과 칸을 이 표에서 바로 선택하세요.</div>
+
+      <div class="viewbar">
+        <button class="tab on" id="tabBan">반별 보기</button>
+        <button class="tab" id="tabUniv">대학별 보기</button>
+        <span class="sp">
+          <button class="xbtn" id="xlsxBtn">엑셀 다운로드 (0단계 양식)</button>
+        </span>
+      </div>
+      <div class="statline" id="statline"></div>
+      <div class="fbar" id="fbar"></div>
+      <div id="area"></div>
+    </div>
+  </div>
+
+  <div class="foot">호남고등학교 3학년부 · 2027학년도 대입 &nbsp;|&nbsp; 제작 · <b>호남고 조영신</b></div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-app.js";
+import { getFirestore, collection, addDoc, deleteDoc, updateDoc, doc, onSnapshot } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore.js";
+
+/* Firestore 백엔드 (상담예약 공용 프로젝트 재사용, pw_* 규칙 허용) */
+const firebaseConfig = {
+  apiKey: "AIzaSyBotwjsJxit4SbOzXVVOov37Po97AieoxM",
+  authDomain: "sangdam-b97c1.firebaseapp.com",
+  projectId: "sangdam-b97c1",
+  storageBucket: "sangdam-b97c1.firebasestorage.app",
+  messagingSenderId: "389048360844",
+  appId: "1:389048360844:web:675f4f6ce8d54a873140a9"
+};
+const FS_COL = "pw_gwagiwon_rows";
+const YEAR = "2027";   /* 학년도 — 매년 이 값과 ROSTER만 교체 */
+
+const ROSTER = {
+ "1": {t:"이지원", s:[[1,"김은찬"],[2,"김청우"],[3,"김하준"],[4,"김현서"],[5,"박예준"],[6,"박태영"],[7,"신이현"],[8,"양하랑"],[9,"윤도현"],[10,"이경엽"],[11,"이은겸"],[12,"이정우"],[13,"이창헌"],[14,"이태희"],[15,"이현호"],[16,"장민준"],[17,"장연범"],[18,"전주형"],[19,"정승재"],[20,"조예찬"],[21,"최성우"]]},
+ "2": {t:"신채린", s:[[1,"강민광"],[2,"고의정"],[3,"권현서"],[4,"노승우"],[5,"박민수"],[6,"박지후"],[7,"박철웅"],[8,"백지훈"],[9,"송호준"],[10,"안석현"],[11,"안수현"],[12,"양채완"],[13,"오영현"],[14,"오지우"],[15,"유성민"],[16,"이서우"],[17,"이서진"],[18,"이승로"],[19,"이승주"],[20,"임명찬"],[21,"임현후"]]},
+ "3": {t:"류정현", s:[[1,"김균태"],[2,"김민석"],[3,"김성윤"],[4,"김승준"],[5,"김윤호"],[6,"김지환"],[7,"김형민"],[8,"노동완"],[9,"민환"],[10,"박재현"],[11,"박태희"],[12,"손연우"],[13,"신지용"],[14,"안정언"],[15,"안준성"],[16,"이대용"],[17,"이산"],[18,"이성훈"],[19,"이한샘"],[20,"정승욱"],[21,"홍종성"]]},
+ "4": {t:"박정민", s:[[1,"강동훈"],[2,"강정우"],[3,"김건우"],[4,"김관유"],[5,"김동윤"],[6,"김민준"],[7,"김세진"],[8,"김영준"],[9,"김현준"],[10,"문관후"],[11,"문준우"],[12,"박윤환"],[13,"박지강"],[14,"유동언"],[15,"유지안"],[16,"이호열"],[17,"한석"],[18,"허정관"]]},
+ "5": {t:"심요섭", s:[[1,"강현수"],[2,"김도훈"],[3,"김성빈"],[4,"김예찬"],[5,"서민웅"],[6,"신재민"],[7,"오영일"],[8,"유승범"],[9,"유호성"],[10,"이성빈"],[11,"이승준"],[12,"이승진"],[13,"임태훈"],[14,"장준호"],[15,"전재훈"],[16,"정윤우"],[17,"최예건"],[18,"추민석"],[19,"홍경서"]]},
+ "6": {t:"조영신", s:[[1,"강태균"],[2,"김기현"],[3,"김준서"],[4,"김태영"],[5,"박민서"],[6,"박세훈"],[7,"서지완"],[8,"신수한"],[9,"신현민"],[10,"유시형"],[11,"유호준"],[12,"이도윤"],[13,"이준영"],[14,"정승환"],[15,"조승원"],[16,"조원준"],[17,"진현우"],[18,"하승범"]]}
+};
+
+/* 전형 목록 (1단계 기준서 기준, 2027학년도) */
+const TRACKS = {
+  "KAIST":  ["일반","창의도전","학교장추천","반도체시스템","고른기회","특기자","수능우수자"],
+  "GIST":   ["일반","학교장추천","고른기회","반도체공학"],
+  "DGIST":  ["일반","학교장추천","고른기회","과학인재","수능우수자"],
+  "UNIST":  ["일반","지역인재","그릿인재","기회균등"],
+  "KENTECH":["일반","고른기회"]
+};
+const UNIVS = Object.keys(TRACKS);
+const SEOR = ["통과","불합격","해당없음"];
+const FIN  = ["최초합격","추가합격","불합격","발표 전"];
+const REG  = ["등록","미등록"];
+
+const $ = id => document.getElementById(id);
+let db = null, rows = [], view = "ban", filter = "all";
+
+/* 전형 셀렉트 */
+$("track").innerHTML = '<option value="">선택</option>' +
+  UNIVS.map(u => `<optgroup label="${u}">` +
+    TRACKS[u].map(t => `<option value="${u}|${t}">${u} ${t}</option>`).join("") +
+  `</optgroup>`).join("") + '<option value="기타|기타">기타 (비고에 기재)</option>';
+
+/* 명부 선택 */
+const ban = $("ban"), stu = $("stu");
+ban.innerHTML = '<option value="">선택</option>' +
+  Object.keys(ROSTER).map(r => `<option value="${r}">${r}반 (담임 ${ROSTER[r].t})</option>`).join("");
+ban.addEventListener("change", () => {
+  const r = ban.value;
+  if (!r) { stu.disabled = true; stu.innerHTML = '<option value="">반을 먼저 선택</option>'; return; }
+  stu.disabled = false;
+  stu.innerHTML = '<option value="">선택</option>' +
+    ROSTER[r].s.map(([n, nm]) => `<option value="${n}|${nm}">${String(n).padStart(2,"0")}번 ${nm}</option>`).join("");
+});
+
+$("gradChk").addEventListener("change", () => {
+  const g = $("gradChk").checked;
+  $("rosterRow").style.display = g ? "none" : "grid";
+  $("gradRow").style.display = g ? "block" : "none";
+});
+
+/* ── 실시간 구독 ── */
+load();
+function load(){
+  db = getFirestore(initializeApp(firebaseConfig));
+  onSnapshot(collection(db, FS_COL), snap => {
+    rows = [];
+    snap.forEach(d => {
+      const v = d.data() || {};
+      if (!v.name || !v.univ) return;
+      rows.push({ id:d.id, year:v.year || YEAR, ban:String(v.ban || ""), num:String(v.num || ""),
+        name:v.name, grad:!!v.grad, univ:v.univ, track:v.track || "",
+        seor:v.seor || "", fin:v.fin || "", reg:v.reg || "", memo:v.memo || "", ts:v.ts || "" });
+    });
+    $("live").textContent = "● 실시간 연결됨 · 총 " + rows.length + "건";
+    render();
+  }, err => { $("live").textContent = "연결 오류 — 새로고침 해주세요"; });
+}
+
+function esc(s){ return String(s == null ? "" : s).replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c])); }
+
+/* ── 추가 ── */
+$("addBtn").addEventListener("click", async () => {
+  const grad = $("gradChk").checked;
+  const tk = $("track").value, memo = $("memo").value.trim();
+  let b = "", n = "", name = "";
+  if (grad) {
+    name = $("gradName").value.trim();
+    if (!name) { alert("졸업생 이름을 입력해 주세요."); return; }
+  } else {
+    if (!ban.value || !stu.value) { alert("반과 이름을 선택해 주세요."); return; }
+    b = ban.value; [n, name] = stu.value.split("|");
+  }
+  if (!tk) { alert("지원 대학·전형을 선택해 주세요."); return; }
+  const [univ, trackNm] = tk.split("|");
+  const track = univ === "기타" ? "기타" : univ + " " + trackNm;
+
+  const dup = rows.find(r => r.name === name && r.grad === grad && r.ban === b && r.track === track);
+  if (dup && !confirm(`${name} 학생의 「${track}」 건이 이미 있습니다.\n그래도 추가할까요?`)) return;
+
+  const btn = $("addBtn"); btn.disabled = true; btn.textContent = "추가 중…";
+  try {
+    const now = new Date();
+    const ts = String(now.getMonth()+1).padStart(2,"0") + "-" + String(now.getDate()).padStart(2,"0")
+      + " " + String(now.getHours()).padStart(2,"0") + ":" + String(now.getMinutes()).padStart(2,"0");
+    await addDoc(collection(db, FS_COL), { year:YEAR, ban:b, num:n, name, grad, univ, track,
+      seor:"", fin:"", reg:"", memo, ts });
+    $("track").value = ""; $("memo").value = "";   /* 학생 선택 유지 — 같은 학생 여러 대학 입력 편의 */
+  } catch (e) {
+    alert("추가에 실패했습니다. 잠시 후 다시 시도해 주세요.");
+  }
+  btn.disabled = false; btn.textContent = "지원 건 추가";
+});
+
+/* ── 결과 인라인 수정 ── */
+window.setRes = async (id, field, val) => {
+  try { await updateDoc(doc(db, FS_COL, id), { [field]: val }); }
+  catch (e) { alert("저장에 실패했습니다. 다시 시도해 주세요."); }
+};
+window.delRow = async (id, label) => {
+  if (!confirm(label + " 건을 삭제할까요?")) return;
+  try { await deleteDoc(doc(db, FS_COL, id)); }
+  catch (e) { alert("삭제에 실패했습니다."); }
+};
+
+function resSel(r, field, opts, ph){
+  const v = r[field] || "";
+  const cls = v === "" ? "" :
+    (v === "불합격" || v === "미등록") ? "done-no" :
+    (v === "발표 전" || v === "해당없음") ? "" : "done-ok";
+  return `<select class="rsel ${cls}" onchange="setRes('${r.id}','${field}',this.value)">` +
+    `<option value="">${ph}</option>` +
+    opts.map(o => `<option value="${o}"${o===v?" selected":""}>${o}</option>`).join("") + `</select>`;
+}
+
+/* ── 렌더 ── */
+const area = $("area"), fbar = $("fbar");
+$("tabBan").addEventListener("click", () => { view = "ban"; filter = "all"; setTabs(); render(); });
+$("tabUniv").addEventListener("click", () => { view = "univ"; filter = "all"; setTabs(); render(); });
+function setTabs(){
+  $("tabBan").classList.toggle("on", view === "ban");
+  $("tabUniv").classList.toggle("on", view === "univ");
+}
+
+function render(){
+  const stuSet = new Set(rows.map(r => r.grad ? "졸|" + r.name : r.ban + "|" + r.num));
+  const hap = rows.filter(r => r.fin === "최초합격" || r.fin === "추가합격").length;
+  const deung = rows.filter(r => r.reg === "등록").length;
+  $("statline").innerHTML = `지원 <b>${rows.length}건</b> · 학생 <b>${stuSet.size}명</b>` +
+    (hap ? ` · 합격 <b style="color:var(--green)">${hap}건</b>` : "") +
+    (deung ? ` · 등록 <b style="color:var(--green)">${deung}건</b>` : "");
+  if (!rows.length) {
+    fbar.innerHTML = "";
+    area.innerHTML = `<div class="emptymsg">아직 입력된 지원 건이 없습니다. 위에서 첫 건을 추가해 주세요.</div>`;
+    return;
+  }
+  if (view === "ban") renderBan(); else renderUniv();
+}
+
+function rowTr(r, mode){
+  const who = r.grad
+    ? `<span class="stname">${esc(r.name)}</span> <span class="taggrad">졸업생</span>`
+    : `<span class="stname">${esc(r.name)}</span><br><span class="stnum">${r.ban}반 ${String(r.num).padStart(2,"0")}번</span>`;
+  const label = (r.grad ? r.name + "(졸업생)" : r.ban + "반 " + r.name) + " · " + r.track;
+  return `<tr>
+    <td>${who}</td>
+    <td class="trackname">${esc(mode === "univ" ? r.track.replace(r.univ,"").trim() || r.track : r.track)}</td>
+    <td><div class="rwrap">${resSel(r,"seor",SEOR,"서류")}${resSel(r,"fin",FIN,"최종")}${resSel(r,"reg",REG,"등록")}</div></td>
+    <td class="memocell">${esc(r.memo)}</td>
+    <td><button class="delbtn" onclick="delRow('${r.id}','${esc(label)}')">삭제</button></td>
+  </tr>`;
+}
+
+function renderBan(){
+  const keys = Object.keys(ROSTER).filter(b => rows.some(r => r.ban === b));
+  const hasGrad = rows.some(r => r.grad);
+  const fkeys = keys.concat(hasGrad ? ["졸"] : []);
+  fbar.innerHTML = `<button data-b="all" class="${filter==="all"?"on":""}">전체</button>` +
+    fkeys.map(b => `<button data-b="${b}" class="${filter===b?"on":""}">${b === "졸" ? "졸업생" : b + "반"}</button>`).join("");
+  fbar.querySelectorAll("button").forEach(btn => btn.addEventListener("click", () => { filter = btn.dataset.b; render(); }));
+
+  const show = filter === "all" ? fkeys : [filter];
+  area.innerHTML = show.map(b => {
+    const list = b === "졸"
+      ? rows.filter(r => r.grad)
+      : rows.filter(r => !r.grad && r.ban === b);
+    if (!list.length) return "";
+    list.sort((a,c) => (Number(a.num)||99) - (Number(c.num)||99) || a.track.localeCompare(c.track));
+    return `<div class="card">
+      <div class="chd"><span class="tt">${b === "졸" ? "졸업생" : b + "반" + " (담임 " + ROSTER[b].t + ")"}</span><span class="n">${list.length}건</span></div>
+      <div class="tscroll"><table>
+        <tr><th>학생</th><th>전형</th><th>결과 (발표 후 선택)</th><th>비고</th><th></th></tr>
+        ${list.map(r => rowTr(r,"ban")).join("")}
+      </table></div></div>`;
+  }).join("") || `<div class="emptymsg">해당 반의 입력 건이 없습니다.</div>`;
+}
+
+function renderUniv(){
+  const keys = UNIVS.concat("기타").filter(u => rows.some(r => r.univ === u));
+  fbar.innerHTML = `<button data-b="all" class="${filter==="all"?"on":""}">전체</button>` +
+    keys.map(u => `<button data-b="${u}" class="${filter===u?"on":""}">${u}</button>`).join("");
+  fbar.querySelectorAll("button").forEach(btn => btn.addEventListener("click", () => { filter = btn.dataset.b; render(); }));
+
+  const show = filter === "all" ? keys : [filter];
+  area.innerHTML = show.map(u => {
+    const list = rows.filter(r => r.univ === u);
+    if (!list.length) return "";
+    list.sort((a,c) => a.track.localeCompare(c.track) || (Number(a.ban)||9) - (Number(c.ban)||9) || (Number(a.num)||99) - (Number(c.num)||99));
+    const uh = list.filter(r => r.fin === "최초합격" || r.fin === "추가합격").length;
+    return `<div class="card">
+      <div class="chd"><span class="tt">${u}</span><span class="n">${list.length}건${uh ? " · 합격 " + uh : ""}</span></div>
+      <div class="tscroll"><table>
+        <tr><th>학생</th><th>전형</th><th>결과 (발표 후 선택)</th><th>비고</th><th></th></tr>
+        ${list.map(r => rowTr(r,"univ")).join("")}
+      </table></div></div>`;
+  }).join("") || `<div class="emptymsg">해당 대학의 입력 건이 없습니다.</div>`;
+}
+
+/* ── 엑셀 다운로드: 0단계_과기원_지원결과_기록.xlsx 지원기록 시트와 열 일치 ── */
+$("xlsxBtn").addEventListener("click", () => {
+  if (!rows.length) { alert("아직 입력된 건이 없습니다."); return; }
+  const sorted = [...rows].sort((a,c) =>
+    (a.grad?1:0)-(c.grad?1:0) || (Number(a.ban)||9)-(Number(c.ban)||9) || (Number(a.num)||99)-(Number(c.num)||99) || a.track.localeCompare(c.track));
+  const out = [["연번","학년도","반","번호","이름","생기부 PDF","지원대학","전형","서류 결과","면접","최종 결과","등록","최종 진학 대학","비고"]];
+  sorted.forEach((r,i) => out.push([
+    i+1, r.year, r.grad ? "졸" : r.ban, r.grad ? "" : r.num, r.name, "",
+    r.univ, r.track, r.seor, "", r.fin, r.reg, "", r.memo
+  ]));
+  const wb = XLSX.utils.book_new();
+  const ws = XLSX.utils.aoa_to_sheet(out);
+  ws["!cols"] = [{wch:5},{wch:7},{wch:5},{wch:5},{wch:9},{wch:10},{wch:10},{wch:18},{wch:12},{wch:8},{wch:10},{wch:8},{wch:13},{wch:22}];
+  XLSX.utils.book_append_sheet(wb, ws, "지원기록(0단계 양식)");
+  const sum = [["대학","지원 건수","합격 계","등록"]];
+  UNIVS.concat("기타").forEach(u => {
+    const l = rows.filter(r => r.univ === u);
+    if (!l.length) return;
+    sum.push([u, l.length, l.filter(r => r.fin === "최초합격" || r.fin === "추가합격").length,
+      l.filter(r => r.reg === "등록").length]);
+  });
+  XLSX.utils.book_append_sheet(wb, XLSX.utils.aoa_to_sheet(sum), "대학별 요약");
+  XLSX.writeFile(wb, `과기원_지원현황_${YEAR}학년도.xlsx`);
+});
+</script>
+</body>
+</html>
