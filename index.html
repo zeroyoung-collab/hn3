@@ -53,7 +53,7 @@ footer{text-align:center;font-size:12.5px;font-weight:800;color:var(--navy);padd
     <p>2027학년도 대입 · 이 주소 하나만 기억하시면 됩니다</p>
   </div>
 
-  <div class="alert"><span class="tag">필수</span><b>9/14(월)까지</b> 아래 4가지를 꼭 작성해 주세요 — <b>학교장추천 · 원서접수 계정 · 대입 지원현황 · 과기원 조사</b></div>
+  <div class="alert" id="alert-914"><span class="tag">필수</span><b>9/14(월)까지</b> 아래 4가지를 꼭 작성해 주세요 — <b>학교장추천 · 원서접수 계정 · 대입 지원현황 · 과기원 조사</b></div>
 
   <div><span class="sec">선생님용</span></div>
   <a class="card must" href="https://zeroyoung-collab.github.io/hn3/chucheon/">
@@ -123,6 +123,7 @@ setDue("due-chu",         2026, 8, 14, "9/14(월)");
 setDue("due-apply-admin", 2026, 8, 14, "9/14(월)");
 setDue("due-jinhak",      2026, 8, 14, "9/14(월)");
 setDue("due-gwagiwon",    2026, 8, 14, "9/14(월)");
+if (new Date() > new Date(2026, 8, 14, 23, 59, 59)) document.getElementById("alert-914").style.display = "none";
 </script>
 </body>
 </html>
