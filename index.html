@@ -88,6 +88,11 @@ footer{text-align:center;font-size:12.5px;font-weight:800;color:var(--navy);padd
   </a>
 
   <div><span class="sec g">학생·학부모 배포용</span></div>
+  <a class="card" href="https://zeroyoung-collab.github.io/hn3/jasup/">
+    <div class="ct"><div class="t">수능대비 자습반 신청 <span class="due hot" id="due-jasup"></span></div>
+    <div class="d">2학기 지정좌석 자습반(지성재·독행재·일신재) 신청 — <b style="color:var(--gold-d)">9/14(월) 오후 6시 마감</b></div></div>
+    <div class="arrow">→</div>
+  </a>
   <a class="card" href="https://zeroyoung-collab.github.io/hn-apply-2027/">
     <div class="ct"><div class="t">원서접수 계정 사전조사 <span class="due" id="due-apply"></span></div>
     <div class="d">학생이 유웨이·진학사 계정을 입력하는 곳 — <b style="color:var(--gold-d)">9/6(일)까지 입력 완료</b></div></div>
@@ -108,10 +113,10 @@ footer{text-align:center;font-size:12.5px;font-weight:800;color:var(--navy);padd
 </div>
 <footer>호남고등학교 3학년부 · 2026학년도(2027학년도 대입) &nbsp;|&nbsp; 제작 · 호남고 조영신</footer>
 <script>
-function setDue(id, y, m, d, label){
+function setDue(id, y, m, d, label, hh){
   const el = document.getElementById(id);
   if (!el) return;
-  const due = new Date(y, m, d, 23, 59, 59);
+  const due = hh != null ? new Date(y, m, d, hh, 0, 0) : new Date(y, m, d, 23, 59, 59);
   const today = new Date();
   const days = Math.ceil((new Date(y,m,d) - new Date(today.getFullYear(),today.getMonth(),today.getDate())) / 86400000);
   if (today > due) { el.textContent = "마감"; el.classList.remove("hot"); el.classList.add("over"); }
@@ -123,6 +128,7 @@ setDue("due-chu",         2026, 8, 14, "9/14(월)");
 setDue("due-apply-admin", 2026, 8, 14, "9/14(월)");
 setDue("due-jinhak",      2026, 8, 14, "9/14(월)");
 setDue("due-gwagiwon",    2026, 8, 14, "9/14(월)");
+setDue("due-jasup",       2026, 8, 14, "9/14(월) 18시", 18);
 if (new Date() > new Date(2026, 8, 14, 23, 59, 59)) document.getElementById("alert-914").style.display = "none";
 </script>
 </body>

@@ -1,0 +1,729 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>2학기 수능대비 자습반 신청 · 호남고 3학년부</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --navy:#0B3E86; --navy2:#092f66; --gold:#F5B301; --gold-d:#c8920a;
+  --red:#c0392b; --red-d:#a33025; --green:#1A7F37;
+  --ink:#141a24; --soft:#3d4652; --line:#b9c4d4; --lt:#eef3fa;
+}
+*{ margin:0; padding:0; box-sizing:border-box; }
+html{ -webkit-text-size-adjust:100%; }
+body{ font-family:'Noto Sans KR',sans-serif; color:var(--ink);
+  background:#f3efe6; word-break:keep-all; line-height:1.55; }
+.app{ max-width:860px; margin:0 auto; background:#fff; min-height:100vh;
+  border-left:2.5px solid var(--navy2); border-right:2.5px solid var(--navy2); }
+
+.topbar{ background:var(--navy); color:#fff; padding:26px 22px 22px; }
+.topbar .school{ display:flex; align-items:center; gap:9px;
+  font-size:13px; font-weight:800; color:#cfe0f7; letter-spacing:.06em; }
+.topbar .school::before{ content:""; width:10px; height:10px;
+  background:var(--gold); border:2px solid #fff; }
+.topbar h1{ font-size:23px; font-weight:900; letter-spacing:-.02em;
+  margin-top:9px; line-height:1.35; }
+.topbar .sub{ font-size:13.5px; color:#cfe0f7; margin-top:7px; font-weight:500; }
+.topbar .duebar{ display:inline-block; margin-top:12px; margin-right:8px; padding:4px 16px;
+  background:var(--gold); color:var(--navy2); border:2px solid var(--navy2);
+  font-size:13.5px; font-weight:900; }
+.topbar .live{ display:inline-block; margin-top:12px; padding:4px 16px;
+  color:#cfe0f7; border:2px solid rgba(255,255,255,.55); font-size:13px; font-weight:800; }
+.goldline{ height:6px; background:var(--gold); }
+
+.pad{ padding:6px 18px 34px; }
+.sect{ margin-top:26px; }
+.sect-tt{ display:flex; align-items:center; gap:9px; font-size:16.5px;
+  font-weight:900; color:var(--navy); letter-spacing:-.01em; }
+.sect-tt::before{ content:""; width:14px; height:14px;
+  background:var(--gold); border:2px solid var(--navy2); flex-shrink:0; }
+.sect-tt .en{ font-size:11px; font-weight:800; color:var(--gold-d);
+  letter-spacing:.14em; margin-left:auto; }
+.sect-desc{ font-size:13px; color:var(--soft); margin:5px 0 0 23px; }
+
+/* 세 반 소개 */
+.rooms{ display:grid; grid-template-columns:repeat(3,1fr); gap:10px; margin-top:14px; }
+@media (max-width:640px){ .rooms{ grid-template-columns:1fr; } }
+.room{ border:2.5px solid var(--navy2); box-shadow:4px 4px 0 rgba(9,47,102,.9);
+  padding:12px 13px 13px; }
+.room .han{ font-size:12px; font-weight:800; color:var(--gold-d); letter-spacing:.1em; }
+.room .nm{ font-size:20px; font-weight:900; color:var(--navy); margin-top:2px; }
+.room .mot{ font-size:12px; color:var(--soft); margin-top:5px; font-weight:600; line-height:1.45; }
+.room .cap{ margin-top:9px; padding-top:8px; border-top:2px solid #e8e4d8;
+  font-size:12.5px; font-weight:800; color:var(--navy2); display:flex; }
+.room .cap b{ margin-left:auto; color:var(--gold-d); }
+.room .capsub{ font-size:11px; font-weight:700; color:var(--soft); margin-top:3px; text-align:right; }
+
+/* 규정 */
+.rules{ margin-top:14px; border:2.5px solid var(--navy2); border-left:10px solid var(--gold);
+  padding:14px 16px; font-size:13.5px; color:var(--soft); }
+.rules h3{ font-size:14px; font-weight:900; color:var(--navy); margin-bottom:6px; }
+.rules h3:not(:first-child){ margin-top:14px; }
+.rules ul{ margin:0 0 0 17px; }
+.rules li{ margin-top:4px; }
+.rules b{ color:var(--ink); }
+.rules .warn{ color:var(--red-d); font-weight:800; }
+.steps{ display:flex; gap:6px; margin-top:9px; flex-wrap:wrap; }
+.step{ flex:1; min-width:110px; border:2px solid var(--line); padding:7px 9px; }
+.step .s{ font-size:11px; font-weight:900; color:var(--gold-d); }
+.step .t{ font-size:12.5px; font-weight:800; color:var(--ink); margin-top:2px; }
+.step .d{ font-size:11.5px; color:var(--soft); margin-top:2px; }
+.step.s4{ border-color:var(--red); background:#fdf3f2; }
+.step.s4 .s,.step.s4 .t{ color:var(--red-d); }
+
+/* 폼 */
+.formbox{ margin-top:14px; border:2.5px solid var(--navy2);
+  box-shadow:4px 4px 0 rgba(9,47,102,.9); padding:4px 16px 18px; }
+.field{ margin-top:14px; }
+.field label{ display:block; font-size:13.5px; font-weight:800;
+  color:var(--navy2); margin-bottom:6px; }
+.field label .req{ color:var(--red); }
+.field label .lite{ font-weight:600; color:var(--soft); font-size:12px; }
+select,input[type=text],textarea{
+  width:100%; padding:11px 13px; font-size:15.5px; font-family:inherit;
+  border:2.5px solid #cfc7b2; background:#fff; color:var(--ink); font-weight:500;
+  -webkit-appearance:none; appearance:none; border-radius:0; }
+textarea{ resize:vertical; min-height:110px; line-height:1.6; font-size:14.5px; }
+select{ background:#fff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='9'%3E%3Cpath d='M1 1l6 6 6-6' stroke='%230B3E86' stroke-width='2.2' fill='none' stroke-linecap='round'/%3E%3C/svg%3E") no-repeat right 12px center; padding-right:34px; }
+select:focus,input:focus,textarea:focus{ outline:none; border-color:var(--navy); }
+select:disabled{ background:#eee9dd; color:#9a917c; }
+.row2{ display:grid; grid-template-columns:1fr 1fr; gap:10px; }
+.row2>div{ min-width:0; }
+.cnt{ text-align:right; font-size:12px; font-weight:700; color:var(--soft); margin-top:5px; }
+.cnt.over{ color:var(--red-d); }
+
+/* 서약 */
+.pledge{ margin-top:16px; border:2.5px solid var(--red); background:#fdf3f2; padding:13px 15px; }
+.pledge h3{ font-size:14px; font-weight:900; color:var(--red-d); margin-bottom:8px; }
+.pl{ display:flex; gap:9px; align-items:flex-start; margin-top:9px; cursor:pointer; }
+.pl input{ width:19px; height:19px; accent-color:var(--red); flex-shrink:0; margin-top:2px; }
+.pl span{ font-size:13px; font-weight:600; color:var(--ink); line-height:1.5; }
+.pl b{ font-weight:900; color:var(--red-d); }
+.plall{ margin-top:12px; padding-top:10px; border-top:2px dashed #e0b8b2; }
+.plall .pl span{ font-weight:900; font-size:13.5px; }
+
+.btn{ width:100%; margin-top:18px; padding:15px; font-size:16.5px; font-weight:900;
+  font-family:inherit; color:#fff; background:var(--navy); border:2.5px solid var(--navy2);
+  box-shadow:4px 4px 0 var(--gold); cursor:pointer; }
+.btn:active{ transform:translate(2px,2px); box-shadow:2px 2px 0 var(--gold); }
+.btn:disabled{ background:#b9c4d4; border-color:#9aa4b1; box-shadow:none; cursor:not-allowed; }
+.btn.ghost{ background:#fff; color:var(--red-d); border-color:var(--red);
+  box-shadow:none; margin-top:9px; padding:11px; font-size:13.5px; }
+.btn.ghost:disabled{ background:#f2eee2; color:#a49b86; border-color:#cfc7b2; }
+.hint{ font-size:12.5px; color:var(--soft); margin-top:9px; text-align:center; font-weight:600; }
+.okbox{ margin-top:14px; border:2.5px solid var(--green); background:#f1f9f3;
+  padding:13px 15px; font-size:13.5px; font-weight:700; color:#14682c; }
+
+/* 현황 */
+.tally{ display:grid; grid-template-columns:repeat(3,1fr); gap:10px; margin-top:14px; }
+@media (max-width:640px){ .tally{ grid-template-columns:1fr; } }
+.tl{ border:2.5px solid var(--navy2); padding:11px 13px; }
+.tl .n{ font-size:13px; font-weight:900; color:var(--navy); }
+.tl .v{ font-size:24px; font-weight:900; color:var(--navy2); margin-top:3px; }
+.tl .v em{ font-size:13px; font-weight:700; font-style:normal; color:var(--soft); }
+.tl .bar{ position:relative; height:11px; background:#e8e4d8;
+  border:1.5px solid var(--navy2); margin-top:6px; }
+.tl .bar i{ display:block; height:100%; background:var(--navy); }
+.tl .bar i.flex{ background:var(--gold-d); }
+.tl .bar i.over{ background:var(--red); }
+.tl .bar u{ position:absolute; top:-3px; bottom:-3px; width:2.5px;
+  background:var(--navy2); transform:translateX(-50%); }
+.tl .r{ font-size:11.5px; font-weight:800; color:var(--soft); margin-top:5px; line-height:1.4; }
+.tl .r.flex{ color:var(--gold-d); }
+.tl .r.over{ color:var(--red-d); }
+
+.card{ background:#fff; border:2.5px solid var(--navy2); margin-top:14px;
+  overflow:hidden; box-shadow:4px 4px 0 rgba(9,47,102,.9); }
+.card .chd{ display:flex; align-items:center; gap:9px; padding:10px 14px;
+  background:var(--navy); border-bottom:2.5px solid var(--navy2); }
+.card .chd .tt{ font-size:14.5px; font-weight:900; color:#fff; }
+.card .chd .n{ margin-left:auto; font-size:12px; font-weight:800; color:#cfe0f7; }
+.tscroll{ overflow-x:auto; }
+table{ width:100%; border-collapse:collapse; min-width:720px; }
+th{ background:var(--navy2); color:#fff; font-size:11.5px; font-weight:700;
+  padding:8px 10px; text-align:left; white-space:nowrap; }
+td{ padding:8px 10px; font-size:13px; border-top:1px solid #e8e4d8; vertical-align:top; }
+.stname{ font-weight:900; color:var(--navy2); white-space:nowrap; }
+.stnum{ font-size:11.5px; color:var(--soft); white-space:nowrap; }
+.tag{ display:inline-block; font-size:11px; font-weight:800; padding:0 6px;
+  border:2px solid var(--line); color:var(--soft); white-space:nowrap; }
+.tag.w1{ border-color:var(--navy); color:var(--navy); }
+.tag.w2{ border-color:var(--gold-d); color:#8a5a00; background:#fff8e2; }
+.tag.w3{ border-color:var(--green); color:var(--green); }
+.wish{ font-weight:900; color:var(--navy); white-space:nowrap; }
+.memo{ font-size:12px; color:var(--soft); line-height:1.45; }
+td.ev select,td.ev input{ padding:5px 6px; font-size:12px; border-width:2px; }
+td.ev select{ background-position:right 5px center; padding-right:20px; }
+.evsave{ margin-top:4px; width:100%; padding:4px; font-family:inherit; font-size:11px;
+  font-weight:800; border:2px solid var(--navy); background:#fff; color:var(--navy); cursor:pointer; }
+
+.sortnote{ font-size:12px; font-weight:700; color:#8a5a00; background:#fff8e2;
+  padding:7px 14px; border-bottom:2px solid var(--gold-d); }
+.sortnote b{ color:var(--ink); }
+.admbar{ display:flex; align-items:center; gap:9px; padding:9px 14px;
+  background:var(--lt); border-bottom:2px solid var(--navy2); flex-wrap:wrap; }
+.admn{ margin-left:auto; font-size:12px; font-weight:800; color:var(--soft); }
+.xbtn.big{ padding:8px 16px; font-size:13.5px; background:var(--navy); color:#fff;
+  box-shadow:3px 3px 0 var(--gold); }
+.xbtn.big:active{ transform:translate(1px,1px); box-shadow:2px 2px 0 var(--gold); }
+.gate{ margin-top:14px; border:2.5px dashed var(--navy); background:var(--lt);
+  padding:15px; }
+.gate .g2{ display:grid; grid-template-columns:1fr 110px; gap:8px; margin-top:9px; }
+.gate button{ font-family:inherit; font-size:14px; font-weight:900; color:#fff;
+  background:var(--navy); border:2.5px solid var(--navy2); cursor:pointer; }
+
+.viewbar{ display:flex; align-items:flex-end; gap:6px; margin-top:14px;
+  border-bottom:3px solid var(--navy2); flex-wrap:wrap; }
+.viewbar .tab{ padding:9px 15px; font-size:13.5px; font-weight:900; font-family:inherit;
+  border:2.5px solid #b3aa90; border-bottom:none; background:#efe9da; color:var(--soft); cursor:pointer; }
+.viewbar .tab.on{ background:var(--navy); border-color:var(--navy2); color:#fff; }
+.viewbar .sp{ margin-left:auto; display:flex; gap:6px; padding-bottom:6px; }
+.viewbar .xbtn{ padding:6px 12px; font-size:12.5px; font-weight:800; font-family:inherit;
+  border:2px solid var(--navy2); background:#fff; color:var(--navy); cursor:pointer; }
+.emptymsg{ margin-top:14px; border:2.5px dashed var(--gold-d); background:#fff;
+  padding:13px 15px; font-size:13.5px; color:var(--soft); }
+.foot{ background:var(--navy2); color:#cfe0f7; text-align:center;
+  font-size:12px; padding:15px; border-top:4px solid var(--gold); }
+.foot b{ color:var(--gold); }
+</style>
+</head>
+<body>
+
+<div class="app">
+  <div class="topbar">
+    <div class="school">호남고등학교 3학년부 · 2학기 학력향상 프로그램</div>
+    <h1>수능대비 자습반 신청</h1>
+    <div class="sub">수능 최저학력기준 충족과 정시 준비에 집중할 학생을 위한 <b>지정좌석 자습반</b>입니다.
+      1차고사와 수행평가가 모두 끝난 뒤 이동하며, 수능 전일까지 운영합니다.
+      신청은 <b>9월 14일(월) 오후 6시</b>에 마감합니다.</div>
+    <div class="duebar" id="duebar"></div><div class="live" id="live">연결 중…</div>
+  </div>
+  <div class="goldline"></div>
+
+  <div class="pad">
+    <div class="sect">
+      <div class="sect-tt">자습반 편성 <span class="en">CLASSES</span></div>
+      <div class="sect-desc">반 배정은 신청서와 담임 의견을 바탕으로 <b>3학년부 협의회</b>에서 최종 결정합니다.</div>
+      <div class="rooms" id="rooms"></div>
+    </div>
+
+    <div class="sect">
+      <div class="sect-tt">운영 규정 <span class="en">RULES</span></div>
+      <div class="rules">
+        <h3>기본 운영</h3>
+        <ul>
+          <li><b>지정좌석제</b>로 운영하며, 자리 교환·임의 이동은 허용하지 않습니다.</li>
+          <li>입실 후 <b>화장실 외 이동 금지</b>입니다. 부득이한 이동은 감독 교사의 확인을 받습니다.</li>
+          <li><b>엎드려 자지 않습니다.</b> 졸릴 때는 교실 뒤 <b>스탠딩 존</b>에서 서서 학습하거나
+            세수 후 복귀합니다. 참고 앉아 있기보다 일어서는 쪽이 낫습니다.</li>
+          <li>휴대전화는 입실 시 제출하며, <b>학습용 태블릿만</b> 사용합니다.</li>
+          <li>주 1회 <b>학습 플래너</b>를 작성해 담당 교사의 확인을 받습니다.</li>
+          <li>정숙을 유지하고, 질문은 쉬는 시간에 합니다. 음료는 뚜껑이 있는 것만 허용합니다.</li>
+        </ul>
+
+        <h3>태블릿 사용</h3>
+        <ul>
+          <li>인터넷 강의·학습 자료 열람 목적으로만 사용합니다.</li>
+          <li class="warn">학습과 무관한 영상 시청·게임이 확인되면 <b>즉시 1주간 강제 퇴장</b>하며,
+            보호자에게 통보합니다. 예외는 없습니다.</li>
+          <li>퇴장 기간에는 원래 교실에서 자습하고, 기간 종료 후 자동 복귀합니다.</li>
+        </ul>
+
+        <h3>제재 단계</h3>
+        <div class="steps">
+          <div class="step"><div class="s">1단계</div><div class="t">구두 경고</div>
+            <div class="d">기록 후 담임 공유</div></div>
+          <div class="step"><div class="s">2단계</div><div class="t">3일 퇴장</div>
+            <div class="d">보호자 통보</div></div>
+          <div class="step"><div class="s">3단계</div><div class="t">7일 퇴장</div>
+            <div class="d">태블릿 위반은 즉시 이 단계</div></div>
+          <div class="step s4"><div class="s">4단계</div><div class="t">최종 제적</div>
+            <div class="d">대기자가 자리 승계</div></div>
+        </div>
+
+        <h3>선발 및 대기</h3>
+        <ul>
+          <li>각 반 정원은 <b>기준 인원 + α</b>로 운영합니다. 신청이 몰리고 학습 태도가 고른 경우
+            좌석 여건이 허용하는 범위에서 <b>협의회 의결로 증원</b>할 수 있습니다.
+            다만 증원은 자습 분위기를 해치지 않는 선까지만 하며, 무제한이 아닙니다.</li>
+          <li>정원 초과 시 <b>협의회 심사</b>로 선발합니다. 1순위 <b>학습 태도</b>(출결·수업태도·담임 의견),
+            2순위 <b>성적</b>(모의고사 추이·내신), 3순위 수능 활용 계획입니다.</li>
+          <li>탈락자는 <b>대기 순번</b>을 부여받고, 결원 발생 시 순서대로 승계합니다.</li>
+          <li>무단 결석 2회 또는 플래너 미작성 3회 누적 시 자격을 재심의합니다.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="sect">
+      <div class="sect-tt">신청서 작성 <span class="en">APPLY</span></div>
+      <div class="sect-desc">이미 신청한 학생이 다시 제출하면 <b>최신 내용으로 갱신</b>됩니다.
+        <b>9월 14일(월) 오후 6시</b>에 마감되며, 이후에는 제출·수정·취소가 모두 잠깁니다.</div>
+
+      <div class="formbox">
+        <div class="field row2">
+          <div><label for="ban">반 <span class="req">*</span></label><select id="ban"></select></div>
+          <div><label for="stu">이름 <span class="req">*</span></label>
+            <select id="stu" disabled><option value="">반을 먼저 선택</option></select></div>
+        </div>
+
+        <div class="field">
+          <label for="wish">희망 자습반 <span class="req">*</span>
+            <span class="lite">— 참고용이며 최종 배정은 협의회에서 결정합니다</span></label>
+          <select id="wish"></select>
+        </div>
+
+        <div class="field">
+          <label for="need">수시 수능최저 <span class="req">*</span></label>
+          <select id="need">
+            <option value="">선택</option>
+            <option value="필요">최저가 있는 전형에 지원 — 반드시 충족해야 함</option>
+            <option value="일부">일부 지원 대학만 최저 적용</option>
+            <option value="불필요">지원 전형에 최저 없음 — 정시 대비 목적</option>
+            <option value="정시집중">수시 미지원 · 정시 집중</option>
+          </select>
+        </div>
+
+        <div class="field">
+          <label for="cond">충족해야 할 최저 조건 <span class="lite">— 예) 3합 7 (탐구 1과목)</span></label>
+          <input type="text" id="cond" placeholder="최저가 없으면 비워 두세요">
+        </div>
+
+        <div class="field row2">
+          <div><label for="tuniv">정시 목표 대학 <span class="req">*</span></label>
+            <input type="text" id="tuniv" placeholder="예) 전북대"></div>
+          <div><label for="tmajor">목표 학과 <span class="req">*</span></label>
+            <input type="text" id="tmajor" placeholder="예) 컴퓨터인공지능학부"></div>
+        </div>
+
+        <div class="field">
+          <label for="oath">각오 한 단락 <span class="req">*</span>
+            <span class="lite">— 남은 기간 무엇을, 어떻게 할 것인지 구체적으로</span></label>
+          <textarea id="oath" maxlength="400" placeholder="예) 수학 4등급에서 2등급까지 올리는 것이 목표입니다. 매일 저녁 자습 첫 두 시간은 수학 기출에만 쓰고, 틀린 문항은 오답노트에 단원별로 정리하겠습니다. 9월 모의고사에서 확률과통계 5번 유형을 반복해서 틀렸는데..."></textarea>
+          <div class="cnt" id="oathCnt">0 / 400자</div>
+        </div>
+
+        <div class="pledge">
+          <h3>서약 — 모두 동의해야 신청됩니다</h3>
+          <label class="pl"><input type="checkbox" class="pchk"><span>
+            <b>엎드려 자지 않겠습니다.</b> 졸릴 때는 스탠딩 존에서 서서 학습하거나 세수 후 복귀하겠습니다.</span></label>
+          <label class="pl"><input type="checkbox" class="pchk"><span>
+            <b>지정좌석을 지키고</b> 화장실 외에는 자리를 이동하지 않겠습니다.</span></label>
+          <label class="pl"><input type="checkbox" class="pchk"><span>
+            태블릿으로 학습과 무관한 <b>영상 시청·게임을 하지 않겠습니다.</b>
+            적발 시 <b>1주간 강제 퇴장</b>되며 보호자에게 통보된다는 점에 동의합니다.</span></label>
+          <label class="pl"><input type="checkbox" class="pchk"><span>
+            입실 시 <b>휴대전화를 제출</b>하고, 주 1회 <b>학습 플래너</b>를 작성하겠습니다.</span></label>
+          <label class="pl"><input type="checkbox" class="pchk"><span>
+            반 배정 결과가 희망과 다를 수 있으며, <b>협의회 결정에 따르겠습니다.</b></span></label>
+          <div class="plall">
+            <label class="pl"><input type="checkbox" id="pAll"><span>위 내용을 모두 읽고 동의합니다</span></label>
+          </div>
+        </div>
+
+        <button type="button" class="btn" id="saveBtn">신청서 제출</button>
+        <div class="hint" id="hint">제출 후에도 마감 전까지 언제든 수정할 수 있습니다.</div>
+        <button type="button" class="btn ghost" id="delBtn">내 신청 취소</button>
+      </div>
+    </div>
+
+    <div class="sect">
+      <div class="sect-tt">신청 현황 <span class="en">LIVE</span></div>
+      <div class="sect-desc">희망 인원만 집계해 공개합니다. 실제 배정은 협의회 심사 후 별도 안내합니다.</div>
+      <div class="tally" id="tally"></div>
+      <div id="mine"></div>
+
+      <div class="viewbar">
+        <button class="tab on" id="tabOpen">전체 집계</button>
+        <button class="tab" id="tabAdmin">교사용 심사</button>
+        <span class="sp"><button class="xbtn big" id="topXlsx">⬇ 명단 엑셀</button></span>
+      </div>
+      <div id="area"></div>
+    </div>
+  </div>
+
+  <div class="foot">호남고등학교 3학년부 · 2027학년도 대입 &nbsp;|&nbsp; 제작 · <b>호남고 박정민</b></div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-app.js";
+import { getFirestore, collection, addDoc, deleteDoc, doc, onSnapshot } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyBotwjsJxit4SbOzXVVOov37Po97AieoxM",
+  authDomain: "sangdam-b97c1.firebaseapp.com",
+  projectId: "sangdam-b97c1",
+  storageBucket: "sangdam-b97c1.firebasestorage.app",
+  messagingSenderId: "389048360844",
+  appId: "1:389048360844:web:675f4f6ce8d54a873140a9"
+};
+const COL_APP = "pw_jasup_apply";   /* 신청서 */
+const COL_EV  = "pw_jasup_eval";    /* 교사 심사 */
+
+/* ── 여기만 고치면 됩니다 ────────────────────────────── */
+const DUE = { y:2026, m:8, d:14, h:18, min:0, label:"9월 14일(월) 오후 6시", time:"오후 6시" };  /* 월은 0부터 — 8 = 9월 */
+const TEACHER_PW = "honam1234";                           /* 교사용 탭 암호 */
+/* cap = 기준 정원, plus = 협의회 판단에 따라 추가 수용 가능한 인원(+α) */
+const ROOMS = [
+  { key:"지성재", han:"至誠齋", cap:10, plus:2, mot:"至誠感天 — 지극한 정성은 하늘을 움직인다" },
+  { key:"독행재", han:"篤行齋", cap:15, plus:3, mot:"博學篤行 — 널리 배우고 독실하게 행한다" },
+  { key:"일신재", han:"日新齋", cap:15, plus:3, mot:"日日新又日新 — 날로 새롭고 또 새롭다" }
+];
+/* ──────────────────────────────────────────────────── */
+
+const ROSTER = {
+ "1": {t:"이지원", s:[[1,"김은찬"],[2,"김청우"],[3,"김하준"],[4,"김현서"],[5,"박예준"],[6,"박태영"],[7,"신이현"],[8,"양하랑"],[9,"윤도현"],[10,"이경엽"],[11,"이은겸"],[12,"이정우"],[13,"이창헌"],[14,"이태희"],[15,"이현호"],[16,"장민준"],[17,"장연범"],[18,"전주형"],[19,"정승재"],[20,"조예찬"],[21,"최성우"]]},
+ "2": {t:"신채린", s:[[1,"강민광"],[2,"고의정"],[3,"권현서"],[4,"노승우"],[5,"박민수"],[6,"박지후"],[7,"박철웅"],[8,"백지훈"],[9,"송호준"],[10,"안석현"],[11,"안수현"],[12,"양채완"],[13,"오영현"],[14,"오지우"],[15,"유성민"],[16,"이서우"],[17,"이서진"],[18,"이승로"],[19,"이승주"],[20,"임명찬"],[21,"임현후"]]},
+ "3": {t:"류정현", s:[[1,"김균태"],[2,"김민석"],[3,"김성윤"],[4,"김승준"],[5,"김윤호"],[6,"김지환"],[7,"김형민"],[8,"노동완"],[9,"민환"],[10,"박재현"],[11,"박태희"],[12,"손연우"],[13,"신지용"],[14,"안정언"],[15,"안준성"],[16,"이대용"],[17,"이산"],[18,"이성훈"],[19,"이한샘"],[20,"정승욱"],[21,"홍종성"]]},
+ "4": {t:"박정민", s:[[1,"강동훈"],[2,"강정우"],[3,"김건우"],[4,"김관유"],[5,"김동윤"],[6,"김민준"],[7,"김세진"],[8,"김영준"],[9,"김현준"],[10,"문관후"],[11,"문준우"],[12,"박윤환"],[13,"박지강"],[14,"유동언"],[15,"유지안"],[16,"이호열"],[17,"한석"],[18,"허정관"]]},
+ "5": {t:"심요섭", s:[[1,"강현수"],[2,"김도훈"],[3,"김성빈"],[4,"김예찬"],[5,"서민웅"],[6,"신재민"],[7,"오영일"],[8,"유승범"],[9,"유호성"],[10,"이성빈"],[11,"이승준"],[12,"이승진"],[13,"임태훈"],[14,"장준호"],[15,"전재훈"],[16,"정윤우"],[17,"최예건"],[18,"추민석"],[19,"홍경서"]]},
+ "6": {t:"조영신", s:[[1,"강태균"],[2,"김기현"],[3,"김준서"],[4,"김태영"],[5,"박민서"],[6,"박세훈"],[7,"서지완"],[8,"신수한"],[9,"신현민"],[10,"유시형"],[11,"유호준"],[12,"이도윤"],[13,"이준영"],[14,"정승환"],[15,"조승원"],[16,"조원준"],[17,"진현우"],[18,"하승범"]]}
+};
+
+const $ = id => document.getElementById(id);
+const esc = s => String(s == null ? "" : s).replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const keyOf = r => r.ban + "|" + r.num;
+const CAP = ROOMS.reduce((a,r) => a + r.cap, 0);
+const CAP_MAX = ROOMS.reduce((a,r) => a + r.cap + (r.plus || 0), 0);
+
+let db = null, rows = [], evals = [], view = "open", admin = false, cur = null;
+
+/* ── 마감 카운트다운 (1분마다 갱신) ── */
+const DUE_AT = new Date(DUE.y, DUE.m, DUE.d, DUE.h, DUE.min, 0);
+const isClosed = () => new Date() > DUE_AT;
+
+function tickDue(){
+  const el = $("duebar"), now = new Date(), left = DUE_AT - now;
+  if (left <= 0) {
+    el.textContent = `신청 마감되었습니다 (${DUE.label})`;
+    el.style.background = "#c0392b"; el.style.color = "#fff";
+  } else {
+    const h = left / 3600000;
+    el.textContent = h > 24
+      ? `⏰ ${DUE.label}까지 · D-${Math.ceil(h / 24 - 0.5)}`
+      : h >= 1
+        ? `⏰ 오늘 ${DUE.time} 마감 · ${Math.floor(h)}시간 ${Math.floor(left/60000)%60}분 남음`
+        : `⏰ 마감까지 ${Math.max(1, Math.floor(left/60000))}분 남았습니다`;
+  }
+  lockIfClosed();
+}
+function lockIfClosed(){
+  const closed = isClosed();
+  $("saveBtn").disabled = closed;
+  $("delBtn").disabled = closed;
+  if (closed) {
+    $("saveBtn").textContent = "신청이 마감되었습니다";
+    $("hint").textContent = "마감 이후 변경은 3학년부(박정민)로 문의해 주세요.";
+  }
+}
+tickDue();
+setInterval(tickDue, 60000);
+
+/* ── 정적 UI ── */
+$("rooms").innerHTML = ROOMS.map(r => `<div class="room">
+  <div class="han">${r.han}</div><div class="nm">${r.key}</div>
+  <div class="mot">${r.mot}</div>
+  <div class="cap">정원 <b>${r.cap}명 +α</b></div>
+  <div class="capsub">여건에 따라 최대 ${r.cap + r.plus}명까지</div></div>`).join("");
+
+$("wish").innerHTML = '<option value="">선택</option>' +
+  ROOMS.map(r => `<option value="${r.key}">${r.key} (${r.han}) — 정원 ${r.cap}명 +α</option>`).join("") +
+  '<option value="무관">어느 반이든 상관없습니다</option>';
+
+const ban = $("ban"), stu = $("stu");
+ban.innerHTML = '<option value="">선택</option>' +
+  Object.keys(ROSTER).map(r => `<option value="${r}">${r}반 (담임 ${ROSTER[r].t})</option>`).join("");
+ban.addEventListener("change", () => {
+  const r = ban.value;
+  if (!r) { stu.disabled = true; stu.innerHTML = '<option value="">반을 먼저 선택</option>'; cur = null; renderMine(); return; }
+  stu.disabled = false;
+  stu.innerHTML = '<option value="">선택</option>' +
+    ROSTER[r].s.map(([n, nm]) => `<option value="${n}|${nm}">${String(n).padStart(2,"0")}번 ${nm}</option>`).join("");
+  cur = null; renderMine();
+});
+stu.addEventListener("change", () => {
+  if (!stu.value) { cur = null; renderMine(); return; }
+  const [n, nm] = stu.value.split("|");
+  cur = { ban: ban.value, num: n, name: nm, key: ban.value + "|" + n };
+  fillMine(); renderMine();
+});
+
+$("oath").addEventListener("input", () => {
+  const n = $("oath").value.length;
+  $("oathCnt").textContent = `${n} / 400자`;
+  $("oathCnt").classList.toggle("over", n < 50);
+});
+$("pAll").addEventListener("change", () => {
+  document.querySelectorAll(".pchk").forEach(c => c.checked = $("pAll").checked);
+});
+document.querySelectorAll(".pchk").forEach(c => c.addEventListener("change", () => {
+  $("pAll").checked = [...document.querySelectorAll(".pchk")].every(x => x.checked);
+}));
+
+const mineOf = () => cur ? rows.find(r => keyOf(r) === cur.key) : null;
+const evOf = k => evals.find(e => e.key === k);
+
+function fillMine(){
+  const m = mineOf();
+  if (!m) return;
+  $("wish").value = m.wish || "";
+  $("need").value = m.need || ""; $("cond").value = m.cond || "";
+  $("tuniv").value = m.tuniv || ""; $("tmajor").value = m.tmajor || "";
+  $("oath").value = m.oath || "";
+  $("oath").dispatchEvent(new Event("input"));
+}
+
+function renderMine(){
+  const m = mineOf();
+  $("mine").innerHTML = m
+    ? `<div class="okbox">✓ ${esc(m.name)} 학생의 신청이 접수되어 있습니다 — 희망 <b>${esc(m.wish)}</b> · 제출 ${esc(m.ts)}<br>
+       내용을 고쳐 다시 제출하면 갱신됩니다.</div>` : "";
+}
+
+/* ── 제출 ── */
+$("saveBtn").addEventListener("click", async () => {
+  if (isClosed()) return alert(`신청이 마감되었습니다.\n마감: ${DUE.label}\n\n변경이 필요하면 3학년부로 문의해 주세요.`);
+  if (!cur) return alert("반과 이름을 선택해 주세요.");
+  const need = [["wish","희망 자습반"],["need","수능최저 해당 여부"],
+    ["tuniv","정시 목표 대학"],["tmajor","목표 학과"]];
+  for (const [id, label] of need)
+    if (!$(id).value.trim()) return alert(label + "을(를) 입력해 주세요.");
+  if ($("oath").value.trim().length < 50)
+    return alert("각오는 50자 이상 구체적으로 작성해 주세요.\n협의회 심사에서 가장 비중 있게 보는 항목입니다.");
+  if (![...document.querySelectorAll(".pchk")].every(c => c.checked))
+    return alert("서약 항목에 모두 동의해야 신청할 수 있습니다.");
+
+  const btn = $("saveBtn"); btn.disabled = true; btn.textContent = "제출 중…";
+  try {
+    const old = rows.filter(r => keyOf(r) === cur.key);
+    await Promise.all(old.map(o => deleteDoc(doc(db, COL_APP, o.id))));
+    const t = new Date();
+    const ts = `${String(t.getMonth()+1).padStart(2,"0")}-${String(t.getDate()).padStart(2,"0")} `
+      + `${String(t.getHours()).padStart(2,"0")}:${String(t.getMinutes()).padStart(2,"0")}`;
+    await addDoc(collection(db, COL_APP), {
+      ban:cur.ban, num:cur.num, name:cur.name, wish:$("wish").value,
+      need:$("need").value, cond:$("cond").value.trim(),
+      tuniv:$("tuniv").value.trim(), tmajor:$("tmajor").value.trim(),
+      oath:$("oath").value.trim(), ts
+    });
+    $("hint").textContent = "제출 완료 ✓ 신청이 접수되었습니다.";
+    setTimeout(() => $("hint").textContent = "제출 후에도 마감 전까지 언제든 수정할 수 있습니다.", 3500);
+  } catch(e){ alert("제출에 실패했습니다. 잠시 후 다시 시도해 주세요."); }
+  btn.disabled = false; btn.textContent = "신청서 제출";
+});
+
+$("delBtn").addEventListener("click", async () => {
+  if (isClosed()) return alert("마감 이후에는 취소할 수 없습니다. 3학년부로 문의해 주세요.");
+  const m = mineOf();
+  if (!m) return alert("접수된 신청이 없습니다.");
+  if (!confirm(`${m.name} 학생의 신청을 취소할까요?`)) return;
+  try { await deleteDoc(doc(db, COL_APP, m.id)); }
+  catch(e){ alert("취소에 실패했습니다."); }
+});
+
+/* ── 현황 ── */
+$("tabOpen").addEventListener("click", () => { view = "open"; sync(); });
+$("tabAdmin").addEventListener("click", () => { view = "admin"; sync(); });
+$("topXlsx").addEventListener("click", () => {
+  if (!rows.length) return alert("아직 신청자가 없습니다.");
+  if (admin) { exportXlsx(); return; }
+  view = "admin"; sync();
+  setTimeout(() => {
+    const f = $("pw");
+    if (f) { f.focus(); f.scrollIntoView({ behavior:"smooth", block:"center" }); }
+  }, 80);
+});
+
+function sync(){
+  $("tabOpen").classList.toggle("on", view === "open");
+  $("tabAdmin").classList.toggle("on", view === "admin");
+  render();
+}
+
+function render(){
+  $("tally").innerHTML = ROOMS.map(r => {
+    const n = rows.filter(x => x.wish === r.key).length;
+    const max = r.cap + r.plus;
+    const pct = Math.min(100, n / max * 100);
+    const base = r.cap / max * 100;      /* 기준 정원 위치 표시선 */
+    const st = n <= r.cap ? "" : n <= max ? "flex" : "over";
+    return `<div class="tl"><div class="n">${r.key} <span style="font-weight:600;color:var(--soft)">${r.han}</span></div>
+      <div class="v">${n}<em> / ${r.cap}명 +α</em></div>
+      <div class="bar"><i class="${st}" style="width:${pct}%"></i>
+        <u style="left:${base}%"></u></div>
+      <div class="r ${st}">${
+        n <= r.cap ? `기준 정원까지 ${r.cap - n}명 여유 · 최대 ${max}명`
+        : n <= max ? `기준 정원 초과 — 증원(+α) 검토 구간 · 최대 ${max}명`
+        : `최대 수용 ${max}명 초과 · 경쟁률 ${(n/max).toFixed(1)} : 1`
+      }</div></div>`;
+  }).join("");
+  renderMine();
+  view === "open" ? renderOpen() : renderAdmin();
+}
+
+function renderOpen(){
+  const any = rows.filter(x => x.wish === "무관").length;
+  const byBan = Object.keys(ROSTER).map(b => ({ b, n: rows.filter(r => r.ban === b).length }));
+  $("area").innerHTML = `<div class="card">
+    <div class="chd"><span class="tt">전체 신청 현황</span>
+      <span class="n">총 ${rows.length}명 / 정원 ${CAP}명 (최대 ${CAP_MAX}명)</span></div>
+    <div class="tscroll"><table style="min-width:0">
+      <thead><tr><th>구분</th><th style="width:90px">인원</th><th>비고</th></tr></thead>
+      <tbody>
+        <tr><td class="stname">총 신청</td><td><b>${rows.length}명</b></td>
+          <td class="stnum">${rows.length > CAP_MAX
+            ? `최대 수용 ${CAP_MAX}명 대비 경쟁률 ${(rows.length/CAP_MAX).toFixed(1)} : 1 — 협의회 심사 진행`
+            : rows.length > CAP
+            ? `기준 정원 ${CAP}명 초과 — 증원(+α) 검토 구간, 최대 ${CAP_MAX}명`
+            : `기준 정원까지 ${CAP - rows.length}명 여유 (최대 ${CAP_MAX}명)`}</td></tr>
+        ${ROOMS.map(r => { const n = rows.filter(x => x.wish === r.key).length;
+          return `<tr><td class="stname">${r.key} 희망</td><td>${n}명</td>
+          <td class="stnum">정원 ${r.cap}명 · 최대 ${r.cap + r.plus}명</td></tr>`; }).join("")}
+        <tr><td class="stname">반 무관</td><td>${any}명</td>
+          <td class="stnum">배정 조정에 우선 활용</td></tr>
+        <tr><td class="stname">학급별</td><td colspan="2" class="stnum">
+          ${byBan.map(x => `${x.b}반 ${x.n}명`).join(" · ")}</td></tr>
+      </tbody></table></div></div>
+    <div class="emptymsg">개인별 신청 내용과 성적은 공개하지 않습니다.
+      배정 결과는 협의회 심사 후 담임 선생님을 통해 개별 안내합니다.</div>`;
+}
+
+function renderAdmin(){
+  if (!admin) {
+    $("area").innerHTML = `<div class="gate">
+      <div style="font-size:13.5px;font-weight:800;color:var(--navy2)">🔒 교사용 화면입니다</div>
+      <div style="font-size:12.5px;color:var(--soft);margin-top:4px">
+        암호를 입력하면 신청자 전체 명단과 각오를 확인하고,
+        <b>협의회 심사 의견 기록</b>과 <b>엑셀 다운로드</b>를 할 수 있습니다.<br>
+        암호는 3학년부에서 안내합니다.</div>
+      <div class="g2"><input type="text" id="pw" placeholder="암호"><button id="pwBtn">확인</button></div></div>`;
+    const go = () => {
+      if ($("pw").value.trim() === TEACHER_PW) { admin = true; render(); }
+      else alert("암호가 올바르지 않습니다.");
+    };
+    $("pwBtn").addEventListener("click", go);
+    $("pw").addEventListener("keydown", e => { if (e.key === "Enter") go(); });
+    return;
+  }
+
+  const sorted = [...rows].sort((a,b) => {
+    const ea = evOf(keyOf(a)), eb = evOf(keyOf(b));
+    const ra = ea && ea.att ? "ABC".indexOf(ea.att) : 9;
+    const rb = eb && eb.att ? "ABC".indexOf(eb.att) : 9;
+    return ra - rb || (a.ban - b.ban) || (a.num - b.num);
+  });
+
+  const tr = sorted.map(r => {
+    const k = keyOf(r), e = evOf(k) || {};
+    return `<tr>
+      <td><span class="stname">${esc(r.name)}</span><br>
+        <span class="stnum">${esc(r.ban)}반 ${String(r.num).padStart(2,"0")}번</span></td>
+      <td class="wish">${esc(r.wish)}</td>
+      <td><span class="tag ${r.need === "필요" ? "w1" : r.need === "일부" ? "w2" : "w3"}">${esc(r.need)}</span>
+        ${r.cond ? `<br><span class="stnum">${esc(r.cond)}</span>` : ""}</td>
+      <td class="stnum">${esc(r.tuniv)}<br>${esc(r.tmajor)}</td>
+      <td class="memo">${esc(r.oath)}</td>
+      <td class="ev" style="min-width:120px">
+        <select class="e-att" data-k="${esc(k)}">
+          <option value="">태도</option>
+          <option value="A"${e.att === "A" ? " selected" : ""}>A 우수</option>
+          <option value="B"${e.att === "B" ? " selected" : ""}>B 보통</option>
+          <option value="C"${e.att === "C" ? " selected" : ""}>C 우려</option>
+        </select>
+        <input type="text" class="e-memo" data-k="${esc(k)}" placeholder="의견"
+          value="${esc(e.memo || "")}" style="margin-top:4px">
+        <button class="evsave" data-k="${esc(k)}">저장</button></td></tr>`;
+  }).join("");
+
+  $("area").innerHTML = rows.length ? `<div class="card">
+    <div class="chd"><span class="tt">협의회 심사 명단</span>
+      <span class="n">${rows.length}명 · 정원 ${CAP}명</span></div>
+    <div class="admbar">
+      <button class="xbtn big" id="xlsxBtn">⬇ 엑셀 다운로드</button>
+      <span class="admn">신청 ${rows.length}명 · 태도 입력 ${evals.filter(e => e.att).length}명</span>
+      <button class="xbtn" id="lockBtn">화면 잠금</button>
+    </div>
+    <div class="sortnote">1순위 <b>태도</b> 순으로 정렬됩니다. 성적은 3학년부 보유 자료로 판단하시고,
+      태도 등급과 의견을 채우시면 협의회 배부용 엑셀이 그대로 만들어집니다.</div>
+    <div class="tscroll"><table>
+      <thead><tr><th style="width:85px">학생</th><th style="width:75px">희망</th>
+        <th style="width:120px">수능최저</th><th style="width:120px">정시 목표</th>
+        <th>각오</th><th style="width:130px">심사</th></tr></thead>
+      <tbody>${tr}</tbody></table></div></div>
+`
+    : `<div class="emptymsg">아직 신청자가 없습니다.</div>`;
+
+  document.querySelectorAll(".evsave").forEach(b => b.addEventListener("click", async () => {
+    const k = b.dataset.k;
+    const att = document.querySelector(`.e-att[data-k="${CSS.escape(k)}"]`).value;
+    const memo = document.querySelector(`.e-memo[data-k="${CSS.escape(k)}"]`).value.trim();
+    b.disabled = true; b.textContent = "저장 중";
+    try {
+      const old = evals.filter(x => x.key === k);
+      await Promise.all(old.map(o => deleteDoc(doc(db, COL_EV, o.id))));
+      if (att || memo) await addDoc(collection(db, COL_EV), { key:k, att, memo });
+      b.textContent = "저장됨 ✓";
+    } catch(err){ alert("저장에 실패했습니다."); b.textContent = "저장"; }
+    b.disabled = false;
+  }));
+  const lb = $("lockBtn"); if (lb) lb.addEventListener("click", () => { admin = false; render(); });
+  const xb = $("xlsxBtn"); if (xb) xb.addEventListener("click", exportXlsx);
+}
+
+function exportXlsx(){
+  const head = ["반","번호","이름","희망반","태도","협의회 의견",
+    "수능최저","최저 조건","정시 목표 대학","목표 학과","각오","제출시각"];
+  const out = [head];
+  for (const r of [...rows].sort((a,b) => (a.ban - b.ban) || (a.num - b.num))) {
+    const e = evOf(keyOf(r)) || {};
+    out.push([r.ban, r.num, r.name, r.wish, e.att || "", e.memo || "",
+      r.need, r.cond, r.tuniv, r.tmajor, r.oath, r.ts]);
+  }
+  const wb = XLSX.utils.book_new();
+  const ws = XLSX.utils.aoa_to_sheet(out);
+  ws["!cols"] = [{wch:5},{wch:5},{wch:9},{wch:9},{wch:5},{wch:26},
+    {wch:9},{wch:20},{wch:14},{wch:20},{wch:60},{wch:12}];
+  XLSX.utils.book_append_sheet(wb, ws, "신청 명단");
+
+  /* 반별 집계 — 기준 정원과 +α 최대치를 함께 */
+  const t = [["자습반","한자","기준 정원","최대(+α)","희망 인원","기준 대비","상태"]];
+  for (const r of ROOMS) {
+    const n = rows.filter(x => x.wish === r.key).length, max = r.cap + r.plus;
+    t.push([r.key, r.han, r.cap, max, n, n - r.cap,
+      n <= r.cap ? "여유" : n <= max ? "증원(+α) 검토" : "최대 초과 · 심사 필요"]);
+  }
+  const anyN = rows.filter(x => x.wish === "무관").length;
+  t.push(["반 무관", "", "", "", anyN, "", "배정 조정에 우선 활용"]);
+  t.push(["합계", "", CAP, CAP_MAX, rows.length, rows.length - CAP,
+    rows.length <= CAP ? "여유" : rows.length <= CAP_MAX ? "증원(+α) 검토" : "최대 초과 · 심사 필요"]);
+  const ws2 = XLSX.utils.aoa_to_sheet(t);
+  ws2["!cols"] = [{wch:10},{wch:8},{wch:10},{wch:10},{wch:10},{wch:10},{wch:20}];
+  XLSX.utils.book_append_sheet(wb, ws2, "반별 집계");
+
+  const d = new Date();
+  const stamp = `${d.getFullYear()}${String(d.getMonth()+1).padStart(2,"0")}${String(d.getDate()).padStart(2,"0")}`;
+  XLSX.writeFile(wb, `2학기_자습반_신청명단_${stamp}.xlsx`);
+}
+
+/* ── 구독 ── */
+db = getFirestore(initializeApp(firebaseConfig));
+onSnapshot(collection(db, COL_APP), snap => {
+  rows = [];
+  snap.forEach(d => { const v = d.data() || {}; if (v.name) rows.push({ id:d.id, ...v }); });
+  $("live").textContent = "● 실시간 연결됨 · 신청 " + rows.length + "명";
+  if (cur) fillMine();
+  render();
+}, () => { $("live").textContent = "연결 오류 — 새로고침 해주세요"; });
+
+onSnapshot(collection(db, COL_EV), snap => {
+  evals = [];
+  snap.forEach(d => { const v = d.data() || {}; if (v.key) evals.push({ id:d.id, ...v }); });
+  render();
+}, () => {});
+
+</script>
+</body>
+</html>
