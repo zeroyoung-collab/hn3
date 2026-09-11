@@ -1,0 +1,905 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>3학년 학부모 상담 예약</title>
+<meta property="og:title" content="3학년 학부모 상담 예약">
+<meta property="og:description" content="반을 선택하고 원하는 상담 시간을 예약해 주세요.">
+<meta name="description" content="호남고등학교 3학년 학부모 상담 예약">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --navy:#0B3E86; --navy2:#092f66; --gold:#F5B301; --gold-d:#c8920a;
+  --green:#1A9A3E; --green-d:#157f33; --ink:#141a24; --soft:#3d4652;
+  --line:#b9c4d4; --lt:#eef3fa; --paper:#f4f7fb; --card:#ffffff;
+  --red:#c0392b; --red-lt:#fdecea;
+  --radius:14px;
+  --sans:"Noto Sans KR",-apple-system,BlinkMacSystemFont,"Malgun Gothic",sans-serif;
+}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{font-family:var(--sans);background:var(--paper);color:var(--ink);font-size:15px;line-height:1.5;word-break:keep-all;-webkit-font-smoothing:antialiased;padding-bottom:40px}
+button{font-family:inherit;cursor:pointer}
+input{font-family:inherit}
+
+/* ===== 헤더 ===== */
+.logobar{background:#fff;border-bottom:1px solid var(--line);padding:9px 16px;display:flex;align-items:center;gap:10px}
+.logobar img{height:38px;width:auto}
+.logobar .lb-txt{font-weight:700;color:var(--navy);font-size:13px;letter-spacing:-.01em}
+.hero{background:linear-gradient(150deg,#0B3E86,#0d4b9e,#092f66);color:#fff;padding:22px 18px 20px;position:relative}
+.hero .ey{color:var(--gold);font-weight:800;font-size:12.5px;letter-spacing:.06em;margin-bottom:5px}
+.hero h1{margin:0;font-size:23px;font-weight:900;letter-spacing:-.03em}
+.hero .sub{margin-top:7px;color:#dbe6f7;font-size:13.5px;line-height:1.55}
+.hero-line{height:4px;background:linear-gradient(90deg,var(--gold),var(--green))}
+.wrap{max-width:720px;margin:0 auto;padding:16px 14px 0}
+
+/* ===== 안내 배너 ===== */
+.info{background:var(--card);border:2px solid var(--line);border-radius:var(--radius);padding:13px 15px;margin-bottom:16px;font-size:13.5px;color:var(--soft);line-height:1.7}
+.info b{color:var(--navy)}
+.info .badge{display:inline-block;background:var(--gold);color:var(--navy2);font-weight:800;font-size:12px;padding:2px 9px;border-radius:20px;margin-right:6px}
+.info .tline{display:block;margin-top:2px}
+.info .tp{display:inline-block;font-weight:800;font-size:12px;padding:1px 8px;border-radius:20px;margin-right:5px}
+.tp.call{background:var(--lt);color:var(--navy);border:1.5px solid #c6d6ec}
+.tp.visit{background:#eaf6ed;color:var(--green-d);border:1.5px solid #a9dcb6}
+
+/* ===== 반 선택 화면 ===== */
+.grade-row{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:15px}
+.grade-chip{border:2px solid var(--line);background:#fff;border-radius:22px;padding:9px 20px;font-weight:800;font-size:14.5px;color:var(--soft);transition:.12s}
+.grade-chip:hover{border-color:var(--navy);color:var(--navy)}
+.grade-chip.on{background:var(--navy);border-color:var(--navy);color:#fff}
+.class-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:9px}
+.class-btn{border:2px solid var(--line);background:#fff;border-radius:12px;padding:15px 8px;display:flex;flex-direction:column;gap:3px;align-items:center;transition:.12s}
+.class-btn .cb-ban{font-size:17px;font-weight:900;color:var(--navy)}
+.class-btn .cb-t{font-size:12px;color:var(--soft);font-weight:700}
+.class-btn:hover{border-color:var(--navy);background:var(--lt)}
+.class-empty{font-size:13.5px;color:var(--soft);padding:6px 2px}
+
+/* ===== 본인확인 화면 ===== */
+.card{background:var(--card);border:2px solid var(--line);border-radius:var(--radius);padding:18px 16px;margin-bottom:16px}
+.step-lab{display:flex;align-items:center;gap:9px;font-weight:800;color:var(--navy);font-size:15px;margin-bottom:13px}
+.step-no{flex:none;width:26px;height:26px;border-radius:8px;background:var(--navy);color:#fff;display:grid;place-items:center;font-size:13px;font-weight:900}
+.name-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(88px,1fr));gap:8px}
+.name-btn{position:relative;border:2px solid var(--line);background:#fff;border-radius:10px;padding:11px 6px;font-size:14.5px;font-weight:700;color:var(--ink);display:flex;flex-direction:column;align-items:center;gap:2px;transition:.12s}
+.name-btn .nb-no{font-size:11px;color:var(--soft);font-weight:700}
+.name-btn:hover{border-color:var(--navy)}
+.name-btn.on{border-color:var(--navy);background:var(--navy);color:#fff}
+.name-btn.on .nb-no{color:#cfe0f7}
+.name-btn .nb-done{position:absolute;top:-7px;right:-4px;background:var(--green);color:#fff;font-size:10px;font-weight:800;padding:1px 7px;border-radius:20px}
+.confirm-row{margin-top:16px;display:none}
+.confirm-row.show{display:block}
+.confirm-row label{display:block;font-weight:800;color:var(--navy);font-size:13.5px;margin-bottom:7px}
+.pin-line{display:flex;gap:9px;align-items:stretch}
+.pin-line input{flex:1;min-width:0;padding:13px 14px;border:2px solid var(--line);border-radius:11px;font-size:17px;font-weight:800;letter-spacing:.05em;text-align:center}
+.pin-line input:focus{outline:none;border-color:var(--navy);background:var(--lt)}
+.pin-hint{font-size:12.5px;color:var(--soft);margin-top:8px;line-height:1.6}
+.btn{border:none;border-radius:11px;padding:13px 18px;font-size:15px;font-weight:800;transition:.12s;display:inline-flex;align-items:center;justify-content:center;gap:7px}
+.btn.primary{background:var(--navy);color:#fff}
+.btn.primary:hover{background:var(--navy2)}
+.btn.primary:disabled{background:#9fb2ce;cursor:not-allowed}
+.btn.go{background:var(--green);color:#fff;flex:none;padding:13px 20px}
+.btn.go:hover{background:var(--green-d)}
+.btn.ghost{background:#fff;border:2px solid var(--line);color:var(--soft)}
+.btn.ghost:hover{border-color:var(--navy);color:var(--navy)}
+.btn.danger{background:var(--red-lt);color:var(--red);border:2px solid #eab8b2}
+.btn.danger:hover{background:#f9ddd8}
+.err{color:var(--red);font-size:13px;font-weight:700;margin-top:9px;min-height:1px}
+
+/* ===== 예약 화면 ===== */
+#bookScreen,#authScreen,#adminScreen{display:none}
+.who{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;margin-bottom:14px}
+.who .whom{font-size:16px;font-weight:900;color:var(--navy)}
+.who .whom span{color:var(--soft);font-weight:700;font-size:13px;margin-left:4px}
+
+.mybook{background:#eaf6ed;border:2px solid #a9dcb6;border-radius:var(--radius);padding:13px 15px;margin-bottom:16px;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.mybook .mb-l{font-size:14px;color:var(--green-d);font-weight:700;line-height:1.6}
+.mybook .mb-l b{color:var(--ink);font-size:16px;font-weight:900;margin-left:2px}
+.mybook.none{background:var(--lt);border-color:var(--line)}
+.mybook.none .mb-l{color:var(--soft)}
+
+.legend{display:flex;gap:14px;flex-wrap:wrap;margin-bottom:12px;font-size:12.5px;color:var(--soft);font-weight:700}
+.legend i{display:inline-block;width:13px;height:13px;border-radius:4px;vertical-align:-2px;margin-right:5px}
+.lg-free{background:#fff;border:2px solid var(--navy)}
+.lg-me{background:var(--green)}
+.lg-full{background:#dbe1ea}
+
+.day{background:var(--card);border:2px solid var(--line);border-radius:var(--radius);padding:12px 13px;margin-bottom:12px}
+.day-h{display:flex;align-items:center;gap:8px;margin-bottom:4px;flex-wrap:wrap}
+.day-h .dh-date{font-size:16px;font-weight:900;color:var(--navy)}
+.day-h .dh-dow{font-size:12px;font-weight:800;color:var(--gold-d);background:#fdf5e0;padding:2px 8px;border-radius:20px}
+.day-h .dh-dow.sun{color:#c0392b;background:var(--red-lt)}
+.day-h .dh-dow.sat{color:#0B3E86;background:var(--lt)}
+.day-h .dh-cnt{margin-left:auto;font-size:11.5px;color:var(--soft);font-weight:700}
+.day-h .tp{display:inline-block;font-weight:800;font-size:11.5px;padding:1px 8px;border-radius:20px}
+.band-lab{font-size:12px;font-weight:800;color:var(--soft);margin:9px 0 6px}
+.slots{display:grid;grid-template-columns:repeat(4,1fr);gap:7px}
+.slot{border:2px solid var(--line);background:#fff;border-radius:10px;padding:9px 4px;text-align:center;transition:.12s;min-height:52px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px}
+.slot .s-t{font-size:14px;font-weight:800;color:var(--ink)}
+.slot .s-s{font-size:10.5px;font-weight:700}
+.slot.free{border-color:var(--navy);color:var(--navy)}
+.slot.free .s-s{color:var(--navy)}
+.slot.free:hover{background:var(--navy)}
+.slot.free:hover .s-t,.slot.free:hover .s-s{color:#fff}
+.slot.full{background:#eef1f6;border-color:#dbe1ea;cursor:not-allowed}
+.slot.full .s-t,.slot.full .s-s{color:#9aa4b3}
+.slot.me{background:var(--green);border-color:var(--green)}
+.slot.me .s-t,.slot.me .s-s{color:#fff}
+@media (max-width:480px){ .slots{grid-template-columns:repeat(3,1fr)} }
+
+/* ===== 모달 ===== */
+.backdrop{position:fixed;inset:0;background:rgba(9,20,40,.5);display:none;align-items:center;justify-content:center;padding:20px;z-index:50}
+.backdrop.show{display:flex}
+.modal{background:#fff;border-radius:16px;max-width:390px;width:100%;padding:22px 20px 18px;box-shadow:0 20px 60px rgba(0,0,0,.3)}
+.modal h3{margin:0 0 8px;font-size:18px;font-weight:900;color:var(--navy);letter-spacing:-.02em}
+.modal p{margin:0 0 14px;font-size:14px;color:var(--soft);line-height:1.65}
+.modal .mslot{font-weight:900;color:var(--ink);font-size:16px}
+.type-pick{display:flex;gap:8px;margin-bottom:16px}
+.type-pick.hide{display:none}
+.type-btn{flex:1;border:2px solid var(--line);background:#fff;border-radius:11px;padding:12px 8px;font-size:15px;font-weight:800;color:var(--soft);display:flex;flex-direction:column;gap:2px;align-items:center}
+.type-btn small{font-size:11px;font-weight:700;color:#8a93a2}
+.type-btn.on{border-color:var(--navy);background:var(--lt);color:var(--navy)}
+.type-btn.on small{color:var(--navy)}
+.type-btn.off{opacity:.45;cursor:not-allowed;background:#f2f4f8}
+.modal-btns{display:flex;gap:9px}
+.modal-btns .btn{flex:1}
+
+/* ===== 토스트 ===== */
+.toast{position:fixed;left:50%;bottom:26px;transform:translate(-50%,14px);background:var(--navy2);color:#fff;padding:12px 18px;border-radius:12px;font-size:14px;font-weight:700;z-index:80;opacity:0;pointer-events:none;transition:.2s;box-shadow:0 8px 26px rgba(0,0,0,.28);max-width:90%;text-align:center}
+.toast.show{opacity:1;transform:translate(-50%,0)}
+.toast.ok{background:var(--green-d)}
+.toast.no{background:var(--red)}
+
+/* ===== 푸터 / 선생님용 ===== */
+.foot{max-width:720px;margin:22px auto 0;padding:16px 14px;text-align:center;font-size:12px;color:var(--soft)}
+.foot .credit{font-weight:700;color:var(--soft)}
+.foot .admin-link{margin-top:10px}
+.foot .admin-link a{color:var(--soft);text-decoration:underline;cursor:pointer;font-size:11.5px}
+
+.adm-table{width:100%;border-collapse:collapse;font-size:13px;background:#fff;border:2px solid var(--line);border-radius:12px;overflow:hidden}
+.adm-table th{background:var(--navy);color:#fff;padding:9px 6px;font-size:12px;font-weight:800}
+.adm-table td{padding:8px 6px;border-bottom:1px solid var(--line);text-align:center}
+.adm-table tr:last-child td{border-bottom:none}
+.adm-table td.tel{font-variant-numeric:tabular-nums}
+.adm-table .del{background:none;border:none;color:var(--red);font-weight:800;font-size:12px;text-decoration:underline;padding:2px 4px}
+.adm-sec{font-size:14px;font-weight:900;color:var(--navy);margin:18px 0 9px;display:flex;align-items:center;gap:7px}
+.adm-sec::before{content:"";width:6px;height:15px;border-radius:3px;background:var(--gold)}
+.chiprow{display:flex;gap:7px;flex-wrap:wrap}
+.chip{background:var(--lt);border:2px solid #c6d6ec;color:var(--navy);border-radius:20px;padding:4px 12px;font-size:12.5px;font-weight:800}
+.chip.warn{background:var(--red-lt);border-color:#eab8b2;color:var(--red)}
+.adm-actions{display:flex;gap:9px;flex-wrap:wrap;margin-top:16px}
+</style>
+</head>
+<body>
+
+<!-- ===== 상담주간 종료 안내 (2026-09-11 종료 처리) ===== -->
+<div id="closedScreen" style="position:fixed;inset:0;z-index:9999;background:#f4f7fb;display:flex;align-items:center;justify-content:center;padding:24px">
+  <div style="max-width:460px;width:100%;background:#fff;border:2px solid #c6d6ec;border-radius:18px;padding:38px 30px;text-align:center;box-shadow:0 10px 30px rgba(11,62,134,.12)">
+    <img src="honam_logo.png" alt="호남고등학교" style="height:52px;margin-bottom:18px" onerror="this.style.display='none'">
+    <div style="font-size:13px;font-weight:800;letter-spacing:.12em;color:#b8860b;margin-bottom:8px">2026학년도 2학기 상담주간</div>
+    <h1 style="font-size:23px;font-weight:900;color:#0B3E86;margin-bottom:14px;word-break:keep-all">학부모 상담 예약이<br>종료되었습니다</h1>
+    <p style="font-size:14.5px;color:#3d4652;line-height:1.7;word-break:keep-all">
+      상담주간(8/24~8/30)이 마무리되어 예약 접수를 닫았습니다.<br>
+      참여해 주신 학부모님들께 감사드립니다.<br>
+      <b style="color:#0B3E86">추가 상담이 필요하시면 담임 선생님께 직접 연락</b>해 주세요.
+    </p>
+    <div style="margin-top:26px;font-size:12px;color:#98a3b3">
+      제작 · 호남고 조영신 &nbsp;·&nbsp;
+      <a href="#" onclick="document.getElementById('closedScreen').style.display='none';return false" style="color:#98a3b3;text-decoration:underline">선생님용 현황 확인</a>
+    </div>
+  </div>
+</div>
+
+<div class="logobar">
+  <img src="honam_logo.png" alt="호남고등학교" onerror="this.style.display='none'">
+  <span class="lb-txt" id="lbTxt">호남고등학교</span>
+</div>
+<div class="hero">
+  <div class="ey" id="heroEy"></div>
+  <h1 id="heroTitle">3학년 학부모 상담 예약</h1>
+  <div class="sub" id="heroSub"></div>
+</div>
+<div class="hero-line"></div>
+
+<div class="wrap">
+  <div class="info">
+    <span class="badge">안내</span>
+    먼저 예약하신 분이 우선이며, 예약 후 <b>취소·변경</b>도 가능합니다.
+    <span class="tline" id="tlineCall"><span class="tp call">전화</span><b>30분</b> · 예약 시간에 담임이 <b>입력하신 연락처로 전화</b>드립니다</span>
+    <span class="tline" id="tlineVisit"><span class="tp visit">방문</span><b>1시간</b> · 예약 시간부터 1시간, <b>학교로 방문</b>해 주세요</span>
+    <span class="tline" id="availLine"></span>
+    <span class="tline" id="topicLine"></span>
+  </div>
+
+  <!-- ===== 반 선택 화면 ===== -->
+  <div id="classScreen">
+    <div class="card">
+      <div class="step-lab"><span class="step-no">1</span>학년을 선택하세요</div>
+      <div class="grade-row" id="gradeRow"></div>
+      <div class="step-lab"><span class="step-no">2</span>반을 선택하세요</div>
+      <div class="class-grid" id="classGrid"></div>
+    </div>
+  </div>
+
+  <!-- ===== 본인확인 화면 ===== -->
+  <div id="authScreen">
+    <div class="who">
+      <div class="whom" id="clsName"></div>
+      <button class="btn ghost" id="reClassBtn" style="padding:8px 12px;font-size:13px">반 다시 선택</button>
+    </div>
+    <div class="card">
+      <div class="step-lab"><span class="step-no">1</span>자녀 이름을 선택하세요</div>
+      <div class="name-grid" id="nameGrid"></div>
+
+      <div class="confirm-row" id="confirmRow">
+        <div class="step-lab" style="margin-top:20px"><span class="step-no">2</span>학부모 연락처</div>
+        <label id="pinLabel">전화상담을 받으실 휴대전화 번호를 입력하세요</label>
+        <div class="pin-line">
+          <input id="phoneInput" inputmode="numeric" maxlength="13" placeholder="010-0000-0000" autocomplete="tel">
+          <button class="btn go" id="enterBtn">다음 →</button>
+        </div>
+        <div class="pin-hint">예약 확인과 <b>취소·변경 시 본인 확인</b>에 사용됩니다. 취소·변경하실 때는 <b>예약할 때 입력한 번호</b>를 그대로 입력해 주세요.</div>
+        <div class="err" id="authErr"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== 예약 화면 ===== -->
+  <div id="bookScreen">
+    <div class="who">
+      <div class="whom" id="whoName"></div>
+      <button class="btn ghost" id="logoutBtn" style="padding:8px 12px;font-size:13px">처음으로</button>
+    </div>
+
+    <div class="mybook" id="myBook"></div>
+
+    <div class="legend">
+      <span><i class="lg-free"></i>예약 가능</span>
+      <span><i class="lg-me"></i>내 예약</span>
+      <span><i class="lg-full"></i>마감</span>
+    </div>
+
+    <div id="dayWrap"></div>
+  </div>
+
+  <!-- ===== 선생님용 화면 ===== -->
+  <div id="adminScreen">
+    <div class="who">
+      <div class="whom" id="admTitle">🔒 선생님용 · 전체 예약 현황</div>
+      <button class="btn ghost" id="admBack" style="padding:8px 12px;font-size:13px">← 돌아가기</button>
+    </div>
+    <div id="admBody"></div>
+    <div class="adm-actions">
+      <button class="btn danger" id="admReset">전체 예약 초기화</button>
+    </div>
+  </div>
+</div>
+
+<div class="foot">
+  <span class="credit">제작 · 호남고 조영신</span>
+  <div class="admin-link"><a id="adminLink">선생님용 보기</a></div>
+</div>
+
+<!-- 예약/변경/취소 확인 모달 -->
+<div class="backdrop" id="modal">
+  <div class="modal">
+    <h3 id="mTitle">예약 확인</h3>
+    <p id="mText"></p>
+    <div class="type-pick" id="typePick">
+      <button class="type-btn" data-type="전화">📞 전화 상담<small>30분 · 담임이 전화드립니다</small></button>
+      <button class="type-btn" data-type="방문">🏫 방문 상담<small>1시간 · 학교로 방문</small></button>
+    </div>
+    <div class="modal-btns">
+      <button class="btn ghost" id="mCancel">아니요</button>
+      <button class="btn primary" id="mOk">네, 예약할게요</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-app.js";
+import { getFirestore, collection, doc, onSnapshot, runTransaction, getDocs, writeBatch }
+  from "https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore.js";
+
+/* ==================================================================
+   ★★★★★  설정 영역 — 반을 추가할 때 여기만 수정하면 됩니다  ★★★★★
+   classes 배열에 반 블록을 하나 복사해 붙이면 학년·반 선택 화면에
+   자동으로 나타납니다. (아래 스크립트 본문은 손대지 않아도 됩니다)
+
+   반 블록 형식:
+   · classId     반 구분 — 데이터 저장 구분용. 반드시 반마다 다르게! (예 "3-1")
+   · grade/ban   학년·반 숫자 (선택 화면 구성용)
+   · teacherName 담임 성함
+   · adminPw     선생님용 화면 비밀번호 (반마다 다르게)
+   · topic/topicDetail 상담 주제 — 비우면("") 해당 안내 줄 숨김
+   · roster      학생 명단 — 번호는 두 자리 문자열("01","02"...)
+   · schedule    상담 가능 시간 — 날짜별 한 줄, 요일 자동 계산
+                 types: "모두"(전화+방문) / "전화" / "방문"
+                 times: [시작, 끝] — 반드시 30분 단위
+                 전화 상담=30분 1칸, 방문 상담=연속 2칸(1시간) 자동 처리
+   · periodLabel (선택) 반별 머리글 문구 — 없으면 APP.periodLabel 사용
+   · slotsCol/stuCol (선택) 데이터 컬렉션 이름을 직접 지정 — 3-6반처럼
+                 기존 단독 앱의 예약 데이터를 그대로 이어받을 때만 사용
+   ================================================================== */
+const APP = {
+  periodLabel: "2026학년도 2학기 상담주간",   // 제목 위 작은 문구 (기간은 반별 시간표에서 자동)
+  year: 2026,
+  classes: [
+
+    { classId:"3-1", grade:3, ban:1, teacherName:"이지원", adminPw:"@wldnjs0109",
+      topic:"", topicDetail:"",
+      roster:[
+        {num:"01",name:"김은찬"},{num:"02",name:"김청우"},{num:"03",name:"김하준"},{num:"04",name:"김현서"},
+        {num:"05",name:"박예준"},{num:"06",name:"박태영"},{num:"07",name:"신이현"},{num:"08",name:"양하랑"},
+        {num:"09",name:"윤도현"},{num:"10",name:"이경엽"},{num:"11",name:"이은겸"},{num:"12",name:"이정우"},
+        {num:"13",name:"이창헌"},{num:"14",name:"이태희"},{num:"15",name:"이현호"},{num:"16",name:"장민준"},
+        {num:"17",name:"장연범"},{num:"18",name:"전주형"},{num:"19",name:"정승재"},{num:"20",name:"조예찬"},
+        {num:"21",name:"최성우"}
+      ],
+      schedule:[
+        {date:"8/25", types:"모두", times:[ ["10:00","11:30"], ["13:30","14:30"], ["17:00","18:00"] ]},
+        {date:"8/26", types:"모두", times:[ ["10:00","10:30"], ["13:30","16:30"], ["17:00","18:00"] ]},
+        {date:"8/27", types:"모두", times:[ ["11:00","11:30"], ["13:30","14:30"], ["15:30","16:30"], ["17:00","18:00"] ]},
+        {date:"8/28", types:"모두", times:[ ["10:00","10:30"], ["11:30","12:30"], ["14:30","16:30"], ["17:00","18:00"] ]}
+      ]
+    },
+
+    /* 3-5는 학교 시정표 단위(09:40 시작 등) 시간대 — 연속된 신청 줄은 병합함 */
+    { classId:"3-5", grade:3, ban:5, teacherName:"심요섭", adminPw:"joseph031014$$",
+      periodLabel:"3학년 5반 2학기 상담주간(수시 지원)",
+      topic:"대입 수시 지원 방향",
+      topicDetail:"2027학년도 대입 수시 지원(지원 전략, 수시 카드 구성 등)",
+      roster:[
+        {num:"01",name:"강현수"},{num:"02",name:"김도훈"},{num:"03",name:"김성빈"},{num:"04",name:"김예찬"},
+        {num:"05",name:"서민웅"},{num:"06",name:"신재민"},{num:"07",name:"오영일"},{num:"08",name:"유승범"},
+        {num:"09",name:"유호성"},{num:"10",name:"이성빈"},{num:"11",name:"이승준"},{num:"12",name:"이승진"},
+        {num:"13",name:"임태훈"},{num:"14",name:"장준호"},{num:"15",name:"전재훈"},{num:"16",name:"정윤우"},
+        {num:"17",name:"최예건"},{num:"18",name:"추민석"},{num:"19",name:"홍경서"}
+      ],
+      schedule:[
+        {date:"8/25", types:"모두", times:[ ["09:40","12:40"], ["13:40","14:40"], ["19:00","21:00"] ]},
+        {date:"8/26", types:"모두", times:[ ["09:00","09:30"], ["11:40","12:40"], ["14:40","16:40"] ]},
+        {date:"8/27", types:"모두", times:[ ["09:00","09:30"], ["10:40","11:40"], ["13:40","16:40"], ["19:00","21:00"] ]},
+        {date:"8/28", types:"모두", times:[ ["09:00","09:30"], ["09:40","10:40"], ["13:40","16:40"] ]},
+        {date:"8/31", types:"모두", times:[ ["09:00","09:30"], ["09:40","10:40"], ["11:40","12:40"], ["13:40","15:40"], ["16:40","17:40"], ["19:00","21:00"] ]},
+        {date:"9/1",  types:"모두", times:[ ["09:40","12:40"], ["13:40","14:40"], ["15:40","16:40"], ["19:00","21:00"] ]},
+        {date:"9/3",  types:"모두", times:[ ["09:00","09:30"], ["10:40","11:40"], ["13:40","16:40"], ["19:00","21:00"] ]},
+        {date:"9/4",  types:"모두", times:[ ["09:00","09:30"], ["09:40","10:40"], ["13:40","17:40"], ["19:00","21:00"] ]},
+        {date:"9/7",  types:"모두", times:[ ["09:00","09:30"], ["09:40","10:40"], ["11:40","12:40"], ["13:40","15:40"], ["16:40","17:40"], ["19:00","21:00"] ]},
+        {date:"9/8",  types:"모두", times:[ ["09:40","12:40"], ["13:40","14:40"], ["15:40","16:40"], ["19:00","21:00"] ]},
+        {date:"9/9",  types:"모두", times:[ ["09:00","09:30"], ["11:40","12:40"], ["14:40","16:40"], ["19:00","21:00"] ]},
+        {date:"9/10", types:"모두", times:[ ["09:00","09:30"], ["10:40","11:40"], ["13:40","16:40"], ["19:00","21:00"] ]}
+      ]
+    },
+
+    /* 3-6은 기존 단독 앱(celadon-chimera)과 같은 컬렉션(pw_slots)을 공유
+       → 이미 들어온 예약이 그대로 보이고, 두 주소가 실시간 연동됨 */
+    { classId:"3-6", grade:3, ban:6, teacherName:"조영신", adminPw:"honam36",
+      slotsCol:"pw_slots", stuCol:"pw_students",
+      topic:"대입 수시 지원 방향",
+      topicDetail:"2027학년도 대입 수시 지원(지원 전략·수시 카드 구성 등)",
+      roster:[
+        {num:"01",name:"강태균"},{num:"02",name:"김기현"},{num:"03",name:"김준서"},{num:"04",name:"김태영"},
+        {num:"05",name:"박민서"},{num:"06",name:"박세훈"},{num:"07",name:"서지완"},{num:"08",name:"신수한"},
+        {num:"09",name:"신현민"},{num:"10",name:"유시형"},{num:"11",name:"유호준"},{num:"12",name:"이도윤"},
+        {num:"13",name:"이준영"},{num:"14",name:"정승환"},{num:"15",name:"조승원"},{num:"16",name:"조원준"},
+        {num:"17",name:"진현우"},{num:"18",name:"하승범"}
+      ],
+      schedule:[
+        {date:"8/24", types:"모두", times:[ ["19:00","22:00"] ]},
+        {date:"8/27", types:"모두", times:[ ["13:00","16:00"], ["19:00","22:00"] ]},
+        {date:"8/28", types:"모두", times:[ ["19:00","22:00"] ]},
+        {date:"8/30", types:"모두", times:[ ["09:00","12:00"], ["13:30","17:30"], ["19:00","22:00"] ]}
+      ]
+    }
+
+  ]
+};
+/* ==================================================================
+   ★★★★★  설정 영역 끝  ★★★★★
+   ================================================================== */
+
+/* 상담 예약 공용 파이어베이스 프로젝트(sangdam-b97c1)
+   — classId 접두사로 반별 데이터가 완전히 분리됩니다 */
+const firebaseConfig = {
+  apiKey: "AIzaSyBotwjsJxit4SbOzXVVOov37Po97AieoxM",
+  authDomain: "sangdam-b97c1.firebaseapp.com",
+  projectId: "sangdam-b97c1",
+  storageBucket: "sangdam-b97c1.firebasestorage.app",
+  messagingSenderId: "389048360844",
+  appId: "1:389048360844:web:675f4f6ce8d54a873140a9"
+};
+
+/* ================= 반별 상태 (반 선택 시 재구성) ================= */
+let cls=null;                 // 선택된 반 설정
+let ROSTER=[], DAYS=[], NEXT={}, PERIOD="";
+let PW_SLOTS="", PW_STU="";   // pw_{classId}_slots / pw_{classId}_students
+let db=null, unsubSlots=null, busy=false;
+let current=null, pickedName=null, bookState={};
+
+function band(s,e){
+  const out=[]; let [h,m]=s.split(":").map(Number); const [eh,em]=e.split(":").map(Number);
+  while(h*60+m < eh*60+em){ out.push(String(h).padStart(2,"0")+":"+String(m).padStart(2,"0")); m+=30; if(m>=60){m-=60;h++;} }
+  return out;
+}
+function bandLab(s,e){ const h=+s.split(":")[0]; return (h<12?"오전":(h<18?"오후":"저녁"))+" "+s+" ~ "+e; }
+const DOW=["일","월","화","수","목","금","토"];
+
+function buildClass(c){
+  cls=c;
+  ROSTER=c.roster;
+  DAYS=c.schedule.map(d=>{
+    const [mo,da]=d.date.split("/").map(Number);
+    return {
+      id: String(mo).padStart(2,"0")+String(da).padStart(2,"0"),
+      label: d.date,
+      dow: DOW[new Date(APP.year, mo-1, da).getDay()],
+      types: d.types==="모두" ? ["전화","방문"] : [d.types],
+      bands: d.times.map(t=>({lab:bandLab(t[0],t[1]), times:band(t[0],t[1])}))
+    };
+  });
+  PERIOD = DAYS.length ? DAYS[0].label+" ~ "+DAYS[DAYS.length-1].label : "";
+  NEXT={};
+  DAYS.forEach(d=>d.bands.forEach(b=>{
+    for(let i=0;i<b.times.length-1;i++) NEXT[slotId(d.id,b.times[i])]=slotId(d.id,b.times[i+1]);
+  }));
+  PW_SLOTS=c.slotsCol || "pw_"+c.classId+"_slots";
+  PW_STU=c.stuCol || "pw_"+c.classId+"_students";
+}
+
+/* ================= 머리글·안내문 ================= */
+function clsLabel(c){ return c.grade+"학년 "+c.ban+"반"; }
+function setHeader(){
+  if(cls){
+    document.title = clsLabel(cls)+" 학부모 상담 예약";
+    document.getElementById("lbTxt").textContent = "호남고등학교 · "+clsLabel(cls)+" (담임 "+cls.teacherName+")";
+    document.getElementById("heroEy").textContent = (cls.periodLabel||APP.periodLabel)+" · "+PERIOD;
+    document.getElementById("heroTitle").textContent = clsLabel(cls)+" 학부모 상담 예약";
+    document.getElementById("heroSub").innerHTML =
+      (cls.topic ? '이번 상담은 <b style="color:#fff">'+cls.topic+'</b>을(를) 중심으로 진행됩니다. ' : '')
+      +'자녀 이름을 선택한 뒤 원하는 상담 시간을 예약해 주세요. <b style="color:#fff">학생 1명당 1건</b>입니다.';
+    const callDays=DAYS.filter(d=>d.types.includes("전화"));
+    const visitDays=DAYS.filter(d=>d.types.includes("방문"));
+    /* keep-all 환경에서 줄바꿈 되도록 구분자 양옆에 공백 · 날짜가 많으면 축약 */
+    const list=a=>a.length>5 ? "모든 상담일" : a.map(d=>d.label+"("+d.dow+")").join(" · ");
+    document.getElementById("tlineCall").style.display = callDays.length? "" : "none";
+    document.getElementById("tlineVisit").style.display = visitDays.length? "" : "none";
+    const av=document.getElementById("availLine"); av.style.display="";
+    if(callDays.length && visitDays.length && callDays.length===DAYS.length && visitDays.length===DAYS.length){
+      av.innerHTML = "두 방법 모두 <b>"+list(DAYS)+"</b>에 가능합니다.";
+    }else{
+      const parts=[];
+      if(callDays.length) parts.push("<b>전화</b> 가능일: "+list(callDays));
+      if(visitDays.length) parts.push("<b>방문</b> 가능일: "+list(visitDays));
+      av.innerHTML = parts.join(" / ");
+    }
+    const tl=document.getElementById("topicLine");
+    if(cls.topicDetail){ tl.style.display=""; tl.innerHTML="상담 주제는 <b>"+cls.topicDetail+"</b>입니다."; }
+    else tl.style.display="none";
+  }else{
+    document.title = "3학년 학부모 상담 예약";
+    document.getElementById("lbTxt").textContent = "호남고등학교";
+    document.getElementById("heroEy").textContent = APP.periodLabel;
+    document.getElementById("heroTitle").textContent = "3학년 학부모 상담 예약";
+    document.getElementById("heroSub").innerHTML = "학년과 반을 선택하면 담임 선생님의 <b style=\"color:#fff\">상담 가능 시간</b>이 표시됩니다.";
+    document.getElementById("availLine").style.display="none";
+    document.getElementById("topicLine").style.display="none";
+  }
+}
+
+function slotId(dayId,time){return dayId+"_"+time.replace(":","");}
+function slotLabel(sid){
+  const [d,t]=sid.split("_");
+  const day=DAYS.find(x=>x.id===d);
+  const time=t.slice(0,2)+":"+t.slice(2);
+  return {full:(day?day.label+"("+day.dow+")":d)+" "+time, time, day};
+}
+function fmtPhone(v){
+  const d=v.replace(/[^0-9]/g,"");
+  if(d.length===11) return d.slice(0,3)+"-"+d.slice(3,7)+"-"+d.slice(7);
+  if(d.length===10) return d.slice(0,3)+"-"+d.slice(3,6)+"-"+d.slice(6);
+  return v;
+}
+function addMin(t,min){ let[h,m]=t.split(":").map(Number); m+=min; h+=Math.floor(m/60); m%=60; return String(h).padStart(2,"0")+":"+String(m).padStart(2,"0"); }
+function rangeLabel(sid,type){ const L=slotLabel(sid); return L.full+"~"+addMin(L.time,type==="방문"?60:30); }
+
+/* ================= Firestore 데이터 계층 =================
+   onSnapshot(실시간 반영) + runTransaction(원자적 선착순).
+   초과예약·1가정 1건은 트랜잭션이 서버에서 보장.
+   취소·변경은 예약 시 입력한 연락처가 일치해야 가능. */
+function subscribe(){
+  if(!db) db=getFirestore(initializeApp(firebaseConfig));
+  if(unsubSlots){ unsubSlots(); unsubSlots=null; }
+  bookState={};
+  unsubSlots=onSnapshot(collection(db,PW_SLOTS),(snap)=>{
+    const m={};
+    snap.forEach(d=>{ const v=d.data()||{}; m[d.id]={num:String(v.num),name:String(v.name||""),phone:String(v.phone||""),type:String(v.type||"전화"),cont:!!v.cont,ts:v.ts||0}; });
+    bookState=m;
+    renderNames();
+    if(bookScreen.style.display==="block") renderBooking();
+    if(adminScreen.style.display==="block") renderAdmin();
+  },(err)=>{ toast("데이터 연결 오류. 새로고침 해주세요.","no"); });
+}
+
+const api={
+  // 방문(1시간)은 sid와 다음 30분 슬롯(sid2)을 함께 원자적으로 확보
+  async book(sid, type, student, opts){
+    opts=opts||{};
+    const sid2 = type==="방문" ? (NEXT[sid]||null) : null;
+    if(type==="방문" && !sid2) return {ok:false, reason:"no_hour"};
+    try{
+      await runTransaction(db, async(tx)=>{
+        const stuRef=doc(db,PW_STU,student.num);
+        const stu=await tx.get(stuRef);
+        const old=stu.exists()?stu.data():null;
+        const oldSid=old?(old.sid||null):null;
+        const oldSid2=old?(old.sid2||null):null;
+        if(oldSid && !opts.replace && !(oldSid===sid)) throw {code:"has_booking", mine:oldSid};
+        if(oldSid && String(old.phone||"")!==student.phone) throw {code:"phone_mismatch"};
+        const cur=await tx.get(doc(db,PW_SLOTS,sid));
+        if(cur.exists() && String(cur.data().num)!==student.num) throw {code:"taken"};
+        if(sid2){
+          const cur2=await tx.get(doc(db,PW_SLOTS,sid2));
+          if(cur2.exists() && String(cur2.data().num)!==student.num) throw {code:"taken"};
+        }
+        const toDelete=[];
+        for(const os of [oldSid,oldSid2]){
+          if(os && os!==sid && os!==sid2){
+            const snap=await tx.get(doc(db,PW_SLOTS,os));
+            if(snap.exists() && String(snap.data().num)===student.num) toDelete.push(os);
+          }
+        }
+        toDelete.forEach(os=>tx.delete(doc(db,PW_SLOTS,os)));
+        tx.set(doc(db,PW_SLOTS,sid),{num:student.num, name:student.name, phone:student.phone, type:type, ts:Date.now()});
+        if(sid2) tx.set(doc(db,PW_SLOTS,sid2),{num:student.num, name:student.name, phone:student.phone, type:type, cont:true, ts:Date.now()});
+        tx.set(stuRef,{sid:sid, sid2:sid2, type:type, phone:student.phone, name:student.name, ts:Date.now()});
+      });
+      return {ok:true};
+    }catch(e){
+      if(e&&e.code==="has_booking") return {ok:false, reason:"has_booking", mine:e.mine};
+      if(e&&e.code==="phone_mismatch") return {ok:false, reason:"phone_mismatch"};
+      if(e&&e.code==="taken") return {ok:false, reason:"taken"};
+      return {ok:false, reason:"network"};
+    }
+  },
+  async cancel(sid, student){
+    try{
+      await runTransaction(db, async(tx)=>{
+        const slotRef=doc(db,PW_SLOTS,sid);
+        const stuRef=doc(db,PW_STU,student.num);
+        const s=await tx.get(slotRef);
+        if(!s.exists() || String(s.data().num)!==student.num) throw {code:"not_mine"};
+        if(String(s.data().phone||"")!==student.phone) throw {code:"phone_mismatch"};
+        const stu=await tx.get(stuRef);
+        const sid2=stu.exists()?(stu.data().sid2||null):null;
+        tx.delete(slotRef);
+        if(sid2) tx.delete(doc(db,PW_SLOTS,sid2));
+        tx.delete(stuRef);
+      });
+      return {ok:true};
+    }catch(e){
+      if(e&&e.code==="not_mine") return {ok:false, reason:"not_mine"};
+      if(e&&e.code==="phone_mismatch") return {ok:false, reason:"phone_mismatch"};
+      return {ok:false, reason:"network"};
+    }
+  },
+  async adminDelete(sid){
+    try{
+      await runTransaction(db, async(tx)=>{
+        const slotRef=doc(db,PW_SLOTS,sid);
+        const s=await tx.get(slotRef);
+        if(!s.exists()) return;
+        const num=String(s.data().num);
+        const stuRef=doc(db,PW_STU,num);
+        const stu=await tx.get(stuRef);
+        const sid2=stu.exists()?(stu.data().sid2||null):null;
+        tx.delete(slotRef);
+        if(sid2 && sid2!==sid) tx.delete(doc(db,PW_SLOTS,sid2));
+        tx.delete(stuRef);
+      });
+      return {ok:true};
+    }catch(e){ return {ok:false}; }
+  },
+  async clearAll(){
+    try{
+      for(const col of [PW_SLOTS, PW_STU]){
+        const snap=await getDocs(collection(db,col));
+        const batch=writeBatch(db); snap.forEach(d=>batch.delete(d.ref)); await batch.commit();
+      }
+      return {ok:true};
+    }catch(e){ return {ok:false}; }
+  }
+};
+
+/* ================= 화면 요소 ================= */
+const classScreen=document.getElementById("classScreen");
+const authScreen=document.getElementById("authScreen");
+const bookScreen=document.getElementById("bookScreen");
+const adminScreen=document.getElementById("adminScreen");
+const nameGrid=document.getElementById("nameGrid");
+const confirmRow=document.getElementById("confirmRow");
+const phoneInput=document.getElementById("phoneInput");
+const pinLabel=document.getElementById("pinLabel");
+const authErr=document.getElementById("authErr");
+
+function showOnly(el){
+  [classScreen,authScreen,bookScreen,adminScreen].forEach(x=>x.style.display=(x===el?"block":"none"));
+  window.scrollTo({top:0,behavior:"smooth"});
+}
+
+/* ================= 반 선택 화면 ================= */
+const grades=[...new Set(APP.classes.map(c=>c.grade))].sort((a,b)=>a-b);
+let pickedGrade=grades[0];
+
+function renderClassPick(){
+  const gr=document.getElementById("gradeRow");
+  gr.innerHTML="";
+  grades.forEach(g=>{
+    const b=document.createElement("button");
+    b.className="grade-chip"+(g===pickedGrade?" on":"");
+    b.textContent=g+"학년";
+    b.onclick=()=>{ pickedGrade=g; renderClassPick(); };
+    gr.appendChild(b);
+  });
+  const cg=document.getElementById("classGrid");
+  cg.innerHTML="";
+  const list=APP.classes.filter(c=>c.grade===pickedGrade).sort((a,b)=>a.ban-b.ban);
+  if(!list.length){ cg.innerHTML=`<div class="class-empty">이 학년은 아직 등록된 반이 없습니다.</div>`; return; }
+  list.forEach(c=>{
+    const b=document.createElement("button");
+    b.className="class-btn";
+    b.innerHTML=`<span class="cb-ban">${c.ban}반</span><span class="cb-t">담임 ${c.teacherName}</span>`;
+    b.onclick=()=>selectClass(c);
+    cg.appendChild(b);
+  });
+}
+
+function selectClass(c){
+  buildClass(c);
+  setHeader();
+  current=null; pickedName=null; phoneInput.value=""; confirmRow.classList.remove("show"); authErr.textContent="";
+  document.getElementById("clsName").innerHTML=`${clsLabel(c)} <span>담임 ${c.teacherName}</span>`;
+  renderNames();
+  subscribe();
+  showOnly(authScreen);
+}
+document.getElementById("reClassBtn").onclick=()=>{
+  if(unsubSlots){ unsubSlots(); unsubSlots=null; }
+  cls=null; current=null; pickedName=null; bookState={};
+  setHeader(); renderClassPick();
+  showOnly(classScreen);
+};
+
+/* ================= 본인확인 화면 ================= */
+function bookedNums(){ const s=new Set(); Object.values(bookState).forEach(b=>s.add(b.num)); return s; }
+
+function renderNames(){
+  if(!nameGrid || !cls) return;
+  const done=bookedNums();
+  nameGrid.innerHTML="";
+  ROSTER.forEach(s=>{
+    const b=document.createElement("button");
+    b.className="name-btn"+(pickedName&&pickedName.num===s.num?" on":"");
+    b.innerHTML=`<span class="nb-no">${s.num}</span>${s.name}`+(done.has(s.num)?`<span class="nb-done">예약완료</span>`:"");
+    b.onclick=()=>{ pickedName=s; authErr.textContent=""; renderNames();
+      confirmRow.classList.add("show");
+      pinLabel.innerHTML=`<b style="color:var(--navy)">${s.name}</b> 학생 학부모님 — 연락처를 입력하세요`;
+      phoneInput.focus();
+      confirmRow.scrollIntoView({behavior:"smooth",block:"center"});
+    };
+    nameGrid.appendChild(b);
+  });
+}
+document.getElementById("enterBtn").onclick=tryEnter;
+phoneInput.addEventListener("keydown",e=>{if(e.key==="Enter")tryEnter();});
+phoneInput.addEventListener("input",()=>{authErr.textContent="";});
+function tryEnter(){
+  if(!pickedName){authErr.textContent="먼저 자녀 이름을 선택하세요.";return;}
+  const d=phoneInput.value.replace(/[^0-9]/g,"");
+  if(d.length<10){authErr.textContent="휴대전화 번호를 정확히 입력해 주세요.";return;}
+  current={num:pickedName.num,name:pickedName.name,phone:fmtPhone(d)};
+  showBooking();
+}
+
+/* ================= 예약 화면 ================= */
+function showBooking(){
+  showOnly(bookScreen);
+  document.getElementById("whoName").innerHTML=`${current.name} <span>학생 학부모님 · ${clsLabel(cls)}</span>`;
+  renderBooking();
+}
+document.getElementById("logoutBtn").onclick=()=>{
+  current=null; pickedName=null; phoneInput.value=""; confirmRow.classList.remove("show");
+  renderNames();
+  showOnly(authScreen);
+};
+
+function myBookingSid(){ return Object.keys(bookState).find(k=>bookState[k].num===current.num && !bookState[k].cont); }
+
+function renderBooking(){
+  const mine=myBookingSid();
+  const mb=document.getElementById("myBook");
+  if(mine){
+    const b=bookState[mine];
+    mb.className="mybook";
+    mb.innerHTML=`<div class="mb-l">예약 완료 · <b>${rangeLabel(mine,b.type)}</b> <b style="color:var(--green-d)">${b.type} 상담${b.type==="방문"?" (1시간)":""}</b></div>
+      <button class="btn danger" id="cancelBtn" style="padding:9px 14px;font-size:13px">예약 취소</button>`;
+    document.getElementById("cancelBtn").onclick=()=>askCancel(mine);
+  }else{
+    mb.className="mybook none";
+    mb.innerHTML=`<div class="mb-l">아직 예약이 없습니다. 아래에서 원하는 시간을 선택해 주세요.</div>`;
+  }
+  const wrap=document.getElementById("dayWrap");
+  wrap.innerHTML="";
+  DAYS.forEach(day=>{
+    const total=day.bands.reduce((a,b)=>a+b.times.length,0);
+    const taken=day.bands.reduce((a,b)=>a+b.times.filter(t=>bookState[slotId(day.id,t)]).length,0);
+    const el=document.createElement("div");
+    el.className="day";
+    const typeTags=day.types.map(t=>`<span class="tp ${t==="전화"?"call":"visit"}">${t}</span>`).join(" ");
+    const dowCls=day.dow==="일"?" sun":(day.dow==="토"?" sat":"");
+    el.innerHTML=`<div class="day-h"><span class="dh-date">${day.label}</span><span class="dh-dow${dowCls}">${day.dow}요일</span> ${typeTags}<span class="dh-cnt">남은 자리 ${total-taken}/${total}</span></div>`;
+    day.bands.forEach(bd=>{
+      const lab=document.createElement("div"); lab.className="band-lab"; lab.textContent=bd.lab; el.appendChild(lab);
+      const grid=document.createElement("div"); grid.className="slots";
+      bd.times.forEach(t=>{
+        const sid=slotId(day.id,t);
+        const bk=bookState[sid];
+        const mineHere=bk&&current&&bk.num===current.num;
+        const btn=document.createElement("button");
+        btn.className="slot "+(mineHere?"me":(bk?"full":"free"));
+        btn.innerHTML=`<span class="s-t">${t}</span><span class="s-s">${mineHere?("내 예약 · "+bk.type):(bk?"마감":"예약 가능")}</span>`;
+        if(!bk) btn.onclick=()=>askBook(sid,day);
+        else if(mineHere) btn.onclick=()=>askCancel(bk.cont?myBookingSid():sid);
+        else btn.disabled=true;
+        grid.appendChild(btn);
+      });
+      el.appendChild(grid);
+    });
+    wrap.appendChild(el);
+  });
+}
+
+/* ================= 모달 ================= */
+const modal=document.getElementById("modal");
+const mTitle=document.getElementById("mTitle");
+const mText=document.getElementById("mText");
+const mOk=document.getElementById("mOk");
+const mCancel=document.getElementById("mCancel");
+const typePick=document.getElementById("typePick");
+let pickedType=null;
+mCancel.onclick=()=>modal.classList.remove("show");
+typePick.querySelectorAll(".type-btn").forEach(b=>{
+  b.onclick=()=>{ if(b.disabled) return; pickedType=b.dataset.type;
+    typePick.querySelectorAll(".type-btn").forEach(x=>x.classList.toggle("on",x===b)); };
+});
+
+function askBook(sid, day){
+  if(busy) return;
+  const L=slotLabel(sid);
+  const mine=myBookingSid();
+  const replacing=mine&&mine!==sid;
+  // 방문(1시간)은 다음 30분 칸까지 비어 있어야 가능 (내 기존 예약 칸은 변경이므로 허용)
+  const nsid=NEXT[sid]||null;
+  const visitOk=day.types.includes("방문") && !!nsid && (!bookState[nsid] || (current&&bookState[nsid].num===current.num));
+  const visitBtn=typePick.querySelector('[data-type="방문"]');
+  if(day.types.length>1){
+    typePick.classList.remove("hide"); pickedType=null;
+    typePick.querySelectorAll(".type-btn").forEach(x=>x.classList.remove("on"));
+    visitBtn.disabled=!visitOk;
+    visitBtn.classList.toggle("off",!visitOk);
+    visitBtn.querySelector("small").textContent=visitOk?"1시간 · 학교로 방문":"이 시간은 1시간 확보 불가";
+  }else{
+    typePick.classList.add("hide"); pickedType=day.types[0];
+    if(pickedType==="방문" && !visitOk){ toast("이 시간은 방문 상담(1시간)이 어려워요. 다른 시간을 선택해 주세요.","no"); return; }
+  }
+  const singleDur=day.types.length===1?(day.types[0]==="방문"?"1시간":"30분"):"";
+  mTitle.textContent=replacing?"예약 변경":"예약 확인";
+  mText.innerHTML=(replacing?`기존 예약(<b>${slotLabel(mine).full}</b>)을 취소하고 아래 시간으로 변경합니다.<br>`:"")
+    +`<span class="mslot">${L.full}</span> 시작 · ${current.name} 학생 학부모님`
+    +(day.types.length>1?`<br>상담 방법을 선택해 주세요. (전화 30분 · 방문 1시간)`:`<br><b>${day.types[0]} 상담(${singleDur})</b>으로 예약됩니다.`);
+  mOk.textContent=replacing?"네, 변경할게요":"네, 예약할게요";
+  mOk.onclick=async()=>{
+    if(day.types.length>1 && !pickedType){ toast("전화 또는 방문을 선택해 주세요.","no"); return; }
+    modal.classList.remove("show"); busy=true;
+    const r=await api.book(sid, pickedType, current, {replace:!!replacing});
+    busy=false;
+    if(r.ok) toast(`${rangeLabel(sid,pickedType)} ${pickedType} 상담 예약 완료!`,"ok");
+    else if(r.reason==="taken") toast("방금 다른 분이 먼저 예약해서 시간이 부족해요. 다른 시간을 선택해 주세요.","no");
+    else if(r.reason==="no_hour") toast("이 시간은 방문 상담(1시간)이 어려워요. 다른 시간을 선택해 주세요.","no");
+    else if(r.reason==="has_booking") toast("이미 예약이 있어요. 기존 예약을 취소하거나 변경해 주세요.","no");
+    else if(r.reason==="phone_mismatch") toast("예약할 때 입력한 연락처와 달라요. '처음으로'에서 같은 번호로 다시 입장해 주세요.","no");
+    else toast("네트워크 오류. 잠시 후 다시 시도해 주세요.","no");
+  };
+  modal.classList.add("show");
+}
+
+function askCancel(sid){
+  if(busy) return;
+  const bk=bookState[sid];
+  typePick.classList.add("hide");
+  mTitle.textContent="예약 취소";
+  mText.innerHTML=`<span class="mslot">${rangeLabel(sid,bk?bk.type:"전화")} ${bk?bk.type:""} 상담</span> 예약을 취소할까요?<br>취소 후 다른 시간으로 다시 예약할 수 있습니다.`;
+  mOk.textContent="네, 취소할게요";
+  mOk.onclick=async()=>{
+    modal.classList.remove("show"); busy=true;
+    const r=await api.cancel(sid,current);
+    busy=false;
+    if(r.ok) toast("예약이 취소되었습니다.","ok");
+    else if(r.reason==="phone_mismatch") toast("예약할 때 입력한 연락처와 달라요. '처음으로'에서 같은 번호로 다시 입장해 주세요.","no");
+    else toast("취소하지 못했어요. 새로고침 후 다시 시도해 주세요.","no");
+  };
+  modal.classList.add("show");
+}
+
+/* ================= 토스트 ================= */
+const toastEl=document.getElementById("toast");
+let toastTimer=null;
+function toast(msg,kind){
+  toastEl.textContent=msg;
+  toastEl.className="toast show"+(kind==="ok"?" ok":kind==="no"?" no":"");
+  clearTimeout(toastTimer);
+  toastTimer=setTimeout(()=>toastEl.classList.remove("show"),3200);
+}
+
+/* ================= 선생님용 (반별 비밀번호) ================= */
+document.getElementById("adminLink").onclick=()=>{
+  if(!cls){ toast("먼저 학년·반을 선택해 주세요.","no"); return; }
+  const pw=prompt(clsLabel(cls)+" 선생님용 비밀번호를 입력하세요");
+  if(pw!==cls.adminPw){ if(pw!==null) toast("비밀번호가 달라요.","no"); return; }
+  document.getElementById("admTitle").textContent="🔒 선생님용 · "+clsLabel(cls)+" 예약 현황";
+  showOnly(adminScreen); renderAdmin();
+};
+document.getElementById("admBack").onclick=()=>{
+  if(current) showOnly(bookScreen); else showOnly(authScreen);
+};
+document.getElementById("admReset").onclick=async()=>{
+  if(!confirm("정말 "+clsLabel(cls)+" 전체 예약을 초기화할까요? 되돌릴 수 없습니다.")) return;
+  const r=await api.clearAll();
+  toast(r.ok?"전체 예약을 초기화했습니다.":"초기화 실패. 다시 시도해 주세요.", r.ok?"ok":"no");
+};
+
+function renderAdmin(){
+  const body=document.getElementById("admBody");
+  const entries=[];
+  DAYS.forEach(day=>day.bands.forEach(bd=>bd.times.forEach(t=>{
+    const sid=slotId(day.id,t); const bk=bookState[sid];
+    if(bk && !bk.cont) entries.push({sid, day, t, bk});
+  })));
+  const done=bookedNums();
+  const notYet=ROSTER.filter(s=>!done.has(s.num));
+  let html=`<div class="adm-sec">예약 현황 (${entries.length}건 / ${ROSTER.length}명)</div>`;
+  if(entries.length===0){ html+=`<div class="info">아직 예약이 없습니다.</div>`; }
+  else{
+    html+=`<div style="overflow-x:auto"><table class="adm-table"><tr><th>날짜</th><th>시간</th><th>방법</th><th>학생</th><th>학부모 연락처</th><th></th></tr>`;
+    entries.forEach(e=>{
+      html+=`<tr><td>${e.day.label}(${e.day.dow})</td><td>${e.t}~${addMin(e.t,e.bk.type==="방문"?60:30)}</td><td>${e.bk.type}</td><td><b>${e.bk.num} ${e.bk.name}</b></td><td class="tel"><a href="tel:${e.bk.phone.replace(/-/g,"")}">${e.bk.phone}</a></td><td><button class="del" data-sid="${e.sid}">삭제</button></td></tr>`;
+    });
+    html+=`</table></div>`;
+  }
+  html+=`<div class="adm-sec">미예약 학생 (${notYet.length}명)</div><div class="chiprow">`;
+  html+= notYet.length? notYet.map(s=>`<span class="chip warn">${s.num} ${s.name}</span>`).join("") : `<span class="chip">전원 예약 완료 🎉</span>`;
+  html+=`</div>`;
+  body.innerHTML=html;
+  body.querySelectorAll(".del").forEach(b=>{
+    b.onclick=async()=>{
+      const sid=b.dataset.sid; const L=slotLabel(sid);
+      if(!confirm(`${L.full} 예약을 삭제할까요?`)) return;
+      const r=await api.adminDelete(sid);
+      toast(r.ok?"삭제했습니다.":"삭제 실패.", r.ok?"ok":"no");
+    };
+  });
+}
+
+/* ================= 시작 =================
+   주소 뒤에 #3-1 처럼 classId를 붙이면 그 반으로 바로 입장 (반별 안내 문자용) */
+setHeader();
+renderClassPick();
+const hashCls=APP.classes.find(c=>"#"+c.classId===decodeURIComponent(location.hash));
+if(hashCls) selectClass(hashCls);
+else showOnly(classScreen);
+</script>
+</body>
+</html>
