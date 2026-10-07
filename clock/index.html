@@ -1393,14 +1393,28 @@ document.querySelectorAll('#clsSeg button').forEach(b => b.onclick = () => loadC
 $('#btnLoadClass').onclick = () => loadClass($('#classInput').value);
 $('#classInput').addEventListener('keydown', e => { if(e.key === 'Enter') loadClass($('#classInput').value); });
 $('#btnSeatToggle').onclick = () => { const off = document.body.classList.toggle('noseat'); $('#btnSeatToggle').textContent = off ? '출결판 보이기' : '출결판 숨기기'; };
-$('#btnFull').onclick = () => document.fullscreenElement ? document.exitFullscreen() : document.documentElement.requestFullscreen();
-// 전체화면에서는 위쪽 버튼을 접어 두고 [☰ 메뉴]로만 꺼낸다 (수업 중 오조작 방지)
-document.addEventListener('fullscreenchange', () => {
-  const on = !!document.fullscreenElement;
+// 구형 전자칠판(Chrome 69 WebView)은 webkit 접두사만 지원하고, 아예 API가 없는 기기도 있다
+const fsElement = () => document.fullscreenElement || document.webkitFullscreenElement || null;
+function applyKiosk(on){
   document.body.classList.toggle('kiosk', on); document.body.classList.remove('menu');
   $('#btnFull').textContent = on ? '전체화면 끝내기' : '전체화면'; $('#btnMenu').textContent = '☰ 메뉴';
   setTimeout(() => { buildTimeline(); tick(); }, 60);
-});
+}
+$('#btnFull').onclick = () => {
+  const root = document.documentElement;
+  try {
+    if (fsElement()) {
+      if (document.exitFullscreen) document.exitFullscreen();
+      else if (document.webkitExitFullscreen) document.webkitExitFullscreen();
+    } else if (root.requestFullscreen) root.requestFullscreen();
+    else if (root.webkitRequestFullscreen) root.webkitRequestFullscreen();
+    else applyKiosk(!document.body.classList.contains('kiosk'));
+  } catch (e) { applyKiosk(!document.body.classList.contains('kiosk')); }
+};
+// 전체화면에서는 위쪽 버튼을 접어 두고 [☰ 메뉴]로만 꺼낸다 (수업 중 오조작 방지)
+const onFsChange = () => applyKiosk(!!fsElement());
+document.addEventListener('fullscreenchange', onFsChange);
+document.addEventListener('webkitfullscreenchange', onFsChange);
 $('#btnMenu').onclick = () => { const open = document.body.classList.toggle('menu'); $('#btnMenu').textContent = open ? '✕ 메뉴 닫기' : '☰ 메뉴'; $('#btnMenu').setAttribute('aria-expanded', open); };
 function applyMin(show){ document.body.classList.toggle('nomin', !show); $('#btnMin').textContent = show ? '최저 숨기기' : '최저 보기'; $('#btnMin').classList.toggle('primary', show); }
 $('#btnMin').onclick = () => applyMin(document.body.classList.contains('nomin'));
