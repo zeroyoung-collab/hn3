@@ -547,6 +547,15 @@
 </div>
 
 <script>
+/* ════════ 구형 브라우저(전자칠판 내장 크롬 등) 호환 패치 ════════ */
+function nvl(a, b){ return (a === undefined || a === null) ? b : a; }
+if (typeof structuredClone !== 'function') { window.structuredClone = function(o){ return JSON.parse(JSON.stringify(o)); }; }
+if (!Object.fromEntries) { Object.fromEntries = function(it){ var o = {}; Array.prototype.forEach.call(it, function(p){ o[p[0]] = p[1]; }); return o; }; }
+if (!Object.entries) { Object.entries = function(o){ return Object.keys(o).map(function(k){ return [k, o[k]]; }); }; }
+if (!Object.values) { Object.values = function(o){ return Object.keys(o).map(function(k){ return o[k]; }); }; }
+if (!String.prototype.padStart) { Object.defineProperty(String.prototype, 'padStart', { value: function(len, fill){ var s = String(this); fill = String(fill === undefined ? ' ' : fill); while (s.length < len) s = fill + s; return s.length > len && s.length > String(this).length ? s.slice(s.length - Math.max(len, String(this).length)) : s; } }); }
+if (!Array.prototype.flatMap) { Object.defineProperty(Array.prototype, 'flatMap', { value: function(f){ return this.map(f).reduce(function(a, b){ return a.concat(b); }, []); } }); }
+
 /* ════════ 기본 데이터 ════════ */
 // 우리 교실 시간표 (2026-10 확정안): 기본 시정표 위에 수능 과목 순서를 얹음
 const DEFAULT_OPS = [
@@ -727,8 +736,8 @@ const WARM_QUOTES = ["여기까지 온 것만으로도 이미 많이 해냈다",
 const QUOTE_SEC = 45;
 const TIP_KEYS = ['국어','수학','영어','한국사','탐구','제2외국어','쉬는 시간','점심시간','수능 당일'];
 const TIP_SUBJ = ['국어','수학','영어','한국사','탐구','제2외국어'];   // 과목 시간에 과목명으로 찾는 꿀팁
-const tipList = k => tips[k] ?? DEFAULT_TIPS[k] ?? [];
-const planOf = k => String(plans[k] ?? DEFAULT_PLANS[k] ?? '').split(',').map(x => x.trim().match(/^(.*?)\s*(\d+)\s*분?$/)).filter(Boolean).map(m => ({name:m[1].trim(), min:+m[2]}));
+const tipList = k => nvl(nvl(tips[k], DEFAULT_TIPS[k]), []);
+const planOf = k => String(nvl(nvl(plans[k], DEFAULT_PLANS[k]), '')).split(',').map(x => x.trim().match(/^(.*?)\s*(\d+)\s*분?$/)).filter(Boolean).map(m => ({name:m[1].trim(), min:+m[2]}));
 // 목표 수능최저 (이름 기준, 내장 · 이동반 편성 명단 '목표 수능최저' 열) — 자리 편집에서 직접 적으면 그 값이 우선
 const MINS = {"김청우":"조선대 3합 5 (수학 포함)","노승우":"성균관대 4합 6","안석현":"계명대 2합 7","안수현":"성균관대 4합 7","박재현":"원광대 3합 5 (수학 포함)","신지용":"성균관대 4합 7","강정우":"홍익대 2합 5","김관유":"전북대 4합 6","김세진":"부산대 2합 5 (수학 포함)","유지안":"고려대 4합 5","이호열":"전북대 4합 6","김도훈":"전남대 2합 7","김성빈":"아주대 2합 5","서민웅":"전북대 4합 6","정윤우":"고려대 4합 8","박민서":"고려대 4합 8","이준영":"부산대 2합 5 (수학 포함)","하승범":"부산대 2합 5 (수학 포함)","박예준":"고려대 4합 8","이경엽":"전남대 3합 9","이은겸":"인천대 2합 7","강민광":"부산대 2합 5","이승로":"한국해양대 2합 9","김성윤":"전남대 3합 10","이산":"전북대 2합 8","김동윤":"충북대 2합 8","김예찬":"최저 없음","이승진":"중앙대 3합 6","임태훈":"전북대 2합 8 (수학 포함)","홍경서":"경북대 2합 6","김준서":"부산대 2합 5 (수학 포함)","서지완":"충남대 3합 12","이도윤":"고려대 4합 8","정승환":"전남대 2합 8","조승원":"부산대 2합 5 (수학 포함)","김하준":"한동대 2합 7","양하랑":"경북대 2합 6","김지환":"정시","이성훈":"정시","이한샘":"전북대 2합 7","강동훈":"동신대 2합 11","김건우":"조선대 1개 영역 6등급","김영준":"원광대 3합 13","박윤환":"한국해양대 2합 9","한석":"가천대 1개 영역 3등급","허정관":"전북대 2합 7","강현수":"전북대 2합 8 (수학 포함)","오영일":"원광대 3합 13","유승범":"정시","유호성":"정시","이성빈":"조선대 1개 영역 6등급","박세훈":"정시","이서진":"정시"};
 const DOOR_NOTE = {'3-6':'뒷문 이용', '3-5.5':'앞문 이용', '3-5':'앞·뒷문 이용'};
@@ -749,7 +758,7 @@ for(const k of ['start','end']){ if(BUILTIN_SRC[k]){ builtinAudio[k] = new Audio
 /* ════════ 도구 ════════ */
 const $ = s => document.querySelector(s);
 const pad = n => String(n).padStart(2,'0');
-const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const esc = s => String(s == null ? '' : s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const toSec = hm => { if(!hm) return null; const m = String(hm).trim().match(/^(\d{1,2}):(\d{2})(?::(\d{2}))?$/); return m ? (+m[1])*3600 + (+m[2])*60 + (+(m[3]||0)) : null; };
 const hm = s => `${pad(Math.floor(s/3600))}:${pad(Math.floor(s/60)%60)}`;
 const hms = s => `${hm(s)}:${pad(s%60)}`;
@@ -757,7 +766,7 @@ const left = s => s >= 3600 ? `${Math.floor(s/3600)}:${pad(Math.floor(s/60)%60)}
 const mins = s => { const m = Math.ceil(s/60); return m >= 60 ? `${Math.floor(m/60)}시간 ${m%60 ? (m%60)+'분' : ''}`.trim() : `${m}분`; };
 function store(k, v){ try{ localStorage.setItem(k, typeof v === 'string' ? v : JSON.stringify(v)); }catch(e){} }
 function loadStr(k){ try{ return localStorage.getItem(k); }catch(e){ return null; } }
-function loadJSON(k, def){ try{ const v = JSON.parse(localStorage.getItem(k)); return v ?? structuredClone(def); }catch(e){ return structuredClone(def); } }
+function loadJSON(k, def){ try{ const v = JSON.parse(localStorage.getItem(k)); return v == null ? structuredClone(def) : v; }catch(e){ return structuredClone(def); } }
 function subjVar(name){
   if(/국어/.test(name)) return 'var(--kor)';
   if(/수학/.test(name)) return 'var(--math)';
@@ -1407,11 +1416,12 @@ $('#btnLog').onclick = () => {
   renderLog(); $('#overlay').style.display = 'block'; $('#logModal').style.display = 'block';
 };
 $('#logDate').onchange = renderLog;
-$('#btnCopyLog').onclick = async () => {
+$('#btnCopyLog').onclick = () => {
   const date = $('#logDate').value, rows = logMatrix(date);
   const tsv = [['번호','이름',...periods.map(p => p.name)].join('\t'), ...rows.map(r => [r.no, r.name, ...r.v.map(v => v ? ST[v].name : '')].join('\t'))].join('\n');
-  try{ await navigator.clipboard.writeText(tsv); toast('표를 복사했습니다. 엑셀에 붙여 넣으세요'); }
-  catch(e){ const ta = document.createElement('textarea'); ta.value = tsv; document.body.appendChild(ta); ta.select(); document.execCommand('copy'); ta.remove(); toast('표를 복사했습니다'); }
+  const fallback = () => { const ta = document.createElement('textarea'); ta.value = tsv; document.body.appendChild(ta); ta.select(); document.execCommand('copy'); document.body.removeChild(ta); toast('표를 복사했습니다'); };
+  if (navigator.clipboard && navigator.clipboard.writeText) { navigator.clipboard.writeText(tsv).then(() => toast('표를 복사했습니다. 엑셀에 붙여 넣으세요')).catch(fallback); }
+  else { fallback(); }
 };
 
 /* ════════ 설정 ════════ */
@@ -1445,7 +1455,7 @@ $('#btnAddPer').onclick = () => { periods.push({name:'새 교시', start:'18:00'
 $('#btnResetPer').onclick = () => { periods = structuredClone(DEFAULT_PERIODS); renderPers(); };
 function openSettings(){
   renderOps(); renderPers();
-  $('#tipEditors').innerHTML = TIP_KEYS.map(k => `<div class="tiplab">${k}</div>${TIP_SUBJ.includes(k) ? `<input data-plan="${k}" value="${esc(plans[k] ?? DEFAULT_PLANS[k] ?? '')}" placeholder="실전 시간배분 예: 선택과목 15, 문학 22, 독서 35, 검토·마킹 8" style="width:100%;margin-bottom:4px">` : ''}<textarea rows="4" data-k="${k}">${esc(tipList(k).join('\n'))}</textarea>`).join('');
+  $('#tipEditors').innerHTML = TIP_KEYS.map(k => `<div class="tiplab">${k}</div>${TIP_SUBJ.includes(k) ? `<input data-plan="${k}" value="${esc(nvl(nvl(plans[k], DEFAULT_PLANS[k]), ''))}" placeholder="실전 시간배분 예: 선택과목 15, 문학 22, 독서 35, 검토·마킹 8" style="width:100%;margin-bottom:4px">` : ''}<textarea rows="4" data-k="${k}">${esc(tipList(k).join('\n'))}</textarea>`).join('');
   $('#ddayInput').value = dday; $('#quoteEditor').value = quotes.join('\n');
   $('#bellOn').checked = bellOn; $('#volume').value = volume; $('#volLabel').textContent = volume + '%';
   $('#overlay').style.display = 'block'; $('#setModal').style.display = 'block';
