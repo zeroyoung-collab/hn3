@@ -697,10 +697,12 @@ function tick(){
   const tipList = (tipKey && tips[tipKey] && tips[tipKey].length) ? tips[tipKey] : null;
   const tb = $('#tipBox'), te = $('#tipText');
   const sb = document.querySelector('.seatbody');
+  const db = $('#dayBox');
   if(tipList){
     if(tipOpen){
-      // 펼침: 자리배치를 덮는 대형 패널
+      // 펼침: 자리배치 + 감독교대 일과표까지 덮는 전체 높이 패널
       tb.style.display = 'flex'; tb.classList.add('open'); sb.style.display = 'none';
+      db.style.display = 'none';
       const head = `💡 ${tipKey} 꿀팁`;
       if($('#tipHead').textContent !== head) $('#tipHead').textContent = head;
       const joined = tipList.join('\n');
@@ -716,12 +718,12 @@ function tick(){
       }
       te.style.display = 'flex';
     }else{
-      tb.style.display = 'block'; tb.classList.remove('open'); sb.style.display = '';
+      tb.style.display = 'block'; tb.classList.remove('open'); sb.style.display = ''; db.style.display = '';
       if($('#tipHead').textContent !== '💡 꿀팁') $('#tipHead').textContent = '💡 꿀팁';
       te.style.display = 'none';
     }
   }else{
-    tb.style.display = 'none'; tb.classList.remove('open'); sb.style.display = '';
+    tb.style.display = 'none'; tb.classList.remove('open'); sb.style.display = ''; db.style.display = '';
   }
 
   // 출석 체크 창(窓): 감독 교대 일과 교시 단위로 자동 리셋
