@@ -54,7 +54,7 @@
   .clockRow{display:flex; align-items:center; justify-content:center; gap:3vw; width:100%}
   #clockWrap{display:flex; flex-direction:column; align-items:center; gap:1vh}
   #aclock{
-    width:min(60vmin, 38vw, calc(100vh - 330px)); height:auto;
+    width:min(52vmin, 30vw, calc(100vh - 330px)); height:auto;
     filter:drop-shadow(0 0 34px rgba(217,184,92,.14));
   }
   #digiClock{
@@ -94,17 +94,15 @@
   #progressWrap{width:70%; max-width:760px; height:8px; background:var(--panel); border-radius:4px; overflow:hidden; display:none}
   #progressBar{height:100%; width:0%; background:linear-gradient(90deg,var(--gold-dim),var(--gold))}
 
-  /* 세로 타임테이블 바 (시계 옆) — 스크롤 트랙, 현재 시각 자동 추적 */
+  /* 세로 타임테이블 바 (시계 옆) — 2단 구성(오전/오후), 하루 전체가 한눈에 */
   #timeline{
-    position:relative; flex:0 0 auto; overflow-y:auto; overflow-x:hidden;
-    width:clamp(230px, 22vw, 360px);
+    position:relative; flex:0 0 auto; overflow:hidden; display:flex;
+    width:clamp(420px, 34vw, 620px);
     height:min(calc(100vh - 230px), 880px);
     background:var(--navy2); border:1px solid var(--line); border-radius:10px;
-    scrollbar-width:thin; scrollbar-color:#2c4668 transparent;
   }
-  #timeline::-webkit-scrollbar{width:6px}
-  #timeline::-webkit-scrollbar-thumb{background:#2c4668; border-radius:3px}
-  #tlTrack{position:relative; width:100%}
+  .tlcol{position:relative; flex:1; min-width:0; height:100%}
+  .tlcol + .tlcol{border-left:1.5px solid var(--line)}
   .tlseg{
     position:absolute; left:0; right:0; padding:3px 12px; overflow:hidden;
     font-size:clamp(12px, 1.1vw, 16px); line-height:1.25; white-space:nowrap;
@@ -120,6 +118,7 @@
   #tlNow{
     position:absolute; left:0; right:0; height:0; z-index:6; pointer-events:none;
     border-top:3px solid #ff4b36; box-shadow:0 0 14px rgba(255,75,54,.85), 0 0 4px rgba(255,75,54,.9);
+    transition:top .3s linear;  /* 250ms 틱 사이를 이어 부드럽게 하강 */
   }
   #tlNow::before{
     content:''; position:absolute; left:0; top:-8px;
@@ -758,17 +757,29 @@ function tick(){
     ? `다음 타종 <b>${fmtHMS(ne.sec).slice(0,5)}</b> · ${ne.label} (${ne.period.name})`
     : '오늘 남은 타종이 없습니다';
 
-  renderStrip(sec);
+  renderStrip(sec, sec + d.getMilliseconds()/1000);
 }
 
-function renderStrip(sec){
-  // 타임라인 현재 위치 (빨간 라인이 위→아래로 내려감)
+function renderStrip(sec, secF){
+  // 타임라인 현재 위치 (빨간 라인이 위→아래로 내려감) — 밀리초 단위로 부드럽게
   if(tlMap){
-    const pc = Math.max(0, Math.min(100, tlPos(sec)));
-    $('#tlNow').style.top = pc + '%';
+    const pc = Math.max(0, Math.min(100, tlPos(secF ?? sec)));
+    const inCol2 = pc >= tlSplitPc && tlSplitPc > 0 && tlSplitPc < 100;
+    const colEl = $(inCol2 ? '#tlcol1' : '#tlcol0');
+    const cw = inCol2 ? 100 - tlSplitPc : tlSplitPc;
+    const local = Math.max(0, Math.min(100, (pc - (inCol2 ? tlSplitPc : 0)) / (cw || 100) * 100));
+    const nowEl = $('#tlNow');
+    if(colEl && nowEl.parentElement !== colEl){
+      // 단 이동 시에는 전환 애니메이션 없이 즉시 점프 (역방향 스윕 방지)
+      nowEl.style.transition = 'none';
+      colEl.appendChild(nowEl);
+      nowEl.style.top = local + '%';
+      requestAnimationFrame(() => { nowEl.style.transition = ''; });
+    }else{
+      nowEl.style.top = local + '%';
+    }
     const lab = fmtHMS(sec).slice(0,5);
     if($('#tlNowLab').textContent !== lab) $('#tlNowLab').textContent = lab;
-    followTimeline();
     const curIdx = timetable.findIndex(p => {
       const s = toSec(p.start), e = toSec(p.end);
       return s !== null && e !== null && sec >= s && sec < e;
@@ -1143,6 +1154,7 @@ const SUBJ_PAL = ['#e06c5c','#5b8ee6','#4caf7d','#e0a040','#a06ce0','#c45cc0','#
 /* 세로 타임테이블 바 */
 const fmtRange = (a,b) => fmtHMS(a).slice(0,5) + '~' + fmtHMS(b).slice(0,5);
 let tlMap = null;   // 시간→위치 변환용 구간 지도 (쉬는 시간 최소 높이 보장형 눈금)
+let tlSplitPc = 50; // 2단 분할 경계 (전체 눈금 기준 %)
 function tlPos(t){
   if(!tlMap || !tlMap.length) return 0;
   if(t <= tlMap[0].s) return 0;
@@ -1185,48 +1197,40 @@ function buildTimeline(){
   let acc = 0;
   iv.forEach(g => { g.top = acc / totW * 100; g.h = g.w / totW * 100; acc += g.w; });
   tlMap = iv;
-  // 트랙 전체 높이: 1분 ≈ 2.4px로 여유 있게 — 화면보다 길면 스크롤(현재 시각 자동 추적)
-  const trackPx = Math.max(tl.clientHeight || 700, Math.round(totW / 60 * 2.4));
-  const segPx = g => g.h / 100 * trackPx;  // 블록 실제 px 높이로 라벨 표시 여부 판단
-  let html = '';
+  // 2단 분할: 50%에 가장 가까운 블록 경계에서 왼단/오른단을 나눔 (블록이 잘리지 않음)
+  tlSplitPc = 50; let bestD = Infinity;
+  iv.forEach((g, i) => {
+    if(i === 0) return;
+    const d = Math.abs(g.top - 50);
+    if(d < bestD){ bestD = d; tlSplitPc = g.top; }
+  });
+  const colH = tl.clientHeight || 760;
+  const cols = ['', ''];
   iv.forEach(g => {
+    const c = g.top < tlSplitPc ? 0 : 1;
+    const c0 = c === 0 ? 0 : tlSplitPc, cw = c === 0 ? tlSplitPc : 100 - tlSplitPc;
+    const ltop = (g.top - c0) / cw * 100, lh = g.h / cw * 100;
+    const px = lh / 100 * colH;  // 블록 실제 px 높이로 라벨 표시 여부 판단
+    const pos = `top:${ltop.toFixed(3)}%;height:${lh.toFixed(3)}%`;
     if(g.type === 'gap'){
       const isEdge = (g.s === t0 || g.e === t1);
       if(isEdge && !g.bells.length) return;  // 맨 위/아래 여백은 타종이 없으면 블록 없이
       const mins = g.e - g.s;
       const label = isEdge ? '시험 준비' : mins < 300 ? '문제지 교체' : mins >= 3000 ? '점심 · 쉬는 시간' : '쉬는 시간';
-      const bellLine = (g.bells.length && segPx(g) >= 25)
+      const bellLine = (g.bells.length && px >= 25)
         ? `<span class="tlbells2">🔔 ${g.bells.map(b => `${b.lab} ${fmtHMS(b.t).slice(0,5)}`).join(' · ')}</span>` : '';
-      html += `<div class="tlseg break${segPx(g) < 16 ? ' thin' : ''}" data-s="${g.s}" data-e="${g.e}" style="top:${g.top.toFixed(3)}%;height:${g.h.toFixed(3)}%">${segPx(g) >= 16 ? `<span>${label} <small>${fmtRange(g.s, g.e)}</small></span>${bellLine}` : ''}</div>`;
+      cols[c] += `<div class="tlseg break${px < 16 ? ' thin' : ''}" data-s="${g.s}" data-e="${g.e}" style="${pos}">${px >= 16 ? `<span>${label} <small>${fmtRange(g.s, g.e)}</small></span>${bellLine}` : ''}</div>`;
       return;
     }
     const x = g.x, col = SUBJ_PAL[x.i % SUBJ_PAL.length];
     const nm = x.p.name.replace(/^\d교시\s*/, '').replace(/\(.*?\)/g, '').trim();
     const sub = x.p.name.includes('영어') ? '<span class="tlsub">🎧 듣기로 시작</span>' : '';
-    const body = segPx(g) >= 35
+    const body = px >= 35
       ? `<b style="color:${col};display:block">${nm}</b><small>${x.p.start}~${x.p.end}</small>${sub}`
       : `<b style="color:${col}">${nm}</b> <small>${x.p.start}~${x.p.end}</small>`;
-    html += `<div class="tlseg exam${segPx(g) < 16 ? ' thin' : ''}" data-ti="${x.i}" data-s="${g.s}" data-e="${g.e}" style="top:${g.top.toFixed(3)}%;height:${g.h.toFixed(3)}%;background:${col}30;border-left:4px solid ${col}">${body}</div>`;
+    cols[c] += `<div class="tlseg exam${px < 16 ? ' thin' : ''}" data-ti="${x.i}" data-s="${g.s}" data-e="${g.e}" style="${pos};background:${col}30;border-left:4px solid ${col}">${body}</div>`;
   });
-  html += '<div id="tlNow"><span id="tlNowLab"></span></div>';
-  tl.innerHTML = `<div id="tlTrack" style="height:${trackPx}px">${html}</div>`;
-}
-// 사용자가 직접 스크롤하면 잠시 자동 추적을 멈춘다 (10초)
-let tlUserScrollUntil = 0, tlAutoScrolling = false;
-$('#timeline').addEventListener('scroll', () => {
-  if(!tlAutoScrolling) tlUserScrollUntil = Date.now() + 10000;
-});
-function followTimeline(){
-  const tl = $('#timeline'), track = $('#tlTrack');
-  if(!track || track.offsetHeight <= tl.clientHeight + 2) return;
-  if(Date.now() < tlUserScrollUntil) return;
-  const nowY = parseFloat($('#tlNow').style.top || '0') / 100 * track.offsetHeight;
-  const target = Math.max(0, Math.min(track.offsetHeight - tl.clientHeight, nowY - tl.clientHeight * 0.42));
-  if(Math.abs(tl.scrollTop - target) > 1){
-    tlAutoScrolling = true;
-    tl.scrollTop = target;
-    requestAnimationFrame(() => { tlAutoScrolling = false; });
-  }
+  tl.innerHTML = `<div class="tlcol" id="tlcol0">${cols[0]}<div id="tlNow"><span id="tlNowLab"></span></div></div><div class="tlcol" id="tlcol1">${cols[1]}</div>`;
 }
 
 // 아날로그 시계 눈금·숫자 생성
