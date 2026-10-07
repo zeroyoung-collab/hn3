@@ -547,6 +547,22 @@
 </div>
 
 <script>
+/* 진단: 스크립트 오류를 화면 하단 빨간 띠로 표시 (구형 브라우저 디버깅용, ES3 문법만 사용) */
+window.onerror = function(msg, src, line){
+  try{
+    var d = document.getElementById('jsErrBar');
+    if(!d){
+      d = document.createElement('div');
+      d.id = 'jsErrBar';
+      d.style.cssText = 'position:fixed;left:0;right:0;bottom:0;z-index:99999;background:#b00020;color:#fff;font:13px/1.5 sans-serif;padding:8px 12px;word-break:break-all;';
+      d.innerHTML = '브라우저: ' + navigator.userAgent + '<br>';
+      if(document.body) document.body.appendChild(d);
+    }
+    d.innerHTML += '오류: ' + msg + ' (줄 ' + line + ')<br>';
+  }catch(e){}
+};
+</script>
+<script>
 /* ════════ 구형 브라우저(전자칠판 내장 크롬 등) 호환 패치 ════════ */
 function nvl(a, b){ return (a === undefined || a === null) ? b : a; }
 if (typeof structuredClone !== 'function') { window.structuredClone = function(o){ return JSON.parse(JSON.stringify(o)); }; }
