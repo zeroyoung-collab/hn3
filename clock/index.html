@@ -94,13 +94,17 @@
   #progressWrap{width:70%; max-width:760px; height:8px; background:var(--panel); border-radius:4px; overflow:hidden; display:none}
   #progressBar{height:100%; width:0%; background:linear-gradient(90deg,var(--gold-dim),var(--gold))}
 
-  /* 세로 타임테이블 바 (시계 옆) */
+  /* 세로 타임테이블 바 (시계 옆) — 스크롤 트랙, 현재 시각 자동 추적 */
   #timeline{
-    position:relative; flex:0 0 auto; overflow:hidden;
+    position:relative; flex:0 0 auto; overflow-y:auto; overflow-x:hidden;
     width:clamp(230px, 22vw, 360px);
     height:min(calc(100vh - 230px), 880px);
     background:var(--navy2); border:1px solid var(--line); border-radius:10px;
+    scrollbar-width:thin; scrollbar-color:#2c4668 transparent;
   }
+  #timeline::-webkit-scrollbar{width:6px}
+  #timeline::-webkit-scrollbar-thumb{background:#2c4668; border-radius:3px}
+  #tlTrack{position:relative; width:100%}
   .tlseg{
     position:absolute; left:0; right:0; padding:3px 12px; overflow:hidden;
     font-size:clamp(12px, 1.1vw, 16px); line-height:1.25; white-space:nowrap;
@@ -764,6 +768,7 @@ function renderStrip(sec){
     $('#tlNow').style.top = pc + '%';
     const lab = fmtHMS(sec).slice(0,5);
     if($('#tlNowLab').textContent !== lab) $('#tlNowLab').textContent = lab;
+    followTimeline();
     const curIdx = timetable.findIndex(p => {
       const s = toSec(p.start), e = toSec(p.end);
       return s !== null && e !== null && sec >= s && sec < e;
@@ -1180,6 +1185,9 @@ function buildTimeline(){
   let acc = 0;
   iv.forEach(g => { g.top = acc / totW * 100; g.h = g.w / totW * 100; acc += g.w; });
   tlMap = iv;
+  // 트랙 전체 높이: 1분 ≈ 2.4px로 여유 있게 — 화면보다 길면 스크롤(현재 시각 자동 추적)
+  const trackPx = Math.max(tl.clientHeight || 700, Math.round(totW / 60 * 2.4));
+  const segPx = g => g.h / 100 * trackPx;  // 블록 실제 px 높이로 라벨 표시 여부 판단
   let html = '';
   iv.forEach(g => {
     if(g.type === 'gap'){
@@ -1187,21 +1195,38 @@ function buildTimeline(){
       if(isEdge && !g.bells.length) return;  // 맨 위/아래 여백은 타종이 없으면 블록 없이
       const mins = g.e - g.s;
       const label = isEdge ? '시험 준비' : mins < 300 ? '문제지 교체' : mins >= 3000 ? '점심 · 쉬는 시간' : '쉬는 시간';
-      const bellLine = (g.bells.length && g.h >= 3.6)
+      const bellLine = (g.bells.length && segPx(g) >= 25)
         ? `<span class="tlbells2">🔔 ${g.bells.map(b => `${b.lab} ${fmtHMS(b.t).slice(0,5)}`).join(' · ')}</span>` : '';
-      html += `<div class="tlseg break${g.h < 2.2 ? ' thin' : ''}" data-s="${g.s}" data-e="${g.e}" style="top:${g.top.toFixed(3)}%;height:${g.h.toFixed(3)}%">${g.h >= 2.2 ? `<span>${label} <small>${fmtRange(g.s, g.e)}</small></span>${bellLine}` : ''}</div>`;
+      html += `<div class="tlseg break${segPx(g) < 16 ? ' thin' : ''}" data-s="${g.s}" data-e="${g.e}" style="top:${g.top.toFixed(3)}%;height:${g.h.toFixed(3)}%">${segPx(g) >= 16 ? `<span>${label} <small>${fmtRange(g.s, g.e)}</small></span>${bellLine}` : ''}</div>`;
       return;
     }
     const x = g.x, col = SUBJ_PAL[x.i % SUBJ_PAL.length];
     const nm = x.p.name.replace(/^\d교시\s*/, '').replace(/\(.*?\)/g, '').trim();
     const sub = x.p.name.includes('영어') ? '<span class="tlsub">🎧 듣기로 시작</span>' : '';
-    const body = g.h >= 5
+    const body = segPx(g) >= 35
       ? `<b style="color:${col};display:block">${nm}</b><small>${x.p.start}~${x.p.end}</small>${sub}`
       : `<b style="color:${col}">${nm}</b> <small>${x.p.start}~${x.p.end}</small>`;
-    html += `<div class="tlseg exam${g.h < 2.2 ? ' thin' : ''}" data-ti="${x.i}" data-s="${g.s}" data-e="${g.e}" style="top:${g.top.toFixed(3)}%;height:${g.h.toFixed(3)}%;background:${col}30;border-left:4px solid ${col}">${body}</div>`;
+    html += `<div class="tlseg exam${segPx(g) < 16 ? ' thin' : ''}" data-ti="${x.i}" data-s="${g.s}" data-e="${g.e}" style="top:${g.top.toFixed(3)}%;height:${g.h.toFixed(3)}%;background:${col}30;border-left:4px solid ${col}">${body}</div>`;
   });
   html += '<div id="tlNow"><span id="tlNowLab"></span></div>';
-  tl.innerHTML = html;
+  tl.innerHTML = `<div id="tlTrack" style="height:${trackPx}px">${html}</div>`;
+}
+// 사용자가 직접 스크롤하면 잠시 자동 추적을 멈춘다 (10초)
+let tlUserScrollUntil = 0, tlAutoScrolling = false;
+$('#timeline').addEventListener('scroll', () => {
+  if(!tlAutoScrolling) tlUserScrollUntil = Date.now() + 10000;
+});
+function followTimeline(){
+  const tl = $('#timeline'), track = $('#tlTrack');
+  if(!track || track.offsetHeight <= tl.clientHeight + 2) return;
+  if(Date.now() < tlUserScrollUntil) return;
+  const nowY = parseFloat($('#tlNow').style.top || '0') / 100 * track.offsetHeight;
+  const target = Math.max(0, Math.min(track.offsetHeight - tl.clientHeight, nowY - tl.clientHeight * 0.42));
+  if(Math.abs(tl.scrollTop - target) > 1){
+    tlAutoScrolling = true;
+    tl.scrollTop = target;
+    requestAnimationFrame(() => { tlAutoScrolling = false; });
+  }
 }
 
 // 아날로그 시계 눈금·숫자 생성
