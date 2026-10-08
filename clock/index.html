@@ -391,6 +391,12 @@
     .seat .nm{font-size:15px; white-space:nowrap; max-width:100%; overflow:hidden; text-overflow:ellipsis}
     .seat .mn{font-size:12px; margin-top:1px}
     .seat .tx{overflow:hidden}
+    /* 좁은 화면: 카드 머리줄·상단 바가 잘리지 않게 줄바꿈 허용 + 버튼 축소 */
+    header{flex-wrap:wrap}
+    .cardhead{flex-wrap:wrap}
+    .cardhead h2{font-size:16px}
+    .cardhead .sub{font-size:12px}
+    .cardhead button.sm{padding:5px 9px; font-size:12.5px; margin-left:4px}
   }
 
   @media (max-width:1560px){ .brush kbd{display:none} }
@@ -604,7 +610,7 @@ window.onerror = function(msg, src, line){
 };
 </script>
 <script>
-const APP_VERSION = 'v10.2';   // 배포마다 올린다: 큰 변화=정수, 자잘한 수정=소수점 (헤더 날짜 옆 상시 표시)
+const APP_VERSION = 'v10.3';   // 배포마다 올린다: 큰 변화=정수, 자잘한 수정=소수점 (헤더 날짜 옆 상시 표시)
 /* ════════ 구형 브라우저(전자칠판 내장 크롬 등) 호환 패치 ════════ */
 function nvl(a, b){ return (a === undefined || a === null) ? b : a; }
 if (typeof structuredClone !== 'function') { window.structuredClone = function(o){ return JSON.parse(JSON.stringify(o)); }; }
