@@ -604,7 +604,7 @@ window.onerror = function(msg, src, line){
 };
 </script>
 <script>
-const APP_VERSION = 'v10.1';   // 배포마다 올린다: 큰 변화=정수, 자잘한 수정=소수점 (헤더 날짜 옆 상시 표시)
+const APP_VERSION = 'v10.2';   // 배포마다 올린다: 큰 변화=정수, 자잘한 수정=소수점 (헤더 날짜 옆 상시 표시)
 /* ════════ 구형 브라우저(전자칠판 내장 크롬 등) 호환 패치 ════════ */
 function nvl(a, b){ return (a === undefined || a === null) ? b : a; }
 if (typeof structuredClone !== 'function') { window.structuredClone = function(o){ return JSON.parse(JSON.stringify(o)); }; }
@@ -1289,16 +1289,22 @@ const OLD_CSS = !(window.CSS && CSS.supports && CSS.supports('color', 'color-mix
 function fixOldPhotos(){
   if(!OLD_CSS) return;
   document.querySelectorAll('.seat').forEach(s => {
-    const h = s.clientHeight, small = h < 74, tiny = h < 56;
+    const h = s.clientHeight;
     const img = s.querySelector('.ph');
     if(img){
       const ih = Math.max(26, h - 8);
       img.style.height = ih + 'px';
       img.style.width = Math.min(Math.round(ih * 180/232), Math.round(s.clientWidth * .46)) + 'px';
     }
-    const nm = s.querySelector('.nm'), mn = s.querySelector('.mn');
-    if(nm){ nm.style.fontSize = tiny ? '11px' : small ? '13px' : ''; nm.style.lineHeight = small || tiny ? '1.05' : ''; }
-    if(mn){ mn.style.fontSize = tiny ? '9.5px' : small ? '11px' : ''; mn.style.lineHeight = small || tiny ? '1.1' : ''; mn.style.marginTop = small || tiny ? '0' : ''; }
+    // 글자: 칸에 실제로 들어갈 때까지 한 단계씩 줄인다 (이름·대학·최저·부가조건 몇 줄이든 대응)
+    const tx = s.querySelector('.tx'), nm = s.querySelector('.nm'), mn = s.querySelector('.mn');
+    if(tx && (nm || mn)){
+      for(let f = 15; f >= 8; f--){
+        if(nm){ nm.style.fontSize = f + 'px'; nm.style.lineHeight = '1.05'; }
+        if(mn){ mn.style.fontSize = Math.max(7, Math.round(f * .8)) + 'px'; mn.style.lineHeight = '1.1'; mn.style.marginTop = '0'; }
+        if(tx.scrollHeight <= h - 2) break;
+      }
+    }
   });
 }
 window.addEventListener('resize', () => setTimeout(fixOldPhotos, 60));
