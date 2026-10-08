@@ -1278,7 +1278,20 @@ function renderSeats(){
   });
   if(seats.doorSide === 'right') cols.reverse();
   grid.innerHTML = cols.join('');
+  setTimeout(fixOldPhotos, 0);
 }
+// 구형 전자칠판(aspect-ratio 미지원): 칸의 실제 높이를 재서 사진 크기를 JS로 맞춘다
+const OLD_CSS = !(window.CSS && CSS.supports && CSS.supports('color', 'color-mix(in srgb, red, blue)'));
+function fixOldPhotos(){
+  if(!OLD_CSS) return;
+  document.querySelectorAll('.seat.hasph .ph').forEach(img => {
+    const s = img.parentNode;
+    const h = Math.max(26, s.clientHeight - 10);
+    const w = Math.min(Math.round(h * 180/232), Math.round(s.clientWidth * .46));
+    img.style.height = h + 'px'; img.style.width = w + 'px';
+  });
+}
+window.addEventListener('resize', () => setTimeout(fixOldPhotos, 60));
 function paintSeat(el, value){
   const k = el.dataset.k, att = attOf(today(), shownPeriod(), true);
   if(value){ att[k] = value; el.dataset.st = value; el.querySelector('.bd').textContent = ST[value].short; }
@@ -1436,7 +1449,7 @@ const fsElement = () => document.fullscreenElement || document.webkitFullscreenE
 function applyKiosk(on){
   document.body.classList.toggle('kiosk', on); document.body.classList.remove('menu');
   $('#btnFull').textContent = on ? '전체화면 끝내기' : '전체화면'; $('#btnMenu').textContent = '☰ 메뉴';
-  setTimeout(() => { buildTimeline(); tick(); }, 60);
+  setTimeout(() => { buildTimeline(); tick(); fixOldPhotos(); }, 60);
 }
 $('#btnFull').onclick = () => {
   const root = document.documentElement;
@@ -1472,7 +1485,7 @@ function applyZoom(z){
   $('#btnZoom').textContent = '배율 ' + Math.round(zoomCur*100) + '%';
   $('#btnZoom').classList.toggle('primary', zoomCur !== 1);
   store('ks2_zoom', String(zoomCur));
-  setTimeout(() => { buildTimeline(); tick(); }, 60);
+  setTimeout(() => { buildTimeline(); tick(); fixOldPhotos(); }, 60);
 }
 $('#btnZoom').onclick = () => applyZoom(ZOOM_STEPS[(ZOOM_STEPS.indexOf(zoomCur) + 1) % ZOOM_STEPS.length]);
 applyZoom(parseFloat(loadStr('ks2_zoom')) || 1);
