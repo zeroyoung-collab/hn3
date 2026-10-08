@@ -384,10 +384,11 @@
     #seatGrid .scol{margin:0 4px}
     .scol .clab{margin-bottom:7px}
     .scol .seat{margin-bottom:7px; overflow:hidden}
-    /* 사진 자리: aspect-ratio 미지원 → 고정 크기로 */
-    .seat .ph{width:64px; height:84px; flex:0 0 auto; align-self:center; margin-right:6px}
-    .seat .nm{font-size:17px}
-    .seat .mn{font-size:13.5px}
+    /* 사진 자리: aspect-ratio 미지원 → 폭 비례 + 원본 비율(height:auto)로 */
+    .seat .ph{width:38%; max-width:64px; height:auto; max-height:92%; flex:0 0 auto; align-self:center; margin-right:5px}
+    .seat .nm{font-size:15px; white-space:nowrap; max-width:100%; overflow:hidden; text-overflow:ellipsis}
+    .seat .mn{font-size:12px; margin-top:1px}
+    .seat .tx{overflow:hidden}
   }
 
   @media (max-width:1560px){ .brush kbd{display:none} }
