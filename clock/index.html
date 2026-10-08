@@ -45,6 +45,8 @@
   #dday{display:flex; align-items:baseline; gap:8px; padding:4px 16px; border-radius:99px; background:var(--now); color:#fff; font-weight:800; font-size:24px; letter-spacing:.01em; white-space:nowrap}
   #dday small{font-size:13.5px; font-weight:600; opacity:.92}
   #btnMenu{display:none}
+  #btnExitFull{display:none}
+  body.kiosk #btnExitFull{display:block; padding:9px 16px; font-size:16px; margin-right:8px}
   #hctl{display:contents}
   body.kiosk header{padding:7px 20px}
   body.kiosk #btnMenu{display:block; padding:9px 16px; font-size:16px}
@@ -408,6 +410,7 @@
     <div id="dday" class="num" title="설정에서 수능일을 바꿀 수 있습니다"></div>
     <span id="dateLabel" class="num"></span>
     <span class="spacer"></span>
+    <button id="btnExitFull" title="전체화면을 끝내고 원래 화면으로 돌아갑니다">⤢ 원래 화면</button>
     <button id="btnMenu" aria-expanded="false">☰ 메뉴</button>
     <div id="hctl">
     <div class="seg" id="clsSeg">
@@ -601,7 +604,7 @@ window.onerror = function(msg, src, line){
 };
 </script>
 <script>
-const APP_VERSION = 'v9';   // 배포할 때마다 숫자를 올린다 (헤더 날짜 옆에 상시 표시)
+const APP_VERSION = 'v10';   // 배포할 때마다 숫자를 올린다 (헤더 날짜 옆에 상시 표시)
 /* ════════ 구형 브라우저(전자칠판 내장 크롬 등) 호환 패치 ════════ */
 function nvl(a, b){ return (a === undefined || a === null) ? b : a; }
 if (typeof structuredClone !== 'function') { window.structuredClone = function(o){ return JSON.parse(JSON.stringify(o)); }; }
@@ -1474,6 +1477,15 @@ const onFsChange = () => applyKiosk(!!fsElement());
 document.addEventListener('fullscreenchange', onFsChange);
 document.addEventListener('webkitfullscreenchange', onFsChange);
 $('#btnMenu').onclick = () => { const open = document.body.classList.toggle('menu'); $('#btnMenu').textContent = open ? '✕ 메뉴 닫기' : '☰ 메뉴'; $('#btnMenu').setAttribute('aria-expanded', open); };
+// 전체화면에서 한 번에 원래 화면으로
+$('#btnExitFull').onclick = () => {
+  try {
+    if (fsElement()) {
+      if (document.exitFullscreen) document.exitFullscreen();
+      else if (document.webkitExitFullscreen) document.webkitExitFullscreen();
+    } else applyKiosk(false);
+  } catch (e) { applyKiosk(false); }
+};
 function applyMin(show){ document.body.classList.toggle('nomin', !show); $('#btnMin').textContent = show ? '최저 숨기기' : '최저 보기'; $('#btnMin').classList.toggle('primary', show); }
 $('#btnMin').onclick = () => applyMin(document.body.classList.contains('nomin'));
 let showPhoto = true;
