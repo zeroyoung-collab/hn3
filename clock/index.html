@@ -601,6 +601,7 @@ window.onerror = function(msg, src, line){
 };
 </script>
 <script>
+const APP_VERSION = 'v8';   // 배포할 때마다 숫자를 올린다 (헤더 날짜 옆에 상시 표시)
 /* ════════ 구형 브라우저(전자칠판 내장 크롬 등) 호환 패치 ════════ */
 function nvl(a, b){ return (a === undefined || a === null) ? b : a; }
 if (typeof structuredClone !== 'function') { window.structuredClone = function(o){ return JSON.parse(JSON.stringify(o)); }; }
@@ -1034,7 +1035,7 @@ function tick(){
   $('#hM').setAttribute('transform', `rotate(${(mF*6).toFixed(2)} 100 100)`);
   $('#hH').setAttribute('transform', `rotate(${(hF*30).toFixed(2)} 100 100)`);
   setText('#digi', hms(sec));
-  setText('#dateLabel', `${d.getFullYear()}. ${d.getMonth()+1}. ${d.getDate()}. (${'일월화수목금토'[d.getDay()]})`);
+  setText('#dateLabel', `${d.getFullYear()}. ${d.getMonth()+1}. ${d.getDate()}. (${'일월화수목금토'[d.getDay()]}) · ${APP_VERSION}`);
 
   { const [Y, M, D] = dday.split('-').map(Number);
     const n = Math.round((new Date(Y, M-1, D) - new Date(d.getFullYear(), d.getMonth(), d.getDate())) / 86400000);
@@ -1623,17 +1624,6 @@ loadClass(currentClass);
 tick();
 setInterval(tick, 250);
 
-// 배포 버전: 배포할 때마다 숫자를 올린다. 새로고침 시 우측 하단에 잠깐 표시
-const APP_VERSION = 'v7 · 2026-10-08';
-(function(){
-  const d = document.createElement('div');
-  d.textContent = '수능 시계 ' + APP_VERSION;
-  d.style.cssText = 'position:fixed;right:14px;bottom:14px;z-index:98;background:rgba(10,17,30,.92);color:#f5e9cf;border:1px solid #c9a86a;border-radius:10px;padding:9px 16px;font-size:15px;font-weight:700;opacity:0;transition:opacity .4s;pointer-events:none';
-  document.body.appendChild(d);
-  setTimeout(function(){ d.style.opacity = '1'; }, 80);
-  setTimeout(function(){ d.style.opacity = '0'; }, 7000);
-  setTimeout(function(){ if(d.parentNode) d.parentNode.removeChild(d); }, 7600);
-})();
 </script>
 </body>
 </html>
