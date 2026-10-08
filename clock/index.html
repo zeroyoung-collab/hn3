@@ -601,7 +601,7 @@ window.onerror = function(msg, src, line){
 };
 </script>
 <script>
-const APP_VERSION = 'v8';   // 배포할 때마다 숫자를 올린다 (헤더 날짜 옆에 상시 표시)
+const APP_VERSION = 'v9';   // 배포할 때마다 숫자를 올린다 (헤더 날짜 옆에 상시 표시)
 /* ════════ 구형 브라우저(전자칠판 내장 크롬 등) 호환 패치 ════════ */
 function nvl(a, b){ return (a === undefined || a === null) ? b : a; }
 if (typeof structuredClone !== 'function') { window.structuredClone = function(o){ return JSON.parse(JSON.stringify(o)); }; }
@@ -1281,15 +1281,21 @@ function renderSeats(){
   grid.innerHTML = cols.join('');
   setTimeout(fixOldPhotos, 0);
 }
-// 구형 전자칠판(aspect-ratio 미지원): 칸의 실제 높이를 재서 사진 크기를 JS로 맞춘다
+// 구형 전자칠판(aspect-ratio 미지원): 칸의 실제 크기를 재서 사진·글자를 JS로 맞춘다
 const OLD_CSS = !(window.CSS && CSS.supports && CSS.supports('color', 'color-mix(in srgb, red, blue)'));
 function fixOldPhotos(){
   if(!OLD_CSS) return;
-  document.querySelectorAll('.seat.hasph .ph').forEach(img => {
-    const s = img.parentNode;
-    const h = Math.max(26, s.clientHeight - 10);
-    const w = Math.min(Math.round(h * 180/232), Math.round(s.clientWidth * .46));
-    img.style.height = h + 'px'; img.style.width = w + 'px';
+  document.querySelectorAll('.seat').forEach(s => {
+    const h = s.clientHeight, small = h < 74, tiny = h < 56;
+    const img = s.querySelector('.ph');
+    if(img){
+      const ih = Math.max(26, h - 8);
+      img.style.height = ih + 'px';
+      img.style.width = Math.min(Math.round(ih * 180/232), Math.round(s.clientWidth * .46)) + 'px';
+    }
+    const nm = s.querySelector('.nm'), mn = s.querySelector('.mn');
+    if(nm){ nm.style.fontSize = tiny ? '11px' : small ? '13px' : ''; nm.style.lineHeight = small || tiny ? '1.05' : ''; }
+    if(mn){ mn.style.fontSize = tiny ? '9.5px' : small ? '11px' : ''; mn.style.lineHeight = small || tiny ? '1.1' : ''; mn.style.marginTop = small || tiny ? '0' : ''; }
   });
 }
 window.addEventListener('resize', () => setTimeout(fixOldPhotos, 60));
