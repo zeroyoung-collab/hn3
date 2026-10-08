@@ -354,6 +354,27 @@
   .lg.P{--c:var(--st-P)} .lg.S{--c:var(--st-S)} .lg.A{--c:var(--st-A)} .lg.U{--c:var(--st-U)}
   .lg.none{background:transparent; color:var(--ink-3); font-weight:400}
 
+  /* ── 구형 전자칠판 폴백: color-mix()·clamp() 미지원 브라우저(Chrome 110 이하)에서만 적용 ── */
+  @supports not (color: color-mix(in srgb, red, blue)){
+    .blk{z-index:0; background:var(--panel)}
+    .blk::before{content:''; position:absolute; left:0; top:0; right:0; bottom:0; background:var(--c); opacity:.13; z-index:-1; pointer-events:none}
+    .blk.cur{box-shadow:0 0 0 2px var(--c)}
+    .blk.cur::before{opacity:.3}
+    .blk.cur::after{content:''; position:absolute; left:0; top:0; right:0; height:var(--p,0%); background:var(--c); opacity:.4; z-index:-1; pointer-events:none}
+    .blk.curRest::before{opacity:.26}
+    .blk b{color:var(--ink); font-size:20px}
+    .blk.cur.big b{font-size:38px}
+    .blk.cur.big small{font-size:16px}
+    .blk.cur .rem,.blk.curRest .rem{font-size:17px}
+    .blk.cur.big .rem{font-size:25px; color:var(--ink)}
+    .tg{background:var(--surface); border:1px solid var(--line)}
+    .tg .tk b{color:var(--ink); font-size:23px}
+    .tg .plan i{background:var(--raise)}
+    #pace.hot{background:var(--panel)}
+    .seat[data-st]{z-index:0; border-color:var(--c)}
+    .seat[data-st]::after{content:''; position:absolute; left:0; top:0; right:0; bottom:0; border-radius:9px; background:var(--c); opacity:.2; z-index:-1; pointer-events:none}
+  }
+
   @media (max-width:1560px){ .brush kbd{display:none} }
   @media (max-width:1180px){
     body{overflow:auto} #app{height:auto; min-height:100vh}
