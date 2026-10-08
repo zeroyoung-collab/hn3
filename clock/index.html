@@ -421,6 +421,7 @@
     <button id="btnSeatToggle" class="ghost">출결판 숨기기</button>
     <button id="btnTip" class="ghost">한마디 숨기기</button>
     <button id="btnTheme" class="ghost" aria-label="밝게/어둡게 전환">밝게</button>
+    <button id="btnZoom" class="ghost" title="이 화면에 맞게 전체 크기를 조절합니다 · 기기별로 저장됩니다">배율 100%</button>
     <button id="btnSettings" class="ghost">설정</button>
     <button id="btnFull" class="ghost">전체화면</button>
     </div>
@@ -1462,6 +1463,19 @@ function applyTip(show){ document.body.classList.toggle('notip', !show); $('#btn
 $('#btnTip').onclick = () => applyTip(document.body.classList.contains('notip'));
 function applyTheme(t){ document.documentElement.dataset.theme = t; $('#btnTheme').textContent = t === 'dark' ? '밝게' : '어둡게'; store('ks2_theme', t); }
 $('#btnTheme').onclick = () => applyTheme(document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark');
+// 화면 배율: 디스플레이(전자칠판·모니터)마다 보이는 크기가 달라서, 기기별로 맞춰 저장한다
+const ZOOM_STEPS = [1, .85, .7, .55, 1.25];
+let zoomCur = 1;
+function applyZoom(z){
+  zoomCur = ZOOM_STEPS.indexOf(z) >= 0 ? z : 1;
+  document.body.style.zoom = zoomCur;
+  $('#btnZoom').textContent = '배율 ' + Math.round(zoomCur*100) + '%';
+  $('#btnZoom').classList.toggle('primary', zoomCur !== 1);
+  store('ks2_zoom', String(zoomCur));
+  setTimeout(() => { buildTimeline(); tick(); }, 60);
+}
+$('#btnZoom').onclick = () => applyZoom(ZOOM_STEPS[(ZOOM_STEPS.indexOf(zoomCur) + 1) % ZOOM_STEPS.length]);
+applyZoom(parseFloat(loadStr('ks2_zoom')) || 1);
 
 /* ════════ 출결 기록 ════════ */
 function logMatrix(date){
