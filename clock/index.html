@@ -331,7 +331,7 @@
   #toast.show{opacity:1; transform:translate(-50%,0); pointer-events:auto}
   #toast button{background:transparent; border-color:color-mix(in srgb,var(--bg) 35%,transparent); color:var(--bg); padding:4px 10px; font-size:12.5px}
   #banner{position:fixed; left:50%; top:12%; transform:translateX(-50%); display:none; z-index:70; background:var(--brass); color:var(--bg); font-size:clamp(22px,2.8vw,42px); font-weight:800; padding:16px 44px; border-radius:16px; box-shadow:var(--shadow); white-space:nowrap}
-  #overlay{position:fixed; inset:0; background:rgba(4,8,16,.62); display:none; z-index:90}
+  #overlay{position:fixed; left:0; top:0; right:0; bottom:0; background:rgba(4,8,16,.62); display:none; z-index:90}
   .modal{position:fixed; left:50%; top:50%; transform:translate(-50%,-50%); width:min(900px,94vw); max-height:90vh; overflow:auto; display:none; z-index:91; background:var(--surface); border:1px solid var(--line); border-radius:18px; padding:24px 28px; box-shadow:var(--shadow)}
   .modal h3{font-size:19px; font-weight:800; margin-bottom:6px}
   .modal h4{font-size:14px; font-weight:700; margin:22px 0 8px; padding-top:18px; border-top:1px solid var(--line-soft)}
@@ -604,7 +604,7 @@ window.onerror = function(msg, src, line){
 };
 </script>
 <script>
-const APP_VERSION = 'v10';   // 배포할 때마다 숫자를 올린다 (헤더 날짜 옆에 상시 표시)
+const APP_VERSION = 'v10.1';   // 배포마다 올린다: 큰 변화=정수, 자잘한 수정=소수점 (헤더 날짜 옆 상시 표시)
 /* ════════ 구형 브라우저(전자칠판 내장 크롬 등) 호환 패치 ════════ */
 function nvl(a, b){ return (a === undefined || a === null) ? b : a; }
 if (typeof structuredClone !== 'function') { window.structuredClone = function(o){ return JSON.parse(JSON.stringify(o)); }; }
@@ -945,7 +945,7 @@ function buildTimeline(){
     + swapWindows().map(w => { const hp = (pos(w.e)-pos(w.s))/100*tlH; return hp < 11 ? '' : `<div class="swap" style="top:${pos(w.s).toFixed(3)}%;height:${(pos(w.e)-pos(w.s)).toFixed(3)}%;font-size:${Math.min(14, hp*.72).toFixed(1)}px">교사 교대 · 계속 공부</div>`; }).join('');
   const t2 = REAL.map(o => blockHtml(o, true)).join('')
     + REAL_MARKS.map(m => `<div class="mark num" style="top:${pos(toSec(m.t)).toFixed(3)}%">${esc(m.text)}</div>`).join('');
-  $('#tl').innerHTML = `<div class="hrs" style="position:absolute;inset:0">${ax}</div><div class="track t1">${t1}</div><div class="track t2">${t2}</div><div id="tlNow"><span id="tlNowLab" class="num"></span></div>`;
+  $('#tl').innerHTML = `<div class="hrs" style="position:absolute;left:0;top:0;right:0;bottom:0">${ax}</div><div class="track t1">${t1}</div><div class="track t2">${t2}</div><div id="tlNow"><span id="tlNowLab" class="num"></span></div>`;
 }
 window.addEventListener('resize', () => { buildTimeline(); tick(); });
 
