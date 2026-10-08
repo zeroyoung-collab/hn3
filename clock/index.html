@@ -373,6 +373,21 @@
     #pace.hot{background:var(--panel)}
     .seat[data-st]{z-index:0; border-color:var(--c)}
     .seat[data-st]::after{content:''; position:absolute; left:0; top:0; right:0; bottom:0; border-radius:9px; background:var(--c); opacity:.2; z-index:-1; pointer-events:none}
+    /* 좁은 구형 화면에서 오른쪽 잘림 방지: 열 최소폭을 풀어 화면에 맞춘다 */
+    main{grid-template-columns:minmax(0,.95fr) minmax(0,.82fr) minmax(0,1.5fr)}
+    body.noseat main{grid-template-columns:1fr 1fr}
+    /* flex gap 미지원 → 간격을 margin으로 대체 */
+    .cardhead h2{margin-right:10px}
+    .cardhead .sm{margin-left:6px}
+    #ptabs button{margin-right:4px}
+    .brush{margin-right:6px}
+    #seatGrid .scol{margin:0 4px}
+    .scol .clab{margin-bottom:7px}
+    .scol .seat{margin-bottom:7px; overflow:hidden}
+    /* 사진 자리: aspect-ratio 미지원 → 고정 크기로 */
+    .seat .ph{width:64px; height:84px; flex:0 0 auto; align-self:center; margin-right:6px}
+    .seat .nm{font-size:17px}
+    .seat .mn{font-size:13.5px}
   }
 
   @media (max-width:1560px){ .brush kbd{display:none} }
