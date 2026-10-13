@@ -205,19 +205,21 @@ tr.none td{ background:#fbf9f3; }
       location.href = "kakaotalk://web/openExternal?url=" + encodeURIComponent(url);
     }
   }
-  openExt();  /* 자동 전환 시도 */
+  if (!isAnd) openExt();  /* iOS만 자동 전환 (안드로이드는 자동 intent가 페이지를 깨뜨려 탭으로만) */
   document.addEventListener("DOMContentLoaded", function(){
     var b = document.createElement("div");
     b.style.cssText = "position:fixed;left:0;right:0;bottom:0;z-index:99999;background:#0B3E86;color:#fff;text-align:center;padding:15px 18px;box-shadow:0 -4px 16px rgba(0,0,0,.28);font-family:sans-serif";
     b.innerHTML =
-      '<div style="font-weight:900;font-size:15px">카카오톡 안에서는 일부 기능이 제한될 수 있어요</div>'
+      '<div style="font-weight:900;font-size:15px">카카오톡 브라우저입니다</div>'
       + '<div style="font-size:13px;margin:4px 0 10px;opacity:.95">'
-      + (isAnd ? '버튼을 누르면 크롬으로 열립니다.' : '버튼을 누르거나, 오른쪽 아래 ⋮ → “다른 브라우저로 열기”를 눌러 주세요.')
+      + (isAnd ? '그대로 응답해도 되고, 버튼을 누르면 크롬으로 열립니다.' : '그대로 응답해도 되고, 버튼을 누르면 기본 브라우저로 열립니다.')
       + '</div>'
       + '<button id="kkbtn" style="font:inherit;font-weight:900;font-size:15px;padding:11px 22px;border:0;border-radius:8px;background:#F5B301;color:#0B3E86;cursor:pointer">'
-      + (isAnd ? '크롬으로 열기 ↗' : '기본 브라우저로 열기 ↗') + '</button>';
+      + (isAnd ? '크롬으로 열기 ↗' : '기본 브라우저로 열기 ↗') + '</button>'
+      + '<button id="kkclose" style="display:block;margin:9px auto 0;font:inherit;font-size:12px;background:none;border:0;color:#cfe0f7;text-decoration:underline;cursor:pointer">이대로 사용할게요</button>';
     document.body.appendChild(b);
     document.getElementById("kkbtn").addEventListener("click", openExt);
+    document.getElementById("kkclose").addEventListener("click", function(){ b.remove(); });
   });
 })();
 </script>
