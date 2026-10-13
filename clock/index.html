@@ -1456,7 +1456,7 @@ $('#seatGrid').addEventListener('focusout', e => {
   if(isNm) setTimeout(() => { if(editing && !$('#seatGrid').contains(document.activeElement)) renderSeats(); }, 0);   // 이름이 바뀌면 사진도 따라감
 });
 $('#seatGrid').addEventListener('keydown', e => { if(editing && e.key === 'Enter'){ e.preventDefault(); e.target.blur(); } });
-$('#btnEdit').onclick = () => setEditing(true);
+$('#btnEdit').onclick = () => askPw(() => setEditing(true));
 $('#btnEditDone').onclick = () => { if(document.activeElement) document.activeElement.blur(); saveSeats(); setEditing(false); };
 $('#btnDoor').onclick = () => { seats.doorSide = seats.doorSide === 'left' ? 'right' : 'left'; $('#btnDoor').textContent = '문 위치: ' + (seats.doorSide === 'left' ? '왼쪽' : '오른쪽'); saveSeats(); renderSeats(); };
 $('#colCount').addEventListener('change', () => { const n = Math.max(1, Math.min(8, +$('#colCount').value || 1)); $('#colCount').value = n;
