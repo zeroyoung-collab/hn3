@@ -1607,7 +1607,7 @@ $('#btnFakeOff').onclick = () => { offsetMs = 0; fired.clear(); $('#fakeState').
 
 /* ════════ 설정 비밀번호 ════════ */
 // 학생이 설정을 건드리지 못하게 하는 간단한 잠금. 한 번 풀면 10분 동안은 다시 묻지 않는다.
-const PW = '803';
+const PW = '2026';
 let pwBuf = '', pwThen = null, pwUntil = 0, pwBack = null;
 function pwDraw(){ $('#pwDots').innerHTML = Array.from({length:PW.length}, (_, i) => `<i class="${i < pwBuf.length ? 'on' : ''}"></i>`).join(''); }
 function askPw(then){
