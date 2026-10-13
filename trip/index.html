@@ -5,6 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="robots" content="noindex, nofollow">
 <title>수능 이후 체험활동 참가 조사 · 호남고 3학년부</title>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preconnect" href="https://www.gstatic.com">
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&display=swap" rel="stylesheet">
 <style>
 :root{
@@ -330,7 +332,6 @@ tr.none td{ background:#fbf9f3; }
   <div class="foot">호남고등학교 3학년부 · 수능 이후 체험활동 &nbsp;|&nbsp; 제작 · <b>호남고 박정민</b></div>
 </div>
 
-<script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-app.js";
 import { getFirestore, collection, addDoc, deleteDoc, doc, onSnapshot } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore.js";
@@ -580,7 +581,11 @@ function renderAdmin(){
   $("xlsxBtn").addEventListener("click", exportXlsx);
 }
 
-function exportXlsx(){
+function loadXLSX(){ return window.XLSX ? Promise.resolve() : new Promise((res,rej)=>{ const s=document.createElement("script"); s.src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"; s.onload=res; s.onerror=rej; document.head.appendChild(s); }); }
+async function exportXlsx(){
+  const _b=document.getElementById("xlsxBtn"); if(_b){ _b.disabled=true; _b.textContent="엑셀 준비 중…"; }
+  try{ await loadXLSX(); }catch(e){ alert("엑셀 라이브러리를 불러오지 못했습니다. 인터넷 연결 후 다시 시도해 주세요."); if(_b){ _b.disabled=false; _b.textContent="⬇ 엑셀 다운로드"; } return; }
+  if(_b){ _b.disabled=false; _b.textContent="⬇ 엑셀 다운로드"; }
   const wb = XLSX.utils.book_new();
   const head = ["반","번호","이름", ...PROGS.flatMap(p => [p.short + " 참여", p.short + " 미참여 사유"]), "제출시각"];
   const out = [head];
