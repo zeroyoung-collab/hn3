@@ -166,8 +166,12 @@ details.more[open] summary::before{content:"－ "}
 hr.sep{border:0;border-top:1px solid var(--line);margin:16px 0 12px}
 header .emblem{width:76px;height:76px;margin:0 auto 6px;filter:drop-shadow(0 0 10px rgba(255,90,110,.45)) drop-shadow(0 0 26px rgba(243,210,122,.3))}
 header .emblem svg{width:100%;height:100%;display:block}
-details.admin summary{cursor:pointer;font-weight:700;text-align:center;color:var(--gold)}
-details.admin[open] summary{margin-bottom:10px}
+/* 역할 탭: 학생 / 선생님·학부모 */
+.role-tabs{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+.rtab{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;border-radius:16px;padding:12px 3px;font-size:13.5px;font-weight:700;letter-spacing:0;line-height:1.3;word-break:keep-all;overflow-wrap:anywhere;min-width:0}
+.rtab small{font-weight:400;font-size:11.5px;color:var(--muted);letter-spacing:.08em}
+.rtab[aria-selected="true"]{background:linear-gradient(180deg,#ffe9a8,var(--gold) 55%,var(--gold-deep));border-color:#ffe9a8;color:#2a1c00;box-shadow:0 0 22px rgba(243,210,122,.4),inset 0 1px 0 rgba(255,255,255,.6)}
+.rtab[aria-selected="true"] small{color:#5a4310}
 .hint{font-size:12.5px;color:var(--muted);margin:0}
 code{background:rgba(7,8,28,.6);padding:1px 6px;border-radius:6px;font-size:12.5px;color:var(--gold)}
 
@@ -186,12 +190,20 @@ code{background:rgba(7,8,28,.6);padding:1px 6px;border-radius:6px;font-size:12.5
 .sheet button:hover{box-shadow:0 0 14px rgba(201,154,59,.4)}
 .sheet button.danger{background:transparent;border-color:#b5412f;color:#b5412f}
 
-/* 전광판 모드 */
+/* 전광판 모드: 한 화면(100dvh) 고정 — 나무 자리·크기 고정(fitStage가 px로 지정), 아래 문구만 교체 */
 body.show .panel,body.show .hide-on-show{display:none}
-body.show .layout{grid-template-columns:minmax(0,1fr)}
-body.show .stage{max-width:min(100%,calc(100vh - 260px));margin:0 auto}
+body.show{height:100dvh;overflow:hidden}
+body.show .wrap{height:100%;display:flex;flex-direction:column;padding-block:8px 10px}
+body.show header.top{margin-bottom:0;flex:none}
+body.show header .emblem{width:46px;height:46px;margin-bottom:0}
+body.show h1{font-size:clamp(22px,4.6vh,46px);margin:2px 0 0}
+body.show .sub-title{display:none}
+body.show .layout{display:flex;flex-direction:column;align-items:stretch;flex:1;min-height:0}
+body.show .layout>section{display:flex;flex-direction:column;flex:1;min-height:0}
+body.show .stage{flex:none;margin:0 auto}
 .spot{display:none}
-body.show .spot{display:block;text-align:center;margin:0 auto;max-width:960px;min-height:104px}
+body.show .spot{display:flex;flex:none;flex-direction:column;justify-content:center;text-align:center;margin:0 auto;max-width:960px;height:124px;overflow:hidden;padding-bottom:2px}
+body.show .spot .q{font-size:clamp(20px,3.2vh,34px)}
 .spot .q{font-family:var(--f-wish);font-weight:700;font-size:clamp(24px,3.4vw,42px);line-height:1.4;color:var(--ivory);text-shadow:0 0 24px rgba(243,210,122,.55)}
 .spot .w{color:var(--gold);font-size:clamp(14px,1.6vw,18px);margin-top:6px;letter-spacing:.1em}
 @media (prefers-reduced-motion:no-preference){.spot .q{animation:fade 1s ease}}
@@ -232,7 +244,12 @@ body.show .spot{display:block;text-align:center;margin:0 auto;max-width:960px;mi
     </section>
 
     <aside class="panel">
-      <div class="card">
+      <div class="role-tabs" role="tablist" aria-label="메뉴 선택">
+        <button type="button" class="rtab" id="tabStu" role="tab" aria-selected="true">🌳 학생<small>소원 올리기</small></button>
+        <button type="button" class="rtab" id="tabAdu" role="tab" aria-selected="false">⭐ 선생님·학부모<small>응원의 별 띄우기</small></button>
+        <button type="button" class="rtab" id="tabList" role="tab" aria-selected="false">📜 모든 소원<small>모아 보기</small></button>
+      </div>
+      <div class="card" id="studentCard">
         <h2>소원 올리기</h2>
         <p class="sub">반 · 이름 · 열매를 고르고 소원을 적어요.</p>
         <form id="wishForm" novalidate>
@@ -261,12 +278,13 @@ body.show .spot{display:block;text-align:center;margin:0 auto;max-width:960px;mi
         </form>
       </div>
 
-      <div class="card" id="adminCard">
-        <details class="admin">
-          <summary>선생님 · 학부모 메뉴</summary>
+      <div class="card" id="adminCard" hidden>
+        <h2>응원의 별 띄우기</h2>
+        <p class="sub">선생님·학부모님의 응원이 하늘의 별로 떠요.</p>
+        <div class="msg info" style="margin-bottom:12px">✦ 여기에 응원 한마디를 적어 주시면, 아이들이 보는 나무 위 하늘에 <b style="color:var(--gold)">응원의 별</b>로 떠오릅니다.</div>
           <div id="gate">
-            <label for="pw">암호
-              <div class="quick"><input id="pw" type="password" placeholder="선생님께 받은 암호" autocomplete="off"><button type="button" class="primary" id="pwBtn">열기</button></div>
+            <label for="pw">암호 <span style="font-weight:400">— 담임 선생님께 안내받으세요</span>
+              <div class="quick"><input id="pw" type="password" placeholder="안내받은 암호 입력" autocomplete="off"><button type="button" class="primary" id="pwBtn">열기</button></div>
             </label>
             <div id="pwMsg" class="msg err" hidden style="margin-top:10px"></div>
           </div>
@@ -287,11 +305,11 @@ body.show .spot{display:block;text-align:center;margin:0 auto;max-width:960px;mi
           </label>
           <div id="tMsg" class="msg info" hidden style="margin-top:10px"></div>
           </div>
-        </details>
       </div>
 
-      <div class="card">
+      <div class="card" id="listCard" hidden>
         <h2>모든 소원</h2>
+        <p class="sub">소원을 누르면 카드로 크게 볼 수 있어요.</p>
         <div class="filters" id="filters" role="group" aria-label="반별 보기"></div>
         <ul class="list" id="list"></ul>
       </div>
@@ -766,11 +784,25 @@ const firebaseConfig = {
     $('spotW').textContent = '✦ ' + whoLabel(w) + ' ✦';
     $('spotQ').style.animation = 'none'; void $('spotQ').offsetWidth; $('spotQ').style.animation = '';
   }
-  function rotateSpot(){ if (wishes.length) spotlight(wishes[Math.floor(Math.random()*wishes.length)]); }
+  function rotateSpot(){
+    const cheers = wishes.filter(w => w.kind === 'cheer');   /* 선생님·학부모 응원 우선 */
+    const src = cheers.length ? cheers : wishes;
+    if (src.length) spotlight(src[Math.floor(Math.random()*src.length)]);
+  }
+  // 전광판에서 나무 크기를 px로 고정 — 문구가 바뀌어도 나무는 움직이지 않음
+  function fitStage(){
+    const st = $('stage');
+    if (!document.body.classList.contains('show')){ st.style.width = ''; return; }
+    const wrapEl = document.querySelector('.wrap'), head = document.querySelector('header.top');
+    const avail = window.innerHeight - head.offsetHeight - 124 /*문구 영역*/ - 24 /*상하 여백*/;
+    st.style.width = Math.max(220, Math.min(wrapEl.clientWidth, avail)) + 'px';
+  }
+  window.addEventListener('resize', fitStage);
   $('showBtn').addEventListener('click', async () => {
     const on = document.body.classList.toggle('show');
     $('showBtn').textContent = on ? '전광판 끄기' : '전광판 모드';
     clearInterval(spotTimer);
+    fitStage();
     if (on){
       rotateSpot(); spotTimer = setInterval(rotateSpot, 7000);
       try { if (document.documentElement.requestFullscreen) await document.documentElement.requestFullscreen(); } catch(_){}
@@ -780,8 +812,9 @@ const firebaseConfig = {
     }
   });
   document.addEventListener('fullscreenchange', () => {
-    if (!document.fullscreenElement && document.body.classList.contains('show')) { document.body.classList.remove('show'); $('showBtn').textContent = '전광판 모드'; clearInterval(spotTimer); }
+    if (!document.fullscreenElement && document.body.classList.contains('show')) { document.body.classList.remove('show'); $('showBtn').textContent = '전광판 모드'; clearInterval(spotTimer); fitStage(); }
   });
+  fitStage();
 
   // ---------- 보내기 폼 ----------
   // ---------- 반별 명단 ----------
@@ -877,9 +910,24 @@ const firebaseConfig = {
 
   render();
 
+  // ---------- 메뉴 탭: 학생 / 선생님·학부모 / 모든 소원 ----------
+  const TABS = { stu: ['tabStu','studentCard'], adu: ['tabAdu','adminCard'], list: ['tabList','listCard'] };
+  function selTab(which){
+    for (const k in TABS){
+      $(TABS[k][0]).setAttribute('aria-selected', String(k === which));
+      $(TABS[k][1]).hidden = k !== which;
+    }
+    if (which === 'adu') ($('gate').hidden ? $('tCheer') : $('pw')).focus({preventScroll:true});
+  }
+  $('tabStu').addEventListener('click', () => selTab('stu'));
+  $('tabAdu').addEventListener('click', () => selTab('adu'));
+  $('tabList').addEventListener('click', () => selTab('list'));
+
   // ---------- 암호 ----------
   function openAdmin(){ isAdmin = true; $('gate').hidden = true; $('adminBody').hidden = false; try { sessionStorage.setItem('wishTree.admin','1'); } catch(_){} }
   try { if (sessionStorage.getItem('wishTree.admin') === '1') openAdmin(); } catch(_){}
+  // 선생님·학부모용 바로가기: 주소 뒤에 #cheer 를 붙여 공유하면 응원 탭이 바로 열림
+  if (location.hash === '#cheer') selTab('adu');
   const tryPw = () => { if ($('pw').value.trim() === ADMIN_PW) openAdmin(); else { $('pwMsg').hidden = false; $('pwMsg').textContent = '암호가 맞지 않아요.'; } };
   $('pwBtn').addEventListener('click', tryPw);
   $('pw').addEventListener('keydown', e => { if (e.key === 'Enter'){ e.preventDefault(); tryPw(); } });
