@@ -1,0 +1,912 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>수능대박 소원나무 · 호남고등학교</title>
+<meta name="description" content="호남고 3학년 수능대박 기원 소원나무 — 소원을 보내면 나무에 빛의 열매가 맺힙니다.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Song+Myung&family=Gowun+Batang:wght@400;700&family=Gothic+A1:wght@400;600;800&display=swap">
+<style>
+/* Layout: 신목(神木) — 금빛 후광과 기원문 고리 속에 선 빛의 나무. 왼쪽 무대, 오른쪽(모바일은 아래) 봉헌 패널. 밤의 성소 단일 테마(교실 TV 투사용으로 의도적 선택). */
+:root{
+  color-scheme: dark;
+  --night-0:#07081c; --night-1:#120f33; --night-2:#1f1850; --aurora:#3fe0c5; --aurora-2:#7a6cff;
+  --gold:#f3d27a; --gold-deep:#c99a3b; --ivory:#fff6e0; --ink:#f4efe2; --muted:#b9b3d6; --line:rgba(243,210,122,.28);
+  --glass:rgba(22,18,58,.62); --glass-2:rgba(38,30,86,.66);
+  --gam:#ff8a3d; --sagwa:#ff4d6d; --gyul:#ffc23d; --bae:#f6f1a8; --star:#fff3c4;
+  --danger:#ff8b7b; --ok:#8ff0c8;
+  --f-display:"Song Myung","Gowun Batang",serif;
+  --f-wish:"Gowun Batang","Nanum Myeongjo",serif;
+  --f-ui:"Gothic A1","Apple SD Gothic Neo","Malgun Gothic",system-ui,sans-serif;
+}
+*{box-sizing:border-box}
+html,body{height:auto;margin:0}
+[hidden]{display:none!important}
+body{background:radial-gradient(120% 70% at 50% 0%,var(--night-2) 0%,var(--night-1) 45%,var(--night-0) 100%) fixed;background-color:var(--night-0);color:var(--ink);font-family:var(--f-ui);font-size:15px;line-height:1.55;min-height:100vh;overflow-x:hidden}
+body::before{content:"";position:fixed;inset:-20% -10% auto;height:70vh;background:radial-gradient(40% 50% at 30% 40%,rgba(63,224,197,.16),transparent 70%),radial-gradient(35% 45% at 72% 30%,rgba(122,108,255,.18),transparent 70%);filter:blur(10px);pointer-events:none;z-index:0}
+@media (prefers-reduced-motion:no-preference){body::before{animation:aurora 22s ease-in-out infinite alternate}}
+@keyframes aurora{from{transform:translateX(-4%) skewY(-2deg)}to{transform:translateX(4%) skewY(2deg)}}
+#motes{position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:1}
+.wrap{position:relative;z-index:2;max-width:1260px;margin:0 auto;padding-block:22px 56px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+
+header.top{display:grid;grid-template-columns:1fr auto 1fr;align-items:end;gap:12px 24px;margin-bottom:6px}
+@media (max-width:900px){header.top{grid-template-columns:1fr;justify-items:center;text-align:center}}
+.title-block{grid-column:2;text-align:center}
+@media (max-width:900px){.title-block{grid-column:auto}}
+.eyebrow{font-size:12px;letter-spacing:.32em;color:var(--gold);font-weight:600;display:flex;align-items:center;justify-content:center;gap:10px}
+.eyebrow::before,.eyebrow::after{content:"";height:1px;width:42px;background:linear-gradient(90deg,transparent,var(--gold))}
+.eyebrow::after{transform:scaleX(-1)}
+h1{font-family:var(--f-display);font-weight:400;font-size:clamp(38px,6.6vw,74px);line-height:1.02;margin:8px 0 2px;letter-spacing:.02em;text-wrap:balance;background:linear-gradient(180deg,#fffbe9 10%,var(--gold) 55%,var(--gold-deep) 100%);-webkit-background-clip:text;background-clip:text;color:transparent;filter:drop-shadow(0 0 18px rgba(243,210,122,.35))}
+.sub-title{font-family:var(--f-wish);color:var(--muted);font-size:14.5px;letter-spacing:.06em}
+.stats{display:flex;gap:22px;align-items:baseline;font-variant-numeric:tabular-nums;justify-self:start}
+.stat b{font-family:var(--f-display);font-weight:400;font-size:30px;color:var(--ivory);text-shadow:0 0 14px rgba(243,210,122,.45)}
+.stat span{display:block;font-size:11.5px;color:var(--muted);letter-spacing:.12em}
+.tools{justify-self:end;display:flex;gap:8px}
+@media (max-width:900px){.stats,.tools{justify-self:center}}
+button{font:inherit;cursor:pointer;border-radius:999px;border:1px solid var(--line);background:var(--glass-2);color:var(--ink);padding:9px 18px;font-weight:600;font-size:14px;transition:border-color .2s, box-shadow .2s}
+button:hover{border-color:var(--gold);box-shadow:0 0 16px rgba(243,210,122,.25)}
+button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible,.list li:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+button.primary{background:linear-gradient(180deg,#ffe9a8,var(--gold) 50%,var(--gold-deep));border-color:#ffe9a8;color:#2a1c00;box-shadow:0 0 22px rgba(243,210,122,.35),inset 0 1px 0 rgba(255,255,255,.6)}
+button.primary:hover{box-shadow:0 0 32px rgba(243,210,122,.6),inset 0 1px 0 rgba(255,255,255,.6)}
+button.primary:disabled{opacity:.4;cursor:not-allowed;box-shadow:none}
+
+.layout{display:grid;grid-template-columns:minmax(0,1fr) 380px;gap:28px;align-items:start}
+@media (max-width:900px){.layout{grid-template-columns:minmax(0,1fr)}}
+
+/* 무대 */
+.stage{position:relative;width:100%;max-width:100%;aspect-ratio:1/1}
+.stage > svg{position:absolute;inset:0;width:100%;height:100%;display:block;overflow:visible}
+#tendrils{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
+.spin-a,.spin-b{transform-box:view-box;transform-origin:500px 475px}
+.rays{transform-box:view-box;transform-origin:500px 430px}
+@media (prefers-reduced-motion:no-preference){.shafts{animation:breathe 8s ease-in-out infinite}}
+.spin-seal{transform-box:view-box;transform-origin:500px 862px}
+.em-outer,.em-inner,.em-stamen,.em-leaves{transform-box:view-box;transform-origin:200px 200px}
+@media (prefers-reduced-motion:no-preference){
+  .em-leaves{animation:emLeaf 1.6s cubic-bezier(.2,1,.3,1) both}
+  .em-outer{animation:emOpen 1.8s cubic-bezier(.2,1.2,.3,1) .1s both, emBreathe 7s ease-in-out 2s infinite}
+  .em-inner{animation:emOpen 1.8s cubic-bezier(.2,1.2,.3,1) .35s both, emBreathe 7s ease-in-out 2.3s infinite}
+  .em-stamen{animation:emStamen 1.4s ease-out .8s both}
+}
+@keyframes emOpen{from{transform:scale(.35) rotate(-28deg);opacity:0}to{transform:none;opacity:1}}
+@keyframes emBreathe{0%,100%{transform:scale(1)}50%{transform:scale(1.025)}}
+@keyframes emLeaf{from{transform:scale(.6);opacity:0}to{transform:none;opacity:1}}
+@keyframes emStamen{from{transform:scale(.7);opacity:0}to{transform:none;opacity:1}}
+@media (prefers-reduced-motion:no-preference){.spin-seal{animation:spin 90s linear infinite reverse}}
+@media (prefers-reduced-motion:no-preference){
+  .spin-a{animation:spin 160s linear infinite}
+  .spin-b{animation:spin 220s linear infinite reverse}
+  .rays{animation:spin 300s linear infinite, breathe 9s ease-in-out infinite}
+  .pulse{animation:breathe 6s ease-in-out infinite}
+}
+@keyframes spin{to{transform:rotate(360deg)}}
+@keyframes breathe{0%,100%{opacity:.75}50%{opacity:1}}
+.fruits{position:absolute;inset:0}
+.fruit{position:absolute;width:2.6%;aspect-ratio:1;transform:translate(-50%,-50%);border:0;padding:0;border-radius:50%;cursor:pointer;min-width:11px;
+  background:radial-gradient(circle at 50% 50%,#fff 0 14%,color-mix(in srgb,var(--c) 60%,#fff) 30%,var(--c) 58%,color-mix(in srgb,var(--c) 55%,#000) 100%);
+  box-shadow:0 0 6px var(--c),0 0 16px color-mix(in srgb,var(--c) 70%,transparent),0 0 34px color-mix(in srgb,var(--c) 35%,transparent);
+  transition:scale .2s ease,opacity .3s}
+.fruit::before{content:"";position:absolute;left:50%;bottom:92%;width:1px;height:90%;background:linear-gradient(180deg,transparent,rgba(243,210,122,.85));transform:translateX(-50%)}
+.fruit.star{border-radius:0;width:3.4%;background:radial-gradient(circle,#fff 0 18%,var(--star) 40%,var(--gold) 80%);clip-path:polygon(50% 0,58% 42%,100% 50%,58% 58%,50% 100%,42% 58%,0 50%,42% 42%);box-shadow:none;filter:drop-shadow(0 0 6px var(--star)) drop-shadow(0 0 14px var(--gold))}
+.fruit.star::before{display:none}
+.fruit.mine{outline:1.5px solid #fff;outline-offset:3px}
+.fruit.dim{opacity:.14}
+.fruit:hover,.fruit:focus-visible{z-index:3;scale:1.6}
+@media (prefers-reduced-motion:no-preference){
+  .fruit{animation:sway 6s ease-in-out infinite,glow 4s ease-in-out infinite;animation-delay:var(--d,0s),var(--d,0s)}
+  .fruit.star{animation:twinkle 3.4s ease-in-out infinite;animation-delay:var(--d,0s)}
+  .fruit.new{animation:bloom 1.6s cubic-bezier(.2,1.4,.4,1) both,sway 6s ease-in-out 1.6s infinite,glow 4s ease-in-out 1.6s infinite}
+}
+@keyframes sway{0%,100%{rotate:-4deg}50%{rotate:4deg}}
+@keyframes glow{0%,100%{filter:brightness(1)}50%{filter:brightness(1.35)}}
+@keyframes twinkle{0%,100%{opacity:1;scale:1}50%{opacity:.55;scale:.8}}
+@keyframes bloom{0%{transform:translate(-50%,-50%) scale(0);filter:brightness(4)}60%{filter:brightness(2.2)}100%{transform:translate(-50%,-50%) scale(1);filter:brightness(1)}}
+.flash{position:absolute;width:16%;aspect-ratio:1;transform:translate(-50%,-50%);border-radius:50%;pointer-events:none;background:radial-gradient(circle,rgba(255,246,224,.9),rgba(243,210,122,.35) 35%,transparent 70%)}
+@media (prefers-reduced-motion:no-preference){.flash{animation:flash 1.4s ease-out forwards}}
+@media (prefers-reduced-motion:reduce){.flash{display:none}}
+@keyframes flash{from{opacity:1;transform:translate(-50%,-50%) scale(.2)}to{opacity:0;transform:translate(-50%,-50%) scale(1.6)}}
+
+.empty-note{position:absolute;left:50%;top:40%;transform:translate(-50%,-50%);text-align:center;font-family:var(--f-wish);font-size:clamp(15px,2.2vw,20px);color:var(--ivory);background:rgba(10,9,32,.62);backdrop-filter:blur(6px);padding:16px 22px;border-radius:16px;border:1px solid var(--line);width:min(80%,380px);text-shadow:0 0 12px rgba(243,210,122,.3)}
+.basket{position:absolute;right:4%;bottom:3%;font-size:13px;color:var(--gold);background:rgba(10,9,32,.7);padding:6px 12px;border-radius:999px;border:1px solid var(--line)}
+.ticker{min-height:28px;margin-top:6px;font-family:var(--f-wish);color:var(--muted);text-align:center;font-size:15px;letter-spacing:.03em}
+.ticker b{color:var(--gold)}
+
+/* 봉헌 패널 */
+.panel{display:flex;flex-direction:column;gap:18px;min-width:0}
+.card{position:relative;background:var(--glass);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border:1px solid var(--line);border-radius:20px;padding:22px 20px;box-shadow:0 10px 40px rgba(0,0,0,.35),inset 0 1px 0 rgba(255,246,224,.08)}
+.card::before,.card::after{content:"✦";position:absolute;top:10px;color:var(--gold);font-size:11px;opacity:.8}
+.card::before{left:14px}.card::after{right:14px}
+.card h2{font-family:var(--f-display);font-weight:400;font-size:25px;margin:0 0 6px;white-space:nowrap;text-align:center;color:var(--ivory);letter-spacing:.04em}
+.card p.sub{margin:0 0 16px;color:var(--muted);font-size:13.5px;text-align:center;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+form{display:flex;flex-direction:column;gap:12px}
+label{font-size:13px;color:var(--muted);font-weight:600;display:flex;flex-direction:column;gap:6px}
+input,select,textarea{font:inherit;color:var(--ink);background:rgba(7,8,28,.6);border:1px solid var(--line);border-radius:12px;padding:10px 12px;width:100%;box-sizing:border-box}
+textarea{resize:vertical;font-family:var(--f-wish);font-size:16px;min-height:88px}
+.row2{display:grid;grid-template-columns:1fr 1.4fr;gap:10px}
+.pass{display:inline-block;font-family:var(--f-display);font-size:.85em;line-height:1;padding:3px 8px 2px;border-radius:999px;color:#2a1c00;background:linear-gradient(180deg,#fff0b8,var(--gold) 55%,var(--gold-deep));box-shadow:0 0 10px rgba(243,210,122,.55);letter-spacing:.08em;vertical-align:middle;margin-left:4px}
+.pass-line{display:flex;align-items:center;gap:8px;font-family:var(--f-wish);font-size:15px;color:var(--ivory);margin-top:4px}
+.pass-line b{font-weight:700}
+.sheet .pass{font-size:14px;box-shadow:0 0 10px rgba(201,154,59,.5)}
+.counter{align-self:flex-end;font-size:12px;color:var(--muted);font-variant-numeric:tabular-nums;margin-top:-6px}
+.fruit-pick{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;border:0;padding:0;margin:0;min-width:0}
+.fruit-pick legend{font-size:13px;color:var(--muted);font-weight:600;margin-bottom:6px;padding:0}
+.fruit-pick input{position:absolute;opacity:0;width:1px;height:1px}
+.fruit-pick label{cursor:pointer;align-items:center;text-align:center;gap:5px;border:1px solid var(--line);border-radius:14px;padding:11px 2px;min-width:0;color:var(--ink);font-weight:600;font-size:13px;transition:background .2s,box-shadow .2s}
+.fruit-pick label small{font-weight:400;color:var(--muted);font-size:10.5px;line-height:1.3;word-break:keep-all}
+.fruit-pick input:checked + label{border-color:var(--gold);background:rgba(243,210,122,.1);box-shadow:0 0 18px rgba(243,210,122,.2)}
+.fruit-pick input:focus-visible + label{outline:2px solid var(--gold)}
+.dot{width:20px;height:20px;border-radius:50%;flex:none;display:inline-block;background:radial-gradient(circle,#fff 0 14%,var(--c) 55%,color-mix(in srgb,var(--c) 55%,#000));box-shadow:0 0 10px var(--c)}
+.dot.star{border-radius:0;background:var(--star);box-shadow:none;clip-path:polygon(50% 0,58% 42%,100% 50%,58% 58%,50% 100%,42% 58%,0 50%,42% 42%)}
+.msg{font-size:13.5px;border-radius:12px;padding:10px 12px;background:rgba(7,8,28,.5);border:1px solid var(--line)}
+.msg.ok{border-color:var(--ok);color:var(--ok)}
+.msg.err{border-color:var(--danger);color:var(--danger)}
+.msg.info{color:var(--muted)}
+
+.filters{display:flex;flex-wrap:wrap;gap:6px;margin:10px 0 12px;justify-content:center}
+.chip{padding:5px 11px;font-size:12.5px}
+.chip[aria-pressed="true"]{background:var(--gold);color:#2a1c00;border-color:var(--gold)}
+.list{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;max-height:520px;overflow:auto}
+.list li{display:flex;gap:12px;align-items:flex-start;padding:11px 6px;border-top:1px solid rgba(243,210,122,.14);cursor:pointer;border-radius:8px}
+.list li:hover{background:rgba(243,210,122,.06)}
+.list li:first-child{border-top:0}
+.list .t{font-family:var(--f-wish);font-size:15.5px;line-height:1.5;min-width:0;overflow-wrap:anywhere}
+.list .who{display:block;font-family:var(--f-ui);font-size:12px;color:var(--muted)}
+.list-empty{color:var(--muted);font-size:13.5px;padding:8px 0;justify-content:center}
+
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.quick{display:flex;gap:8px;align-items:stretch}
+.quick input{flex:1;min-width:0;font-family:var(--f-wish);font-size:17px;padding:13px 16px;border-radius:999px}
+.quick button{flex:none;padding:0 22px;font-size:15px}
+details.more summary{cursor:pointer;font-size:13px;color:var(--muted);text-align:center;list-style:none}
+details.more summary::-webkit-details-marker{display:none}
+details.more summary::before{content:"＋ "}
+details.more[open] summary::before{content:"－ "}
+.more-body{display:flex;flex-direction:column;gap:12px;margin-top:12px}
+hr.sep{border:0;border-top:1px solid var(--line);margin:16px 0 12px}
+header .emblem{width:76px;height:76px;margin:0 auto 6px;filter:drop-shadow(0 0 10px rgba(255,90,110,.45)) drop-shadow(0 0 26px rgba(243,210,122,.3))}
+header .emblem svg{width:100%;height:100%;display:block}
+details.admin summary{cursor:pointer;font-weight:700;text-align:center;color:var(--gold)}
+details.admin[open] summary{margin-bottom:10px}
+.hint{font-size:12.5px;color:var(--muted);margin:0}
+code{background:rgba(7,8,28,.6);padding:1px 6px;border-radius:6px;font-size:12.5px;color:var(--gold)}
+
+/* 소원 카드: 금박 두루마리 */
+.sheet-back{position:fixed;inset:0;background:radial-gradient(circle at 50% 45%,rgba(243,210,122,.18),rgba(4,4,16,.82) 60%);display:flex;align-items:center;justify-content:center;z-index:20;padding:16px;padding-bottom:max(16px,env(safe-area-inset-bottom,0px));backdrop-filter:blur(3px)}
+.sheet{background:radial-gradient(120% 90% at 50% 0%,#fffaf0,#f6ead0);color:#2b2214;border-radius:6px;max-width:460px;width:100%;padding:34px 28px 22px;position:relative;text-align:center;box-shadow:0 0 0 1px #d9b968,0 0 0 6px #fbf3df,0 0 0 7px #c99a3b,0 0 60px rgba(243,210,122,.5),0 30px 80px rgba(0,0,0,.6)}
+@media (prefers-reduced-motion:no-preference){.sheet{animation:unveil .5s cubic-bezier(.2,1,.3,1)}}
+@keyframes unveil{from{opacity:0;transform:translateY(14px) scale(.96)}to{opacity:1;transform:none}}
+.sheet .tag{display:flex;align-items:center;justify-content:center;gap:8px;font-size:12.5px;font-weight:700;color:#8a6a28;letter-spacing:.08em}
+.sheet .tag .dot{box-shadow:0 0 8px var(--c)}
+.sheet blockquote{margin:16px 0 12px;font-family:var(--f-wish);font-weight:700;font-size:clamp(21px,4.8vw,27px);line-height:1.55;overflow-wrap:anywhere}
+.sheet .orn{color:#c99a3b;letter-spacing:.6em;font-size:12px}
+.sheet .from{font-size:14px;color:#6b5a37;margin-top:6px}
+.sheet .acts{display:flex;justify-content:center;gap:8px;margin-top:20px;flex-wrap:wrap}
+.sheet button{background:#efe2bf;border-color:#d4b56a;color:#2b2214}
+.sheet button:hover{box-shadow:0 0 14px rgba(201,154,59,.4)}
+.sheet button.danger{background:transparent;border-color:#b5412f;color:#b5412f}
+
+/* 전광판 모드 */
+body.show .panel,body.show .hide-on-show{display:none}
+body.show .layout{grid-template-columns:minmax(0,1fr)}
+body.show .stage{max-width:min(100%,calc(100vh - 260px));margin:0 auto}
+.spot{display:none}
+body.show .spot{display:block;text-align:center;margin:0 auto;max-width:960px;min-height:104px}
+.spot .q{font-family:var(--f-wish);font-weight:700;font-size:clamp(24px,3.4vw,42px);line-height:1.4;color:var(--ivory);text-shadow:0 0 24px rgba(243,210,122,.55)}
+.spot .w{color:var(--gold);font-size:clamp(14px,1.6vw,18px);margin-top:6px;letter-spacing:.1em}
+@media (prefers-reduced-motion:no-preference){.spot .q{animation:fade 1s ease}}
+@keyframes fade{from{opacity:0;filter:blur(6px)}to{opacity:1;filter:none}}
+</style>
+</head>
+<body>
+<canvas id="motes" aria-hidden="true"></canvas>
+<div class="wrap">
+  <header class="top">
+    <div class="stats" aria-live="polite">
+      <div class="stat"><b id="sCount">0</b><span>맺힌 열매</span></div>
+      <div class="stat"><b id="sStar">0</b><span>응원의 별</span></div>
+    </div>
+    <div class="title-block">
+      <div class="emblem" id="hdrEmblem" aria-hidden="true"></div>
+      <div class="eyebrow">호남고 3학년 · 11월 16일(월) 수능대박 기원</div>
+      <h1>수능대박 소원나무</h1>
+      <div class="sub-title">마음을 걸면, 빛으로 열매 맺는 나무</div>
+    </div>
+    <div class="tools">
+      <button type="button" id="musicBtn" aria-pressed="false">♪ 음악</button>
+      <button type="button" id="showBtn">전광판 모드</button>
+    </div>
+  </header>
+
+  <div class="layout">
+    <section aria-label="소원나무">
+      <div class="stage" id="stage">
+        <svg id="treeSvg" viewBox="0 0 1000 1000" aria-hidden="true"></svg>
+        <canvas id="tendrils" aria-hidden="true"></canvas>
+        <div class="fruits" id="fruits"></div>
+        <div class="empty-note" id="emptyNote">나무가 첫 소원을 기다리고 있어요.<br>마음을 담아 첫 열매를 맺어 주세요.</div>
+        <div class="basket" id="basket" hidden></div>
+      </div>
+      <div class="spot" id="spot" aria-live="polite"><div class="q" id="spotQ"></div><div class="w" id="spotW"></div></div>
+      <div class="ticker hide-on-show" id="ticker" aria-live="polite">빛나는 열매를 누르면 소원을 읽을 수 있어요.</div>
+    </section>
+
+    <aside class="panel">
+      <div class="card">
+        <h2>소원 올리기</h2>
+        <p class="sub">반 · 이름 · 열매를 고르고 소원을 적어요.</p>
+        <form id="wishForm" novalidate>
+          <div class="row2">
+            <label for="fCls">반
+              <select id="fCls" required>
+                <option value="" disabled selected>반 선택</option>
+                <option value="1">1반</option><option value="2">2반</option><option value="3">3반</option>
+                <option value="4">4반</option><option value="5">5반</option><option value="6">6반</option>
+              </select>
+            </label>
+            <label for="fName">이름
+              <span id="nameSlot"><select id="fName" required disabled><option value="">반을 먼저 고르세요</option></select></span>
+              <span class="pass-line" id="passLine" hidden><b id="passName"></b><span class="pass">합격</span></span>
+            </label>
+          </div>
+          <fieldset class="fruit-pick" id="fruitPick">
+            <legend>열매 고르기</legend>
+          </fieldset>
+          <label for="fText">나의 소원
+            <textarea id="fText" maxlength="50" placeholder="예) 국어 1등급 받고 원하는 학과 합격!"></textarea>
+          </label>
+          <div class="counter" id="fCount">0 / 50</div>
+          <div id="formMsg" class="msg info" hidden></div>
+          <button type="submit" class="primary" id="fSubmit" disabled>나무에 소원 걸기</button>
+        </form>
+      </div>
+
+      <div class="card" id="adminCard">
+        <details class="admin">
+          <summary>선생님 · 학부모 메뉴</summary>
+          <div id="gate">
+            <label for="pw">암호
+              <div class="quick"><input id="pw" type="password" placeholder="선생님께 받은 암호" autocomplete="off"><button type="button" class="primary" id="pwBtn">열기</button></div>
+            </label>
+            <div id="pwMsg" class="msg err" hidden style="margin-top:10px"></div>
+          </div>
+          <div id="adminBody" hidden>
+          <div class="row2">
+            <label for="tRole">보내는 분
+              <select id="tRole"><option value="teacher">선생님</option><option value="parent">학부모</option></select>
+            </label>
+            <label for="tName">이름
+              <input id="tName" maxlength="14" placeholder="예) 박정민 선생님" autocomplete="off">
+            </label>
+          </div>
+          <label for="tCheer" style="margin-top:10px">응원 한마디 (하늘의 별로 떠요)
+            <div class="quick">
+              <input id="tCheer" maxlength="50" placeholder="예) 너희의 1년을 믿는다!" autocomplete="off" enterkeyhint="send">
+              <button type="button" class="primary" id="tCheerBtn">띄우기</button>
+            </div>
+          </label>
+          <div id="tMsg" class="msg info" hidden style="margin-top:10px"></div>
+          </div>
+        </details>
+      </div>
+
+      <div class="card">
+        <h2>모든 소원</h2>
+        <div class="filters" id="filters" role="group" aria-label="반별 보기"></div>
+        <ul class="list" id="list"></ul>
+      </div>
+    </aside>
+  </div>
+</div>
+
+<div class="sheet-back" id="sheetBack" hidden>
+  <div class="sheet" role="dialog" aria-modal="true" aria-labelledby="sheetQ">
+    <div class="tag" id="sheetTag"></div>
+    <blockquote id="sheetQ"></blockquote>
+    <div class="orn">✦ ✦ ✦</div>
+    <div class="from" id="sheetFrom"></div>
+    <div class="acts">
+      <button type="button" class="danger" id="sheetDel" hidden>열매 거두기</button>
+      <button type="button" id="sheetClose">닫기</button>
+    </div>
+  </div>
+</div>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-app.js";
+import { getFirestore, collection, doc, setDoc, deleteDoc, onSnapshot, query, limit } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore.js";
+(() => {
+  /* ================= 설정 ================= */
+const firebaseConfig = {
+  apiKey: "AIzaSyBotwjsJxit4SbOzXVVOov37Po97AieoxM",
+  authDomain: "sangdam-b97c1.firebaseapp.com",
+  projectId: "sangdam-b97c1",
+  storageBucket: "sangdam-b97c1.firebasestorage.app",
+  messagingSenderId: "389048360844",
+  appId: "1:389048360844:web:675f4f6ce8d54a873140a9"
+};
+  const COL = "pw_wish_tree";        /* 소원 저장 컬렉션 */
+  const ADMIN_PW = "honam1234";      /* 선생님 · 학부모 메뉴 암호 */
+  const ROSTER = {"1": {"t": "이지원", "s": [[1, "김은찬"], [2, "김청우"], [3, "김하준"], [4, "김현서"], [5, "박예준"], [6, "박태영"], [7, "신이현"], [8, "양하랑"], [9, "윤도현"], [10, "이경엽"], [11, "이은겸"], [12, "이정우"], [13, "이창헌"], [14, "이태희"], [15, "이현호"], [16, "장민준"], [17, "장연범"], [18, "전주형"], [19, "정승재"], [20, "조예찬"], [21, "최성우"]]}, "2": {"t": "신채린", "s": [[1, "강민광"], [2, "고의정"], [3, "권현서"], [4, "노승우"], [5, "박민수"], [6, "박지후"], [7, "박철웅"], [8, "백지훈"], [9, "송호준"], [10, "안석현"], [11, "안수현"], [12, "양채완"], [13, "오영현"], [14, "오지우"], [15, "유성민"], [16, "이서우"], [17, "이서진"], [18, "이승로"], [19, "이승주"], [20, "임명찬"], [21, "임현후"]]}, "3": {"t": "류정현", "s": [[1, "김균태"], [2, "김민석"], [3, "김성윤"], [4, "김승준"], [5, "김윤호"], [6, "김지환"], [7, "김형민"], [8, "노동완"], [9, "민환"], [10, "박재현"], [12, "손연우"], [13, "신지용"], [14, "안정언"], [15, "안준성"], [16, "이대용"], [17, "이산"], [18, "이성훈"], [19, "이한샘"], [20, "정승욱"], [21, "홍종성"]]}, "4": {"t": "박정민", "s": [[1, "강동훈"], [2, "강정우"], [3, "김건우"], [4, "김관유"], [5, "김동윤"], [6, "김민준"], [7, "김세진"], [8, "김영준"], [9, "김현준"], [10, "문관후"], [11, "문준우"], [12, "박윤환"], [13, "박지강"], [14, "유동언"], [15, "유지안"], [16, "이호열"], [17, "한석"], [18, "허정관"]]}, "5": {"t": "심요섭", "s": [[1, "강현수"], [2, "김도훈"], [3, "김성빈"], [4, "김예찬"], [5, "서민웅"], [6, "신재민"], [7, "오영일"], [8, "유승범"], [9, "유호성"], [10, "이성빈"], [11, "이승준"], [12, "이승진"], [13, "임태훈"], [14, "장준호"], [15, "전재훈"], [16, "정윤우"], [17, "최예건"], [18, "추민석"], [19, "홍경서"]]}, "6": {"t": "조영신", "s": [[1, "강태균"], [2, "김기현"], [3, "김준서"], [4, "김태영"], [5, "박민서"], [6, "박세훈"], [7, "서지완"], [8, "신수한"], [9, "신현민"], [10, "유시형"], [11, "유호준"], [12, "이도윤"], [13, "이준영"], [14, "정승환"], [15, "조승원"], [16, "조원준"], [17, "진현우"], [18, "하승범"]]}};
+  /* ======================================== */
+
+  const FRUITS = {
+    gam:   {name:'감',   meaning:'실전 감각', color:'var(--gam)'},
+    sagwa: {name:'사과', meaning:'합격 사과', color:'var(--sagwa)'},
+    gyul:  {name:'귤',   meaning:'꿀처럼 달게', color:'var(--gyul)'},
+    bae:   {name:'배',   meaning:'배짱 있게', color:'var(--bae)'},
+  };
+  const STAR = {name:'응원의 별', meaning:'선생님과 학부모의 축복'};
+  const BAD = ['씨발','시발','ㅅㅂ','ㅆㅂ','병신','ㅂㅅ','좆','개새','지랄','니미','fuck','shit'];
+  const $ = id => document.getElementById(id);
+  const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  // ---------- 수능 D-day (KST) ----------
+  const DDAY = (() => {
+    const now = new Date(Date.now() + 9*3600e3);
+    const today = Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate());
+    const d = Math.round((Date.UTC(2026,10,19) - today)/86400e3);
+    return d > 0 ? 'D-' + d : d === 0 ? 'D-DAY' : '수고했어요';
+  })();
+
+  // ---------- 호남고 교표 (벡터 재작도) ----------
+  const EMBLEM = "<defs>\n  <radialGradient id=\"P_pt\" cx=\"50%\" cy=\"100%\" r=\"100%\" fx=\"50%\" fy=\"100%\"><stop offset=\"0\" stop-color=\"#4f0512\"/><stop offset=\".5\" stop-color=\"#b00d2a\"/><stop offset=\".85\" stop-color=\"#e8263f\"/><stop offset=\"1\" stop-color=\"#ff5a6e\"/></radialGradient>\n  <radialGradient id=\"P_pi\" cx=\"50%\" cy=\"100%\" r=\"100%\" fx=\"50%\" fy=\"100%\"><stop offset=\"0\" stop-color=\"#6a0719\"/><stop offset=\".6\" stop-color=\"#cf1834\"/><stop offset=\"1\" stop-color=\"#ff5e72\"/></radialGradient>\n  <radialGradient id=\"P_cd\" cx=\"50%\" cy=\"45%\" r=\"60%\"><stop offset=\"0\" stop-color=\"#7a0b22\"/><stop offset=\"1\" stop-color=\"#3d0410\"/></radialGradient>\n  <linearGradient id=\"P_g\" x1=\"0\" y1=\"0\" x2=\"0\" y2=\"1\"><stop offset=\"0\" stop-color=\"#fff0b0\"/><stop offset=\".5\" stop-color=\"#ffd23a\"/><stop offset=\"1\" stop-color=\"#e9a800\"/></linearGradient>\n  <radialGradient id=\"P_an\" cx=\"40%\" cy=\"35%\" r=\"70%\"><stop offset=\"0\" stop-color=\"#fff6c8\"/><stop offset=\"1\" stop-color=\"#f2b705\"/></radialGradient>\n  <linearGradient id=\"P_lf\" x1=\"0\" y1=\"-1\" x2=\"0\" y2=\"1\"><stop offset=\"0\" stop-color=\"#3aa36a\"/><stop offset=\"1\" stop-color=\"#0b4f30\"/></linearGradient>\n</defs>\n<g class=\"em-leaves\"><g transform=\"translate(200 200) rotate(58) translate(118 0) scale(.66)\"><path d=\"M0 0 C 26 -18 70 -22 118 -2 C 70 22 26 22 0 0 Z\" fill=\"url(#P_lf)\"/><path d=\"M4 0 C 40 -3 80 -2 112 -1\" stroke=\"#7fd1a2\" stroke-width=\"2\" fill=\"none\" stroke-opacity=\".7\"/></g><g transform=\"translate(200 200) rotate(90) translate(118 0) scale(.66)\"><path d=\"M0 0 C 26 -18 70 -22 118 -2 C 70 22 26 22 0 0 Z\" fill=\"url(#P_lf)\"/><path d=\"M4 0 C 40 -3 80 -2 112 -1\" stroke=\"#7fd1a2\" stroke-width=\"2\" fill=\"none\" stroke-opacity=\".7\"/></g><g transform=\"translate(200 200) rotate(122) translate(118 0) scale(.66)\"><path d=\"M0 0 C 26 -18 70 -22 118 -2 C 70 22 26 22 0 0 Z\" fill=\"url(#P_lf)\"/><path d=\"M4 0 C 40 -3 80 -2 112 -1\" stroke=\"#7fd1a2\" stroke-width=\"2\" fill=\"none\" stroke-opacity=\".7\"/></g></g>\n<g class=\"em-outer\"><g transform=\"translate(200 200) rotate(0.0)\"><path d=\"M0 -6 C -62 -22 -96 -112 -58 -168 C -38 -194 -14 -186 0 -176 C 14 -186 38 -194 58 -168 C 96 -112 62 -22 0 -6 Z\" fill=\"url(#P_pt)\"/><path d=\"M0 -14 C -6 -60 -4 -110 0 -160 M0 -40 C -18 -80 -30 -120 -36 -150 M0 -40 C 18 -80 30 -120 36 -150\" fill=\"none\" stroke=\"#ff8796\" stroke-width=\"1.6\" stroke-opacity=\".35\"/></g><g transform=\"translate(200 200) rotate(60.0)\"><path d=\"M0 -6 C -62 -22 -96 -112 -58 -168 C -38 -194 -14 -186 0 -176 C 14 -186 38 -194 58 -168 C 96 -112 62 -22 0 -6 Z\" fill=\"url(#P_pt)\"/><path d=\"M0 -14 C -6 -60 -4 -110 0 -160 M0 -40 C -18 -80 -30 -120 -36 -150 M0 -40 C 18 -80 30 -120 36 -150\" fill=\"none\" stroke=\"#ff8796\" stroke-width=\"1.6\" stroke-opacity=\".35\"/></g><g transform=\"translate(200 200) rotate(120.0)\"><path d=\"M0 -6 C -62 -22 -96 -112 -58 -168 C -38 -194 -14 -186 0 -176 C 14 -186 38 -194 58 -168 C 96 -112 62 -22 0 -6 Z\" fill=\"url(#P_pt)\"/><path d=\"M0 -14 C -6 -60 -4 -110 0 -160 M0 -40 C -18 -80 -30 -120 -36 -150 M0 -40 C 18 -80 30 -120 36 -150\" fill=\"none\" stroke=\"#ff8796\" stroke-width=\"1.6\" stroke-opacity=\".35\"/></g><g transform=\"translate(200 200) rotate(180.0)\"><path d=\"M0 -6 C -62 -22 -96 -112 -58 -168 C -38 -194 -14 -186 0 -176 C 14 -186 38 -194 58 -168 C 96 -112 62 -22 0 -6 Z\" fill=\"url(#P_pt)\"/><path d=\"M0 -14 C -6 -60 -4 -110 0 -160 M0 -40 C -18 -80 -30 -120 -36 -150 M0 -40 C 18 -80 30 -120 36 -150\" fill=\"none\" stroke=\"#ff8796\" stroke-width=\"1.6\" stroke-opacity=\".35\"/></g><g transform=\"translate(200 200) rotate(240.0)\"><path d=\"M0 -6 C -62 -22 -96 -112 -58 -168 C -38 -194 -14 -186 0 -176 C 14 -186 38 -194 58 -168 C 96 -112 62 -22 0 -6 Z\" fill=\"url(#P_pt)\"/><path d=\"M0 -14 C -6 -60 -4 -110 0 -160 M0 -40 C -18 -80 -30 -120 -36 -150 M0 -40 C 18 -80 30 -120 36 -150\" fill=\"none\" stroke=\"#ff8796\" stroke-width=\"1.6\" stroke-opacity=\".35\"/></g><g transform=\"translate(200 200) rotate(300.0)\"><path d=\"M0 -6 C -62 -22 -96 -112 -58 -168 C -38 -194 -14 -186 0 -176 C 14 -186 38 -194 58 -168 C 96 -112 62 -22 0 -6 Z\" fill=\"url(#P_pt)\"/><path d=\"M0 -14 C -6 -60 -4 -110 0 -160 M0 -40 C -18 -80 -30 -120 -36 -150 M0 -40 C 18 -80 30 -120 36 -150\" fill=\"none\" stroke=\"#ff8796\" stroke-width=\"1.6\" stroke-opacity=\".35\"/></g></g>\n<g class=\"em-inner\"><g transform=\"translate(200 200) rotate(36.0)\"><path d=\"M0 -4 C -40 -18 -60 -80 -36 -116 C -22 -132 -8 -126 0 -120 C 8 -126 22 -132 36 -116 C 60 -80 40 -18 0 -4 Z\" fill=\"url(#P_pi)\"/></g><g transform=\"translate(200 200) rotate(108.0)\"><path d=\"M0 -4 C -40 -18 -60 -80 -36 -116 C -22 -132 -8 -126 0 -120 C 8 -126 22 -132 36 -116 C 60 -80 40 -18 0 -4 Z\" fill=\"url(#P_pi)\"/></g><g transform=\"translate(200 200) rotate(180.0)\"><path d=\"M0 -4 C -40 -18 -60 -80 -36 -116 C -22 -132 -8 -126 0 -120 C 8 -126 22 -132 36 -116 C 60 -80 40 -18 0 -4 Z\" fill=\"url(#P_pi)\"/></g><g transform=\"translate(200 200) rotate(252.0)\"><path d=\"M0 -4 C -40 -18 -60 -80 -36 -116 C -22 -132 -8 -126 0 -120 C 8 -126 22 -132 36 -116 C 60 -80 40 -18 0 -4 Z\" fill=\"url(#P_pi)\"/></g><g transform=\"translate(200 200) rotate(324.0)\"><path d=\"M0 -4 C -40 -18 -60 -80 -36 -116 C -22 -132 -8 -126 0 -120 C 8 -126 22 -132 36 -116 C 60 -80 40 -18 0 -4 Z\" fill=\"url(#P_pi)\"/></g></g>\n<path d=\"M88.73264291807216 93.53179259544218 97.62100077151017 101.44425710842592 95.61459824494598 103.6981217071083 86.72624039150797 95.78565719412455ZM83.37477409070888 99.55048062762734 92.26313194414689 107.46294514061108 90.2567294175827 109.71680973929345 81.3683715641447 101.80434522630972ZM90.98962510161071 99.3761044679752 91.57462859300381 99.89687775837878 88.00839539828088 103.90295661933203 87.42339190688779 103.38218332892845ZM89.36371123220839 108.85355976356756 90.2906399797812 109.67871677706444 89.38635832115449 110.69452910317163 89.2593817803911 110.5814938958433Q89.2593817803911 110.5814938958433 89.33285466515451 110.49895914434708Q89.40632754991793 110.41642439285087 89.40632754991793 110.41642439285087Q89.70021908897162 110.08628538686604 89.67442762211675 109.64226365289632Q89.64863615526188 109.1982419189266 89.32980067000989 108.89165272579658ZM82.32921087391603 102.59140927757757 82.29530031171753 102.62950223980658Q81.95385778499985 102.34830835482924 81.50983605103013 102.37409982168411Q81.06581431706041 102.39989128853898 80.77192277800673 102.73003029452381Q80.77192277800673 102.73003029452381 80.6984498932433 102.81256504602003Q80.62497700847989 102.89509979751624 80.62497700847989 102.89509979751624L80.4980004677165 102.7820645901879L81.40228212634321 101.76625226408069ZM91.30229263437556 106.67588108934322 91.33620319657406 106.6377881271142Q91.67764572329175 106.91898201209155 92.12166745726145 106.89319054523668Q92.56568919123117 106.86739907838182 92.85958073028486 106.53726007239698Q92.85958073028486 106.53726007239698 92.92740185468186 106.46107414793894Q92.99522297907886 106.3848882234809 93.0065264998117 106.37219056940457L93.13350304057509 106.4852257767329L92.22922138194839 107.5010381028401ZM84.2677922760832 100.41373060335323 83.34086352851038 99.58857358985637 84.2451451871371 98.57276126374916 84.37212172790049 98.68579647107751Q84.36081820716767 98.69849412515384 84.29299708277065 98.77468004961187Q84.22517595837365 98.85086597406992 84.22517595837365 98.85086597406992Q83.93128441931998 99.18100498005477 83.95707588617483 99.62502671402447Q83.9828673530297 100.06904844799419 84.3017028382817 100.37563764112421ZM94.72158005957166 102.83487173138239 95.64850880714448 103.66002874487927 94.74422714851777 104.67584107098648 94.61725060775437 104.56280586365813Q94.6285541284872 104.5501082095818 94.6963752528842 104.47392228512376Q94.76419637728121 104.39773636066572 94.76419637728121 104.39773636066572Q95.05808791633488 104.06759735468087 95.03794820984643 103.61722679367298Q95.017808503358 103.1668562326651 94.68766949737316 102.87296469361142ZM87.6870797012793 96.57272124539242 87.6531691390808 96.61081420762143Q87.32303013309595 96.31692266856774 86.87335663875982 96.34906296246078Q86.42368314442369 96.38120325635381 86.12979160537 96.71134226233866Q86.12979160537 96.71134226233866 86.061970480973 96.78752818679669Q85.994149356576 96.86371411125474 85.98284583584316 96.87641176533107L85.85586929507977 96.76337655800273L86.76015095370647 95.74756423189554ZM96.66016146173884 100.65719305715807 96.69407202393734 100.61910009492904Q97.03551455065502 100.9002939799064 97.47953628462474 100.87450251305152Q97.92355801859445 100.84871104619666 98.21744955764814 100.51857204021182Q98.21744955764814 100.51857204021182 98.29092244241156 100.43603728871561Q98.36439532717498 100.3535025372194 98.36439532717498 100.3535025372194L98.49137186793837 100.46653774454774L97.58709020931165 101.48235007065495ZM89.62566110344648 94.39504257116808 88.69873235587366 93.5698855576712 89.60301401450037 92.554073231564 89.72999055526377 92.66710843889234Q89.72999055526377 92.66710843889234 89.65651767050035 92.74964319038855Q89.58304478573693 92.83217794188477 89.58304478573693 92.83217794188477Q89.28915324668324 93.1623169478696 89.31494471353811 93.60633868183932Q89.34073618039298 94.05036041580904 89.65957166564498 94.35694960893906Z M98.452786161134 84.04015173322782Q100.04736215579622 82.64380410859208 101.70335604435877 82.18550836485201Q103.35934993292133 81.72721262111193 104.89688166214249 82.215591985212Q106.43441339136365 82.70397134931207 107.70916282619001 84.1596868259747Q108.97491243097144 85.60512483827785 109.2606064112455 87.19880004133508Q109.54630039151957 88.7924752443923 108.87346581915048 90.37350161542845Q108.20063124678141 91.9545279864646 106.6060552521192 93.35087561110032Q105.01399124897368 94.74502352032631 103.36313609259088 95.19881934904393Q101.71228093620807 95.65261517776156 100.17474920698692 95.16423581366149Q98.63721747776576 94.67585644956141 97.3624680429394 93.22014097289878Q96.09671843815796 91.77470296059565 95.8110244578839 90.18102775753842Q95.52533047760984 88.58735255448119 96.19302631779917 87.01082609846749Q96.86072215798849 85.4342996424538 98.452786161134 84.04015173322782ZM106.09007228758136 92.76164264762438Q106.94079435678977 92.01667737501224 107.11749384384521 90.99459428235771Q107.29419333090067 89.97251118970318 106.82478395113782 88.77960333270718Q106.35537457137497 87.58669547571117 105.24441985595487 86.31802735245083Q104.1334651405348 85.04935922919047 103.01294100254933 84.42662334835168Q101.89241686456384 83.80388746751291 100.85595402972204 83.84415344580225Q99.81949119488024 83.88441942409159 98.96876912567184 84.62938469670374Q98.13083651233964 85.36315042386124 97.95413702528418 86.38523351651577Q97.77743753822874 87.4073166091703 98.24684691799159 88.60022446616631Q98.71625629775444 89.79313232316231 99.82721101317452 91.06180044642267Q100.93816572859461 92.330468569683 102.05868986658008 92.9532044505218Q103.17921400456555 93.57594033136058 104.21567683940737 93.53567435307124Q105.25213967424916 93.4954083747819 106.09007228758136 92.76164264762438Z M108.86330981848768 75.54089185779057 123.8615839233506 77.78354112562265 125.22573171569006 79.42763031153865 110.23698987811447 77.19905711845642ZM115.075487608869 84.5561793666306 115.75227858626837 85.55558067386949 114.58396438203137 86.34675885871664 114.48864170915822 86.20599811121821Q114.48864170915822 86.20599811121821 114.61532638190681 86.12020770563237Q114.74201105465539 86.03441730004654 114.75608712940524 86.02488503275922Q115.10798899815133 85.78657835057633 115.18977753247684 85.36162819390748Q115.27156606680235 84.93667803723864 115.03325938461947 84.58477616849254ZM117.49057913714 82.92068805389333Q117.72888581932288 83.27258992263941 118.15383597599174 83.35437845696492Q118.5787861326606 83.43616699129043 118.93068800140668 83.19786030910755Q118.94476407615652 83.18832804182024 119.07144874890511 83.1025376362344Q119.19813342165371 83.01674723064856 119.19813342165371 83.01674723064856L119.29345609452686 83.15750797814701L118.12514189028984 83.94868616299416L117.44835091289048 82.94928485575527ZM108.86330981848768 75.54089185779057 113.09713371683159 76.46330868230038 118.16737011453938 83.92008936113221 115.71005036201885 85.58417747573144 110.08601266250292 77.27929337332375Q109.53858683988071 76.47092254538036 109.13056795543497 76.05356853802203Q108.72254907098925 75.63621453066372 108.72254907098925 75.63621453066372ZM118.37444736469637 69.40795303563496 123.96035599506303 77.65653283904325Q124.33432876309739 78.20876962370231 124.65681985108131 78.58780356996002Q124.97931093906524 78.96683751621771 125.16586366375195 79.15433871108526Q125.35241638843866 79.34183990595281 125.35241638843866 79.34183990595281L125.22573171569006 79.42763031153865L120.86088809090656 78.34205781627489L115.93120368692568 71.06250888294686ZM119.50053334468384 68.64537165264974 119.595856017557 68.78613240014818Q119.595856017557 68.78613240014818 119.46917134480842 68.87192280573402Q119.34248667205982 68.95771321131986 119.34248667205982 68.95771321131986Q118.99058480331374 69.19601989350272 118.90403013534456 69.61393201279665Q118.81747546737539 70.0318441320906 119.05123834209574 70.40735434287384L119.00901011784622 70.43595114473578L118.33221914044684 69.4365498374969ZM114.79104163218835 71.83462253321939 115.95935583642537 71.04344434837223 116.63614681382474 72.04284565561112 116.60799466432505 72.06191019018576Q116.34607964010502 71.70546451397713 115.93293365445474 71.62594788338288Q115.51978766880447 71.54643125278864 115.15380972530853 71.79427020225883Q115.15380972530853 71.79427020225883 115.02712505255994 71.88006060784467Q114.90044037981136 71.96585101343051 114.8863643050615 71.97538328071782Z M128.4282794698823 63.33194927840123 139.13250291865515 71.47159545177789 135.97544172161875 73.12206874403331 129.08304748775748 67.29387391944765ZM130.30103772397274 74.80332031783406Q130.32888742219933 75.17241993620283 130.51447925038724 75.34395615194126Q130.70007107857518 75.51549236767968 130.94450056574766 75.53157976073445Q131.1889300529201 75.54766715378919 131.36971554584017 75.45315469138527L131.50530466553022 75.38227034458232L131.58406505086683 75.5329249220157L128.28956649378003 77.25524879871156L128.21080610844345 77.10459422127819Q128.21080610844345 77.10459422127819 128.27860066828845 77.06915204787671Q128.34639522813347 77.03370987447525 128.34639522813347 77.03370987447525Q128.69290075623024 76.85256098820106 128.94780191220394 76.44114890684799Q129.20270306817767 76.02973682549491 129.17596508192662 75.39149464568285ZM128.4282794698823 63.33194927840123 129.55053571178814 65.41376218004083 130.3971673257723 76.0958717878093 129.2390047446178 76.70134513437588 128.59551015684985 65.92946710577218Q128.5990804555093 65.78886371426155 128.57550561560947 65.45349495103372Q128.55193077570965 65.11812618780588 128.5157203990061 64.71468729504883Q128.47951002230258 64.31124840229177 128.4273738655292 63.950733478466994Q128.37523770875586 63.59021855464222 128.29269035019226 63.40283362520418ZM133.73561188303458 70.04984251222453 134.0984749767082 70.74393492695727 129.74617972669233 73.01926208149723 129.38331663301872 72.3251696667645ZM135.02268495979357 72.33490042610393 138.1224433494783 70.71438434633268Q138.64042339401607 71.09581113783489 139.11915596221596 71.12368840865497Q139.59788853041584 71.15156567947506 139.94439405851261 70.97041679320087Q139.94439405851261 70.97041679320087 140.00465588948597 70.93891263906622Q140.06491772045933 70.90740848493158 140.06491772045933 70.90740848493158L140.1436781057959 71.05806306236497L134.88955925881388 73.80485265244963L134.81079887347727 73.65419807501625L134.94638799316732 73.58331372821331Q135.24473812441235 73.42733989919057 135.34681857181783 73.057454719979Q135.44889901922335 72.68756954076743 135.02268495979357 72.33490042610393Z M150.24078537102812 54.01827737329005 151.1068679404839 55.91603818477002 149.16656159967812 65.75110136046557Q149.16656159967812 65.75110136046557 149.1101059551028 66.09628433235738Q149.05365031052747 66.44146730424922 149.05094428352828 66.91366415037663Q149.0482382565291 67.38586099650406 149.20747128345056 67.79494451845045L149.0613143329499 67.85044249483254L147.72825342376905 66.6265060450386ZM143.0067534255454 68.42128792317642 143.4472896540136 69.58146413022733 141.68318610630607 70.2513205872132 141.62283867774877 70.09239233967199Q141.6387315025029 70.08635759681626 141.75792768815882 70.0410970253983Q141.87712387381472 69.99583645398033 141.87712387381472 69.99583645398033Q142.30623014217602 69.83289839687565 142.54040620489306 69.44393718846234Q142.7745822676101 69.05497598004902 142.65711128095472 68.55405226600246ZM143.88348365512095 68.37932927204618Q143.8895183979767 68.3952220968003 143.89555314083242 68.41111492155443Q143.90158788368817 68.42700774630855 143.9136573693996 68.45879339581678Q144.01021325509126 68.71307859188273 144.274449768316 68.8582321832225Q144.53868628154075 69.00338577456228 144.7929714776067 68.90682988887062L145.0441351459591 68.81145929385949L145.09844783166065 68.95449471664658L144.11621422461863 69.32746348302123L143.7722338818421 68.42157247203627ZM140.14682982851932 57.851103006152975 140.29298677901994 57.7956050297709 141.61593827651853 59.3597987275285 144.12245728004575 69.32509290166017 142.94496231730878 69.7722053202496ZM140.29298677901994 57.7956050297709 148.75850590904398 63.83493979016451 149.0613143329499 67.85044249483254 141.5254171891787 62.374492680776946ZM150.38382079381523 53.963964687588486 156.25097957726857 64.71971189381088 153.27444284892894 65.8499473323853 150.00140037038858 59.59474281000444 150.24078537102812 54.01827737329005ZM155.30811601209555 63.75027687678224 155.6546366289727 63.61869782463673Q155.91514303841515 64.06530885298176 156.34207996685097 64.20323558754207Q156.76901689528677 64.34116232210238 157.19500163593452 64.17940955567823Q157.19500163593452 64.17940955567823 157.3157585854472 64.13355633892002Q157.43651553495988 64.08770312216178 157.44928683200047 64.08285366998658L157.50963426055773 64.24178191752779L155.74865224056376 64.91045308383315ZM152.82545578830064 64.98392894002939 152.9367055615795 64.94168574003929 153.28068590435603 65.84757675102425 152.29845229731401 66.22054551739889 152.24413961161247 66.0775100946118 152.49530327996484 65.98213949960066Q152.75271000374437 65.88439832322848 152.85244769600766 65.60103829154721Q152.95218538827095 65.31767825986596 152.8556295025793 65.0633930638Q152.84356001686783 65.03160741429176 152.83752527401208 65.01571458953764Q152.83149053115636 64.99982176478352 152.82545578830064 64.98392894002939Z  M176.93415951682692 47.737493312562364 179.13864861041654 59.43151861765917 176.17333712252918 59.990521755038614 173.96884802893956 48.29649644994181ZM169.0156338102328 49.23024735593592 171.2201229038224 60.924272661032724 168.25481141593508 61.48327579841217 166.05032232234544 49.789250493315365ZM175.15137230031746 53.74345864553685 175.29646477271257 54.5131222599777 170.0258412957246 55.5067092985121 169.8807488233295 54.73704568407125ZM168.07503194748256 60.25430820619383 168.30492866724262 61.473827988011074 166.96846863237442 61.72576959870703 166.93697593103744 61.55871209434851Q166.93697593103744 61.55871209434851 167.04556330887047 61.538241838479465Q167.1541506867035 61.517771582610415 167.1541506867035 61.517771582610415Q167.5885001980357 61.43589055913423 167.83929508362553 61.06857267859752Q168.09008996921534 60.7012547980608 168.02491469617502 60.26375601659493ZM166.33033629341304 50.999322464731506 166.2802190421055 51.008770275132605Q166.18163226819345 50.57757003393414 165.81431438765674 50.32677514834431Q165.44699650712002 50.07598026275448 165.01264699578786 50.15786128623066Q165.01264699578786 50.15786128623066 164.90405961795483 50.17833154209971Q164.79547224012177 50.198801797968756 164.79547224012177 50.198801797968756L164.76397953878478 50.03174429361023L166.10043957365298 49.77980268291427ZM170.9401089327548 59.71420068961659 170.99022618406235 59.70475287921549Q171.0888129579744 60.13595312041396 171.45613083851111 60.386748006003785Q171.82344871904783 60.63754289159362 172.25779823038 60.55566186811743Q172.25779823038 60.55566186811743 172.35803273299513 60.536766247315235Q172.45826723561024 60.51787062651304 172.47497298604608 60.51472135637934L172.50646568738307 60.681778860737865L171.17000565251487 60.93372047143382ZM169.1954132786853 50.45921494815426 168.96551655892523 49.23969516633702 170.30197659379343 48.98775355564106 170.33346929513044 49.15481105999959Q170.31676354469457 49.15796033013329 170.21652904207946 49.17685595093549Q170.11629453946435 49.19575157173768 170.11629453946435 49.19575157173768Q169.6819450281322 49.277632595213866 169.43115014254235 49.644950475750576Q169.1803552569525 50.012268356287294 169.24553052999286 50.44976713775316ZM175.99355765407668 58.76155416282028 176.22345437383674 59.981073944637515 174.88699433896855 60.23301555533347 174.85550163763156 60.06595805097495Q174.8722073880674 60.06280878084125 174.97244189068252 60.043913160039054Q175.07267639329763 60.025017539236856 175.07267639329763 60.025017539236856Q175.50702590462978 59.94313651576067 175.76617366543755 59.57424400015711Q176.0253214262453 59.205351484553546 175.9434404027691 58.77100197322138ZM174.24886200000716 49.506568421357954 174.19874474869962 49.51601623175905Q174.11686372522342 49.08166672042688 173.74119296946878 48.8324464699039Q173.36552221371414 48.58322621938092 172.93117270238199 48.665107242857104Q172.93117270238199 48.665107242857104 172.83093819976688 48.6840028636593Q172.73070369715174 48.7028984844615 172.7139979467159 48.706047754595204L172.6825052453789 48.53899025023667L174.0189652802471 48.287048639540714ZM178.85863463934894 58.22144664624303 178.90875189065648 58.21199883584193Q179.00733866456852 58.6431990770404 179.37465654510524 58.89399396263023Q179.74197442564196 59.14478884822007 180.17632393697411 59.062907824743874Q180.17632393697411 59.062907824743874 180.28491131480718 59.04243756887483Q180.3934986926402 59.02196731300578 180.3934986926402 59.02196731300578L180.4249913939772 59.18902481736431L179.088531359109 59.44096642806027ZM177.11393898527942 48.9664609047807 176.88404226551935 47.74694112296346 178.22050230038755 47.494999512267505 178.25199500172454 47.662057016626036Q178.25199500172454 47.662057016626036 178.1434076238915 47.68252727249508Q178.03482024605847 47.70299752836412 178.03482024605847 47.70299752836412Q177.60047073472631 47.784878551840315 177.34967584913647 48.152196432377025Q177.09888096354663 48.51951431291374 177.16405623658696 48.957013094379604Z M187.45762664827623 46.604405562670834 188.5444572156157 58.45467135369411 185.5395270595877 58.73026432383368 184.45269649224824 46.8799985328104ZM185.47697301095525 57.489793046052654 185.5903139129778 58.72560647854508 184.23599782257514 58.849815686241016 184.22047167161315 58.68052617494069Q184.22047167161315 58.68052617494069 184.33050985395835 58.67043417681539Q184.44054803630357 58.660342178690094 184.44054803630357 58.660342178690094Q184.88070076568445 58.61997418618891 185.1651629823104 58.278065211003614Q185.4496251989363 57.936156235818316 185.42618615756516 57.49445089134125ZM184.61682424766087 48.11115412001423 184.56603739427078 48.115811965302825Q184.50874045063955 47.67721185101816 184.16683147545427 47.39274963439223Q183.82492250026897 47.108287417766306 183.38476977088808 47.14865541026748Q183.38476977088808 47.14865541026748 183.27473158854286 47.15874740839278Q183.16469340619767 47.168839406518074 183.16469340619767 47.168839406518074L183.14916725523568 46.99954989521774L184.50348334563833 46.8753406875218ZM188.38032946020306 57.22351576649028 188.43111631359315 57.21885792120168Q188.48841325722435 57.65745803548635 188.83032223240966 57.94192025211228Q189.17223120759496 58.22638246873821 189.61238393697585 58.18601447623703Q189.61238393697585 58.18601447623703 189.71395764375603 58.17669878565983Q189.81553135053622 58.167383095082634 189.83246030166626 58.16583047998644L189.84798645262825 58.33511999128677L188.4936703622256 58.45932919898271ZM187.52018069690868 47.84487684045186 187.40683979488614 46.60906340795943 188.7611558852888 46.48485420026349 188.77668203625078 46.65414371156382Q188.75975308512074 46.65569632666002 188.65817937834055 46.66501201723722Q188.55660567156033 46.67432770781441 188.55660567156033 46.67432770781441Q188.11645294217948 46.714695700315595 187.83199072555357 47.05660467550089Q187.54752850892763 47.3985136506862 187.57096755029877 47.84021899516326Z M206.11582980457166 53.25039545061372 206.1109605640594 56.05539122431764Q205.70541484656357 56.56468799893502 204.85027666682169 57.07320431824773Q203.9951384870798 57.58172063756045 202.81548863602308 57.911173362522916Q201.63583878496632 58.24062608748539 200.23455281035086 58.23819357100861Q198.26862943971662 58.231441896454946 196.8041303796723 57.48272054450922Q195.339631319628 56.733999192563495 194.5275664814655 55.34025691201376Q193.71550164330296 53.94651463146403 193.71886057918562 52.01155148242605Q193.72217208637173 50.103910313706336 194.5253890518904 48.72496356286256Q195.32860601740902 47.34601681201879 196.8298481553769 46.60244374133808Q198.33109029334477 45.85887067065736 200.39264639129317 45.86244936142207Q201.3276449825278 45.864072441592825 202.25986091359744 45.98453834350823Q203.1920768446671 46.10500424542363 203.98650281301383 46.29474802788258Q204.78092878136056 46.48449181034153 205.27350962422412 46.72638118863057L205.19833270241074 49.80630586554754L205.04533293293596 49.80604027061051Q204.71048213192722 48.5872199791943 204.09101992122586 47.90098260098884Q203.4715577105245 47.21474522278337 202.69050576124576 46.93152451563789Q201.909453811967 46.648303808492415 201.07433629582718 46.646854113601535Q199.70098240803262 46.64447008491572 198.78943233374557 47.30224465991469Q197.87788225945852 47.96001923491366 197.42768477254612 49.18642604074434Q196.9774872856337 50.41283284657502 196.97446508773294 52.15381325566085Q196.97165631896675 53.771844753314504 197.36983904434706 54.96557169866573Q197.76802176972737 56.15929864401696 198.56119086881756 56.804701941942994Q199.35435996790775 57.450105239869025 200.53645419727422 57.455496251905785Q201.1341821785115 57.45653385821123 201.67958617675936 57.258488818478284Q202.2249901750072 57.06044377874533 202.61226508554478 56.66814091550199Q202.99953999608238 56.27583805225866 203.09401805403448 55.707713116168975L203.11529282158406 53.2451867667458Q203.11662079626922 52.480187919372014 202.2496221025789 52.4786828813955L201.97762251240158 52.478210712618555L201.97791761788716 52.30821096875771L207.2224512198379 52.31731504503542L207.22215611435232 52.48731478889626L206.96715649856102 52.48687213066788Q206.08315783048465 52.485337582142805 206.11582980457166 53.25039545061372Z M224.43550595102843 47.95129073598019 222.97121073685392 59.76085633026627 219.97660112980674 59.38954779390133 221.44089634398125 47.579982199615245ZM216.43874296289755 46.95975369095345 214.97444774872307 58.76931928523953 211.97983814167586 58.39801074887459 213.44413335585037 46.588445154588506ZM220.90713018883386 53.12821205284397 220.81075492730105 53.905480162253056 215.48805619437246 53.24550649777795 215.58443145590527 52.468238388368874ZM212.18315563798672 57.17271731638836 212.0304505656514 58.40428629979248 210.6807859263044 58.236938275315396 210.70170442936404 58.06823019539702Q210.70170442936404 58.06823019539702 210.81136468131098 58.08182722238578Q210.9210249332579 58.095424249374545 210.9210249332579 58.095424249374545Q211.35966594104568 58.1498123573296 211.71047511955499 57.87640164014094Q212.06128429806432 57.60299092295227 212.1325432140112 57.16644176547047ZM213.34204070749055 47.82628968891052 213.29142828351505 47.82001413799263Q213.32894558347826 47.37928127989889 213.05553486628958 47.028472101389575Q212.78212414910092 46.67766292288026 212.34348314131316 46.62327481492521Q212.34348314131316 46.62327481492521 212.2338228893662 46.60967778793645Q212.12416263741926 46.596080760947686 212.12416263741926 46.596080760947686L212.1450811404789 46.42737268102931L213.49474577982588 46.5947207055064ZM215.07654039708288 57.531474750917525 215.1271528210584 57.537750301835416Q215.08963552109518 57.97848315992915 215.36304623828386 58.329292338438464Q215.6364569554725 58.68010151694778 216.07509796326028 58.734489624902835Q216.07509796326028 58.734489624902835 216.17632281121132 58.74704072673862Q216.27754765916234 58.75959182857439 216.29441846715417 58.76168367888036L216.27349996409453 58.930391758798734L214.92383532474756 58.76304373432165ZM216.23542546658672 48.18504712343968 216.38813053892204 46.95347814003556 217.73779517826904 47.12082616451265 217.7168766752094 47.289534244431024Q217.70000586721756 47.28744239412506 217.59878101926654 47.274891292289276Q217.49755617131552 47.26234019045349 217.49755617131552 47.26234019045349Q217.05891516352773 47.20795208249844 216.70810598501842 47.481362799687105Q216.3572968065091 47.754773516875765 216.28603789056223 48.19132267435757ZM220.1799186261176 58.1642543614151 220.02721355378225 59.39582334481921 218.67754891443525 59.22847532034213 218.6984674174949 59.05976724042376Q218.71533822548673 59.06185909072972 218.81656307343775 59.0744101925655Q218.9177879213888 59.086961294401284 218.9177879213888 59.086961294401284Q219.35642892917656 59.14134940235634 219.71567351168179 58.86898461032065Q220.074918094187 58.59661981828497 220.12930620214206 58.157978810497205ZM221.3388036956214 48.81782673393725 221.2881912716459 48.81155118301936Q221.34257937960095 48.372910175231596 221.06073325841635 48.02105507156929Q220.77888713723178 47.669199967907 220.340246129444 47.61481185995194Q220.340246129444 47.61481185995194 220.239021281493 47.60226075811616Q220.13779643354198 47.589709656280384 220.12092562555014 47.58761780597442L220.14184412860976 47.41890972605604L221.49150876795676 47.586257750533136ZM223.07330338521376 58.523011795944264 223.12391580918927 58.52928734686215Q223.08639850922606 58.97002020495589 223.3598092264147 59.3208293834652Q223.63321994360336 59.67163856197452 224.07186095139113 59.72602666992957Q224.07186095139113 59.72602666992957 224.1815212033381 59.73962369691833Q224.29118145528503 59.75322072390709 224.29118145528503 59.75322072390709L224.27026295222538 59.921928803825466L222.9205983128784 59.75458077934838ZM224.23218845471757 49.17658416846642 224.38489352705292 47.945015185062296 225.7345581663999 48.11236320953938 225.71363966334025 48.281071289457756Q225.71363966334025 48.281071289457756 225.6039794113933 48.267474262468994Q225.49431915944638 48.25387723548023 225.49431915944638 48.25387723548023Q225.0556781516586 48.199489127525176 224.7048689731493 48.47289984471384Q224.35405979463997 48.746310561902504 224.28280087869308 49.18285971938431Z  M242.12087934752535 51.72837298916208Q242.4611538899707 51.825867658493536 242.99707720639987 52.01478720637304Q243.53300052282907 52.20370675425256 244.09808820405402 52.427508443653096Q244.66317588527897 52.65131013305363 245.08730807406351 52.834725583074714Q245.51144026284808 53.01814103309581 245.63658275216017 53.124732662716276L244.70367593768032 55.38879239826524L244.54346142880814 55.34288811035601Q244.79455550017647 54.46652306566696 244.2837190639985 53.74147929617396Q243.77288262782054 53.01643552668095 242.65020804917685 52.69476942134994Q241.67257856144937 52.41466129762813 240.9705178572289 52.66728978895726Q240.26845715300846 52.919918280286396 240.0475336230889 53.54218871669302Q239.8552040330648 54.06466098073421 240.14492795981323 54.5204558460005Q240.43465188656165 54.976250711266786 240.91018514754356 55.430494493319664L243.50358118181848 58.04202557054021Q244.21548284470927 58.69851858840688 244.45778413023865 59.561201902903576Q244.70008541576803 60.423885217400276 244.33215351067062 61.46004637684087Q243.7612811153257 63.10531175143592 242.25532817118392 63.657346938225736Q240.74937522704218 64.20938212501555 238.60850034886522 63.59598364146197Q237.7697735746359 63.35567359967842 237.0866846438198 63.014693692941805Q236.4035957130037 62.673713786205184 235.93180906200988 62.28906690751994Q235.46002241101604 61.904420028834686 235.24556140027815 61.517714053485825Q235.2002561432811 61.093892754882226 235.38405150865754 60.55160858896977Q235.567846874034 60.009324423057315 235.88965909484324 59.50500651955486Q236.21147131565252 59.00068861605241 236.54331173926525 58.72092892306578L236.690393649715 58.76307048946356Q236.39238174298896 59.59378070879195 236.56667820111852 60.443608788757494Q236.7409746592481 61.29343686872304 237.3812913432994 61.956738880996454Q238.0216080273507 62.62004089326986 239.0839620535986 62.917477416146234Q240.20880914823798 63.22934596827817 240.93420241779995 62.887559880016255Q241.65959568736196 62.545773791754335 241.85775959009513 61.854144887383434Q242.00483724635566 61.340816491778064 241.77043334032547 60.8225543605229Q241.53602943429527 60.304292229267745 240.83994966898044 59.67632851056336L238.5327165415583 57.31699905032738Q237.67643014975582 56.51966246385464 237.46575677551783 55.54714561911618Q237.25508340127985 54.574628774377715 237.6671005822892 53.5829935338998Q238.01589295861928 52.71282876095536 238.6604438086339 52.1936163576937Q239.30499465864852 51.67440395443204 240.18151462788387 51.54912657064683Q241.05803459711922 51.42384918686162 242.12087934752535 51.72837298916208ZM245.7190367042021 52.93614889180622 245.58130858733992 53.26805185165455 243.43313427461524 52.65256195111625 243.53146459621007 52.30937082673355Z M259.8968081419062 65.67725457601215 259.0442310711052 68.57884060629955Q258.48895101569144 68.9966777027907 257.7324770776928 69.22614372053162Q256.97600313969417 69.45560973827254 255.99325559659815 69.38952638870069Q255.0105080535021 69.32344303912883 253.79485213217143 68.83635032270286Q251.77958687438257 68.0105538263862 250.5512886472455 66.73106319868569Q249.32299042010845 65.45157257098516 249.0226543519699 63.84601051844806Q248.72231828383133 62.24044846591096 249.45465000870865 60.412740171979394Q250.1692548307021 58.62927358754365 251.4834576983136 57.6632714988705Q252.79766056592513 56.69726941019735 254.5679882358498 56.610120400218236Q256.3383159057745 56.522971390239114 258.4292245190883 57.360763020573685Q259.72378236147733 57.87947039899836 260.6434493961766 58.524143421518545Q261.5631164308758 59.16881644403873 262.1046178333811 59.75500418380024L260.8942119128578 62.58811291673262L260.75218845495266 62.531206525134984Q260.9514492104123 60.73452295773324 260.2801616695808 59.70585219721023Q259.6088741287493 58.67718143668721 258.35349178363964 58.174171015808135Q257.1423511480258 57.68888749781294 256.0371506360323 57.9398525250016Q254.93195012403888 58.19081755219026 254.0237407882513 59.110354685504575Q253.1155314524637 60.029891818818896 252.49340028865873 61.58256835784234Q251.8712691248538 63.135244896865785 251.8596485655798 64.43790371630482Q251.8480280063058 65.74056253574386 252.4120887601674 66.68424601499821Q252.97614951402898 67.62792949425256 254.08616086585172 68.10931997490334Q255.33337755560575 68.6090585561288 256.28443415038896 68.54160516132933Q257.2354907451722 68.47415176652987 258.0671665806834 67.75826798122034Q258.89884241619467 67.04238419591083 259.7705650682127 65.62667111681424Z M278.51453943288857 67.51841245826436 272.8197112310972 77.96728473004956 270.17013931940585 76.52321914546793 275.86496752119723 66.07434687368274ZM271.4391602088512 63.66220021876562 265.7443320070598 74.11107249055081 263.09476009536843 72.66700690596919 268.78958829715987 62.218134634184ZM273.33291223212274 71.03987371639633 272.9580967222316 71.72758531182343 268.24867716250844 69.16086474857198 268.62349267239966 68.47315315314488ZM263.7334302032915 71.60174520420499 263.1395409765332 72.69141331254829 261.9453841454721 72.04057580377214 262.0267388340691 71.8913061998895Q262.0267388340691 71.8913061998895 262.1237640765928 71.94418674747756Q262.22078931911653 71.99706729506562 262.22078931911653 71.99706729506562Q262.60889028921144 72.20858948541787 263.0355452302988 72.08294689213946Q263.4622001713862 71.95730429886106 263.6886493221267 71.57733879762588ZM268.2404799515664 63.33220914910642 268.1956990704016 63.307802742527315Q268.39229430036556 62.911566303572734 268.26665170708714 62.48491136248535Q268.14100911380876 62.05825642139797 267.7529081437139 61.846734231045716Q267.7529081437139 61.846734231045716 267.6558829011902 61.793853683457655Q267.55885765866645 61.740973135869595 267.55885765866645 61.740973135869595L267.64021234726346 61.591703531986944L268.83436917832466 62.2425410407631ZM266.29344035265325 72.9969979756284 266.33822123381805 73.0214043822075Q266.14162600385407 73.41764082116208 266.26726859713244 73.84429576224946Q266.39291119041087 74.27095070333685 266.7810121605057 74.48247289368909Q266.7810121605057 74.48247289368909 266.8705739228353 74.53128570684731Q266.9601356851649 74.58009852000552 266.9750626455532 74.58823398886523L266.8937079569562 74.73750359274787L265.699551125895 74.0866660839717ZM270.80049010092813 64.72746192052983 271.3943793276864 63.637793812186516 272.58853615874756 64.28863132096268 272.50718147015056 64.43790092484532Q272.4922545097623 64.42976545598562 272.4026927474327 64.3809526428274Q272.3131309851031 64.33213982966919 272.3131309851031 64.33213982966919Q271.92503001500825 64.12061763931695 271.4983750739209 64.24626023259535Q271.0717201328335 64.37190282587376 270.8452709820929 64.75186832710894ZM270.8088094273289 75.45795744370373 270.21492020057065 76.54762555204704 269.0207633695095 75.89678804327087 269.1021180581065 75.74751843938823Q269.11704501849476 75.75565390824794 269.20660678082436 75.80446672140616Q269.29616854315395 75.85327953456436 269.29616854315395 75.85327953456436Q269.6842695132488 76.0648017249166 270.11838793453035 75.94322686606804Q270.55250635581183 75.8216520072195 270.7640285461641 75.43355103712462ZM275.3158591756038 67.18842138860516 275.271078294439 67.16401498202606Q275.48260048479125 66.77591401193118 275.3494944113187 66.34519133641395Q275.2163883378462 65.91446866089672 274.8282873677513 65.70294647054446Q274.8282873677513 65.70294647054446 274.7387256054217 65.65413365738624Q274.64916384309214 65.60532084422803 274.6342368827039 65.59718537536833L274.7155915713009 65.44791577148568L275.909748402362 66.09875328026185ZM273.36881957669067 76.85321021512713 273.41360045785547 76.87761662170624Q273.21700522789143 77.27385306066083 273.34264782116986 77.7005080017482Q273.4682904144483 78.12716294283558 273.85639138454314 78.33868513318784Q273.85639138454314 78.33868513318784 273.9534166270669 78.3915656807759Q274.0504418695906 78.44444622836397 274.0504418695906 78.44444622836397L273.9690871809936 78.59371583224662L272.7749303499324 77.94287832347045ZM277.87586932496555 68.58367416002858 278.46975855172377 67.49400605168526 279.663915382785 68.14484356046142 279.5825606941879 68.29411316434407Q279.5825606941879 68.29411316434407 279.4855354516642 68.24123261675601Q279.3885102091405 68.18835206916793 279.3885102091405 68.18835206916793Q279.0004092390456 67.97682987881569 278.5737542979582 68.10247247209409Q278.14709935687085 68.2281150653725 277.92065020613035 68.60808056660768Z M289.96026686902707 74.83741200605256Q291.68135297762075 76.07447380660443 292.5026456443977 77.58372166669406Q293.32393831117474 79.09296952678368 293.1963156884169 80.70114572602337Q293.0686930656591 82.30932192526306 291.93935836183834 83.88053063111069Q290.8179968487644 85.44064648142812 289.33037492982794 86.0797104293271Q287.84275301089156 86.71877437722608 286.15045314471683 86.42133209604916Q284.45815327854206 86.12388981487224 282.7370671699483 84.88682801432037Q281.0186923486929 83.65171500063036 280.202946109681 82.14645373591412Q279.3871998706691 80.64119247119788 279.51482249342695 79.03301627195819Q279.6424451161848 77.4248400727185 280.7717798200055 75.85363136687087Q281.8931413330795 74.29351551655344 283.3807632520159 73.65445156865445Q284.86838517095237 73.01538762075548 286.555138609362 73.30884330655901Q288.24189204777167 73.60229899236255 289.96026686902707 74.83741200605256ZM283.19419031314254 84.25084661766154Q284.1124067797706 84.91083132721882 285.14795644251825 84.85155693983987Q286.1835061052659 84.79228255246092 287.2391748498832 84.0650014357459Q288.29484359450055 83.33772031903086 289.2790681646162 81.96839888771109Q290.2632927347319 80.5990774563913 290.6161887239406 79.36666569813329Q290.9690847131492 78.13425393987528 290.69522245280507 77.13381602607197Q290.4213601924609 76.13337811226867 289.50314372583284 75.4733934027114Q288.59873140207327 74.82333067076274 287.5631817393256 74.88260505814169Q286.52763207657796 74.94187944552064 285.47196333196064 75.66916056223567Q284.4162945873434 76.3964416789507 283.43207001722766 77.76576311027047Q282.447845447112 79.13508454159026 282.09494945790334 80.36749629984827Q281.74205346869473 81.59990805810628 282.01591572903885 82.60034597190958Q282.289777989383 83.60078388571289 283.19419031314254 84.25084661766154Z M304.874116621578 87.04008360779982Q306.4274017182985 88.48222254004078 307.0539635754409 90.08215097183424Q307.68052543258324 91.68207940362771 307.353243879929 93.26176450102302Q307.0259623272748 94.84144959841834 305.70940923091035 96.25946991387173Q304.40215110168907 97.66747889573227 302.84641675519595 98.11593440784688Q301.2906824087028 98.56438991996149 299.6487198723436 98.05811946172855Q298.0067573359843 97.55184900349562 296.4534722392639 96.10971007125467Q294.90263408705977 94.66984299107709 294.2810778967138 93.07456204285518Q293.6595217063678 91.47928109463325 293.98680325902205 89.89959599723794Q294.31408481167625 88.31991089984263 295.6306379080407 86.90189058438924Q296.93789603726196 85.49388160252869 298.4936303837551 85.04542609041408Q300.0493647302482 84.59697057829948 301.6863215998111 85.09859355296086Q303.323278469374 85.60021652762225 304.874116621578 87.04008360779982ZM296.98637615832 95.5357350561238Q297.8150691249619 96.30513044438304 298.8499221675638 96.37552744171616Q299.8847752101657 96.44592443904928 301.02293901789994 95.85604524136905Q302.16110282563426 95.26616604368881 303.30848977913877 94.03034956636752Q304.4558767326432 92.79453308904623 304.95978613444925 91.61578390628358Q305.46369553625533 90.43703472352095 305.3168006027096 89.41024436735545Q305.16990566916377 88.38345401118994 304.3412127025219 87.61405862293068Q303.52497801398914 86.85623005387791 302.4901249713873 86.78583305654479Q301.4552719287854 86.71543605921167 300.3171081210511 87.3053152568919Q299.1789443133168 87.89519445457213 298.0315573598123 89.13101093189344Q296.8841704063078 90.36682740921474 296.3802610045018 91.54557659197738Q295.8763516026957 92.72432577474001 296.02324653624146 93.7511161309055Q296.17014146978727 94.77790648707101 296.98637615832 95.5357350561238Z M316.13158604396773 99.01054862963291 307.12907960416675 106.79289260823874 305.15567238121565 104.51008279132424 314.15817882101663 96.7277388127184ZM310.64687789427427 109.63861380288841 310.3988610665647 110.57532997581087 307.0957267014013 106.75431043778245 307.70110381378703 106.23098363353472ZM313.70522521361124 108.7267021765671 310.4322139693301 110.61391214626715 308.1399863271299 107.96229533684237 309.145598272701 107.90195457807013Q309.69016285263956 108.53189925171357 310.3979512657163 108.81730036141592Q311.105739678793 109.10270147111827 311.9228864831602 109.04878790409897Q312.7400332875274 108.99487433707968 313.5974850276432 108.60206983948852ZM306.1278580984175 103.73707766115449 305.18902528398115 104.54866496178052 304.299614543569 103.51980708294613 304.42822177842334 103.40863074039461Q304.42822177842334 103.40863074039461 304.50048640108184 103.4922254430499Q304.5727510237403 103.57582014570521 304.5727510237403 103.57582014570521Q304.8618095143742 103.91019895632638 305.30540913257494 103.94244610708654Q305.7490087507757 103.9746932578467 306.09450519565206 103.69849549069819ZM313.25269890934567 97.57790828380072 313.2193460065802 97.53932611334443Q313.54260718294626 97.23740689922508 313.5748543337064 96.79380728102433Q313.60710148446657 96.35020766282356 313.31804299383265 96.01582885220239Q313.31804299383265 96.01582885220239 313.2457783711742 95.9322341495471Q313.1735137485157 95.84863944689181 313.1735137485157 95.84863944689181L313.30212098337 95.73746310434029L314.1915317237821 96.76632098317468ZM315.1594003267659 99.78355375980266 316.0982331412023 98.97196645917661 316.98764388161436 100.000824338011 316.85903664676005 100.11200068056252Q316.8479190125049 100.09913995707709 316.78121320697403 100.02197561616451Q316.7145074014431 99.94481127525194 316.7145074014431 99.94481127525194Q316.42544891080917 99.61043246463075 315.98184929260844 99.57818531387059Q315.53824967440767 99.54593816311043 315.1927532295313 99.82213593025894Z\" fill=\"url(#P_g)\" stroke=\"#5a0718\" stroke-width=\".6\" paint-order=\"stroke\"/>\n<path d=\"M153.8428015574895 335.04818104030574Q154.0990970050316 335.13524578036834 154.50144611795503 335.29938486109415Q154.90379523087844 335.46352394182 155.32712897118375 335.6553860268498Q155.75046271148904 335.8472481118796 156.06762850058965 336.0030444565177Q156.38479428969026 336.1588408011559 156.47643311233733 336.2448894100182L155.68005180910393 337.9396616417443L155.5593779292449 337.8986681707988Q155.7836100868066 337.2385883137378 155.42027059207348 336.6658813647382Q155.05693109734037 336.0931744157386 154.21133041998783 335.8059199838845Q153.47497798737027 335.5557776822745 152.92938491503253 335.72274643431433Q152.3837918426948 335.8897151863542 152.19201114112767 336.35683219494985Q152.0257654145642 336.74878102591316 152.23018508898775 337.10764730463256Q152.4346047634113 337.466513583352 152.78100474164063 337.83107403782395L154.66518218010336 339.9217964773362Q155.1846349861844 340.44958743166194 155.33776926177848 341.1174832061207Q155.49090353737253 341.7853789805794 155.17151370282699 342.5631870904995Q154.67456620895706 343.7987214838936 153.50386840851218 344.16461867289775Q152.33317060806726 344.5305158619019 150.72065948369448 343.9827384306677Q150.0889288451876 343.7681366327869 149.57980275638377 343.482404183846Q149.07067666757993 343.19667173490507 148.72456181511757 342.8854087406198Q148.3784469626552 342.5741457463346 148.22895603448052 342.2708365307213Q148.21004188718516 341.9454406592128 148.37050255718904 341.53804336685937Q148.53096322719293 341.13064607450593 148.7954368811417 340.7573573296186Q149.05991053509047 340.3840685847313 149.3237303806295 340.1826707263857L149.43451276180076 340.22030400981976Q149.17613453155474 340.84377533048206 149.277802011498 341.49933452973215Q149.37946949144126 342.15489372898224 149.84399295345855 342.6852352853118Q150.30851641547585 343.21557684164145 151.10894071060147 343.4820913486213Q151.95656349406121 343.7619427485303 152.52327892688402 343.52773840531813Q153.08999435970685 343.293534062106 153.26695879068112 342.772597825428Q153.39830215539178 342.38595787892405 153.23844904308547 341.98142654752553Q153.07859593077916 341.576895216127 152.5701718433728 341.071480950817L150.89523143096594 339.1839865583765Q150.27071045452448 338.54327267558733 150.1458000514531 337.79265594636746Q150.02088964838174 337.0420392171476 150.3723038142297 336.2998725094246Q150.67092929458624 335.648145397535 151.18246509979207 335.2754283076288Q151.69400090499786 334.9027112177225 152.3681328640959 334.8394731272491Q153.042264823194 334.77623503677563 153.8428015574895 335.04818104030574ZM156.54639382095817 336.1038999434794 156.4289083302156 336.35231160367795 154.8108992575368 335.80266649416563 154.89871025221615 335.5441742714327Z M164.14503386933097 338.3335893944061 161.7902725060919 347.1236462157353 159.56133458339818 346.5265378001581 161.91609594663726 337.73648097882887ZM159.84457422622737 345.6199522803476 159.5990062554896 346.53662963457197 158.59442833305195 346.2675140502018 158.62806778109822 346.1419418098971Q158.62806778109822 346.1419418098971 158.7096897372963 346.1638074511272Q158.79131169349435 346.18567309235726 158.79131169349435 346.18567309235726Q159.11779951828657 346.2731356572775 159.41234114173588 346.1030599915994Q159.70688276518518 345.9329843259213 159.80690255413597 345.60986044593375ZM161.70819964799088 338.6632501674671 161.67052797589946 338.65315833305317Q161.7454333167893 338.32330656345636 161.5753576511112 338.028764940007Q161.4052819854331 337.73422331655775 161.07879416064088 337.64676075163743Q161.07879416064088 337.64676075163743 160.99717220444282 337.62489511040735Q160.91555024824476 337.6030294691773 160.91555024824476 337.6030294691773L160.94918969629103 337.47745722887254L161.95376761872868 337.7465728132427ZM161.99816880473827 346.19687702709706 162.03584047682966 346.206968861511Q161.96093513593985 346.5368206311078 162.13101080161795 346.8313622545571Q162.30108646729605 347.1259038780064 162.62757429208827 347.2133664429267Q162.62757429208827 347.2133664429267 162.70291763627108 347.2335501117545Q162.7782609804539 347.25373378058225 162.79081820448437 347.25709772538687L162.7571787564381 347.3826699656916L161.75260083400048 347.1135543813214ZM163.86179422650176 339.24017491421654 164.10736219723955 338.3234975599922 165.11194011967717 338.59261314436236 165.0783006716309 338.7181853846671Q165.06574344760043 338.7148214398624 164.9904001034176 338.69463777103465Q164.9150567592348 338.67445410220694 164.9150567592348 338.67445410220694Q164.58856893444258 338.5869915372866 164.29402731099327 338.7570672029647Q163.99948568754397 338.9271428686428 163.89946589859318 339.2502667486304Z M169.50515008311763 339.4762058772444 176.45169494002863 348.76225697834155 176.30892820664158 350.3896749683907 169.35999393632653 341.1164023923878ZM168.0329996231116 347.7180352887952 167.86335127142345 348.6253105704873 166.80273368860028 348.4269892579504 166.82662782264086 348.29920400700786Q166.82662782264086 348.29920400700786 166.94163454848916 348.3207087276444Q167.05664127433747 348.3422134482809 167.06941979943173 348.34460286168496Q167.38888292678809 348.40433819678645 167.66190581975775 348.2173341863629Q167.93492871272738 348.03033017593935 167.99466404782885 347.710867048583ZM170.2254650829357 348.1279970268673Q170.1657297478342 348.4474601542237 170.35273375825773 348.72048304719334Q170.53973776868128 348.993505940163 170.85920089603766 349.05324127526444Q170.87197942113193 349.0556306886685 170.9869861469802 349.077135409305Q171.1019928728285 349.09864012994154 171.1019928728285 349.09864012994154L171.07809873878793 349.2264253808841L170.01748115596476 349.02810406834726L170.1871295076529 348.1208287866551ZM169.50515008311763 339.4762058772444 171.31044467773032 342.25482373881243 170.05581673124752 349.0352723085594 167.8250156961407 348.6181423302751 169.2347696045353 341.07881252466467Q169.37199053622717 340.3449583008191 169.37467768420112 339.89863502201143Q169.37736483217506 339.4523117432038 169.37736483217506 339.4523117432038ZM177.9738946551202 341.2581276270502 176.5736984003418 348.74634333228363Q176.47995621731644 349.24767425984317 176.45138864584777 349.62716539569533Q176.42282107437907 350.00665653154743 176.4233780034345 350.2089181102873Q176.42393493248989 350.4111796890272 176.42393493248989 350.4111796890272L176.30892820664158 350.3896749683907L174.52016886092406 347.4518983391098L175.75587214510762 340.84338706216994ZM178.99617666266062 341.44928069937487 178.97228252862 341.57706595031743Q178.97228252862 341.57706595031743 178.8572758027717 341.5555612296809Q178.74226907692344 341.5340565090444 178.74226907692344 341.5340565090444Q178.42280594956705 341.47432117394294 178.15097776329944 341.65493592181934Q177.87914957703182 341.83555066969575 177.80424630343205 342.1654029087423L177.76591072814927 342.1582346685301L177.93555907983745 341.250959386838ZM174.72081161247297 340.6498445764412 175.78142919529614 340.84816588897803 175.61178084360796 341.75544117067017 175.58622379341946 341.750662343862Q175.63557001683074 341.4160312780073 175.45376056225228 341.15059235428686Q175.27195110767386 340.8851534305664 174.93970945522324 340.82302868206085Q174.93970945522324 340.82302868206085 174.82470272937493 340.8015239614243Q174.70969600352663 340.7800192407878 174.6969174784324 340.77762982738375Z M190.75367940782039 347.97815049400435 190.76249155327093 350.2907956076381Q190.44679281009437 350.7182720377267 189.9425110780752 351.05163408692715Q189.438229346056 351.38499613612765 188.70357957633527 351.5511736412959Q187.96892980661454 351.7173511464641 186.97165229297664 351.62584804794903Q185.31440664105347 351.46073635628306 184.13482414649408 350.7912753107715Q182.9552416519347 350.1218142652599 182.38452196736833 349.0107439472505Q181.81380228280196 347.8996736292411 181.95137490441468 346.4002918131822Q182.08561742790388 344.93720419951313 182.83779669647424 343.9422684215173Q183.58997596504457 342.9473326435215 184.8683515525349 342.4968690635582Q186.14672714002523 342.0464054835949 187.86202840787672 342.2037893398926Q188.92403403271263 342.3012314299669 189.73880399460054 342.57285580368426Q190.55357395648846 342.84448017740164 191.07842878466494 343.1558248080549L190.81004785517888 345.49642636060724L190.69353725502248 345.48573617580075Q190.44721718090562 344.1255006014668 189.7306197213182 343.5182188104115Q189.01402226173076 342.9109370193562 187.98415471300407 342.81644369078924Q186.99058136666716 342.7252804603458 186.2354258539479 343.1505514995766Q185.48027034122867 343.57582253880736 185.01548172006963 344.44804704832825Q184.55069309891059 345.32027155784914 184.4338222707269 346.5940278659879Q184.31695144254317 347.8677841741267 184.59290331526043 348.8249916073206Q184.8688551879777 349.78219904051457 185.48831105768633 350.35061249219444Q186.10776692739498 350.9190259438743 187.02637627232875 351.0294202225499Q188.04954503044584 351.1232989176887 188.7318086035736 350.8661778522335Q189.41407217670135 350.6090567867783 189.86724506964367 349.902795182712Q190.32041796258602 349.19653357864576 190.6501144299036 347.9686481075097Z M198.45341184516653 342.8923183386418 198.38315695098402 351.9920471395371 196.07569398199306 351.97423226062546 196.14594887617554 342.8745034597302ZM201.79331322439796 351.4064240722753 202.20644266385042 352.02156500090024 198.3441581132659 351.99174604713346 198.34888243146057 351.37983117855595ZM201.37100660843723 347.2305058324926 201.3663826543771 347.82942108849744 198.37647176265435 347.8063373375517 198.38109571671447 347.20742208154695ZM202.06777067920936 342.92022316998117 202.06304636101467 343.5321380385587 198.40968868925373 343.50393211481565 198.4144130074484 342.89201724623814ZM202.81239674684159 349.1888928704227 202.24544150156854 352.02186609330386 199.56518861744016 352.0011730719098 200.0378989882523 351.392871312176Q200.6746467348999 351.39778735380105 201.19576377334099 351.13506943716226Q201.71688081178206 350.87235152052347 202.09819388001955 350.3755906937972Q202.47950694825707 349.878829867071 202.68641844570726 349.1879202488854ZM201.36658338264618 347.803421863352 201.3559267747068 349.18371349020964 201.22593064897973 349.1827098488642 201.22662959598605 349.0921790996853Q201.23081446920904 348.5501355618194 200.8792009221316 348.191763828803Q200.52758737505414 347.8333920957867 199.98562448868935 347.8187608786225L199.98582521695843 347.79276165347716ZM201.3814624881075 345.8762134307804 201.37080588016812 347.25650505763804 199.99004771448037 347.2458448477632 199.99024844274948 347.21984562261775Q200.53239234474998 347.211030883268 200.8947607974884 346.8529479993381Q201.25712925022685 346.49486511540823 201.25086777950864 345.9527409260411L201.25146636238043 345.87520978943496ZM202.06334745341832 343.4931392008406 202.05047923258343 345.1598888431279 201.92048310685635 345.1588852017824 201.92148314626633 345.0293556148855Q201.92679533953813 344.3412965312581 201.5313415266768 343.9331381984282Q201.1358877138155 343.5249798655983 200.43492938174992 343.50656769561925L200.435130110019 343.4805684704738ZM202.06957723363118 342.68623014367245 202.06666667372934 343.063218908281 200.48181794533903 342.90797874556654Q200.76780942193858 342.91018675652657 201.08660102237354 342.8736468401048Q201.40539262280853 342.8371069236831 201.67878594337358 342.78721612021775Q201.95217926393863 342.7373253167524 202.06957723363118 342.68623014367245ZM196.12201940153307 351.0255616352215 196.11469281971117 351.97453335302913 195.07472381389456 351.9665042222654 195.07572745524 351.83650809653835Q195.07572745524 351.83650809653835 195.1602249369626 351.8371604634129Q195.24472241868523 351.8378128302874 195.24472241868523 351.8378128302874Q195.58271234557563 351.84042229778566 195.82506191465984 351.6017862016797Q196.06741148374402 351.3631501055737 196.08302056381493 351.0252605428178ZM196.17762113207178 343.8237762699415 196.13862229435367 343.82347517753783Q196.1307854179107 343.48540459914625 195.88875077387587 343.2430287914092Q195.64671612984108 343.0006529836721 195.31297003017679 342.9980762808463Q195.31297003017679 342.9980762808463 195.22974918276995 342.99743377028847Q195.14652833536312 342.99679125973057 195.14652833536312 342.99679125973057L195.14497870807705 342.8667754213701L196.18494771389368 342.8748045521338Z  M217.89624212219928 350.9586592983908 217.88279837132677 350.82935629934406 217.61126207332865 350.85758817617636Q217.32679547542585 350.8871644280959 217.09260771314635 350.70892696851314Q216.85841995086685 350.5306895089304 216.8288436989473 350.24622291102753L215.95365551714653 341.82859767308565L215.8243525180998 341.84204142395816Q215.52748433052608 342.08459540183486 215.10227033186692 342.279111161337Q214.67705633320776 342.4736269208392 214.21768451648194 342.6168466882382Q213.7583126997561 342.7600664556372 213.34837884839794 342.8602194394049Q212.9384449970398 342.9603724231726 212.6713208294484 343.0063498593795L212.68476458032094 343.1356528584262L212.9683030756427 343.10617310217947Q213.33843448881967 343.06769020119856 213.5741776312908 343.2328131375882Q213.80992077376192 343.39793607397786 213.85839064865755 343.86412294748186L214.5453107439663 350.4709716812284Q214.57484607448987 350.75504469409134 214.38947127741113 350.9834394939621Q214.2040964803324 351.2118342938329 213.90669958252494 351.2427549208397L213.6351632845268 351.270986797672L213.63567673549466 351.40163417180594Z M223.41176879892473 350.7063232420342 223.34753399032226 350.6250837129764Q224.5601321101689 350.0136293969205 225.21654299804814 349.35138568560944Q225.8729538859274 348.6891419742984 226.1212846885365 347.93682104324034Q226.36961549114562 347.1845001121822 226.33165369996124 346.3113724836666Q226.29369190877688 345.438244855151 226.11324796238029 344.3951641817206Q225.93019256362155 343.33698765418717 225.7215183643168 342.6305051868211Q225.5128441650121 341.92402271945497 225.20484974604588 341.60283254211316Q224.89685532707966 341.28164236477136 224.38515528556533 341.37016205190014Q223.88603512247008 341.4565055287271 223.6686605667802 341.8212269386914Q223.4512860110903 342.18594834865564 223.43195234875571 342.7128926670956Q223.41261868642113 343.23983698553553 223.51881045700247 343.83871371885436Q223.64371980021687 344.54578991608975 223.82314953210687 344.95247646015684Q224.0025792639969 345.3591630042239 224.23317826827457 345.53801616670376Q224.46377727255228 345.7168693291837 224.7263260898507 345.7324702810091Q225.0566692814723 345.76814884074685 225.3154940618012 345.62737263133636Q225.57431884213005 345.4865964219258 225.73289514811557 345.30697657111455L225.83569441971605 345.39732913514865Q225.69781276858754 345.8327583783909 225.34985686803668 346.1542221778569Q225.00190096748582 346.4756859773229 224.523164853816 346.63766170060813Q224.04442874014623 346.7996374238934 223.52526046240257 346.7667060112045Q223.00609218465894 346.7337745985156 222.53256339349429 346.47643930764286Q222.05903460232963 346.21910401677013 221.7139331784772 345.7045492661339Q221.36883175462478 345.1899945154976 221.2455718960191 344.3848620968325Q221.1109162154626 343.513854585807 221.37781664587914 342.7524285084847Q221.6447170762957 341.99100243116237 222.35437428963252 341.4445267627351Q223.06403150296936 340.8980510943079 224.23437278274722 340.6823990771321Q226.0047857636767 340.3497467539073 227.1454141685735 341.19621399540483Q228.28604257347027 342.0426812369024 228.65282719819245 344.1629294413964Q228.87600872296096 345.4530604754469 228.68049187865367 346.5835600146621Q228.48497503434638 347.7140595538773 227.84056717206425 348.59414890757716Q227.1961593097821 349.4742382612771 226.10015549700745 350.0269959651947Q225.00415168423277 350.5797536691123 223.41176879892473 350.7063232420342Z M235.71514990716466 340.76976393394676 237.20792429327807 337.799499857202 237.33393006351068 337.76752258608514 239.6139094941445 346.75173400367134 237.3772763093879 347.31933837294696ZM237.20792429327807 337.799499857202 237.5371976257956 338.6109638802463 234.31088280307563 344.14143270320767 239.21251957037578 342.8975137339805Q239.56533572702713 342.80797737485324 239.6992475832683 342.6476553974072Q239.83315943950947 342.48733341996126 239.89146044043665 342.2414169549792L240.01746621066928 342.2094396838623L240.07130284590502 343.9561296481473L232.71838317172958 345.82212598694747L232.6864059006127 345.69612021671486ZM239.41245268610814 345.95789765120577Q239.48280268256528 346.23511034571754 239.74187583723614 346.3839570807469Q240.000948991907 346.5328038157763 240.27816168641877 346.46245381931914L240.41676803367466 346.4272788210905L240.44874530479154 346.5532845913232L236.536235375941 347.54618666645337L236.5168586818474 347.4169831691091L236.64286445208 347.3850058979922Q236.93267772361506 347.31145817442336 237.09102247426773 347.0633867332199Q237.24936722492038 346.81531529201646 237.17581950135153 346.52550202048144Z M248.0785886400551 334.12540663221245 248.15697669485704 334.19497898925437Q247.05534206740583 334.992972841063 246.50783423937668 335.74994091603446Q245.96032641134755 336.50690899100584 245.8302910060865 337.28726958518314Q245.70025560082541 338.06763017936044 245.8725077856596 338.92573102333495Q246.0447599704938 339.78383186730946 246.38598863170438 340.79398848902764Q246.72476583762284 341.7968879425251 247.03963414173793 342.45881635781825Q247.35450244585303 343.1207447731114 247.71522132977486 343.39106355806086Q248.0759402136967 343.66138234301025 248.55561242197055 343.4993501373798Q249.03792469392695 343.3364261241063 249.19336121472196 342.94100145568075Q249.348797735517 342.5455767872552 249.28636683599842 342.0165747028208Q249.22393593647985 341.48757261838637 249.0318467636517 340.92689964296727Q248.7980041320739 340.24262177256077 248.55895772636796 339.8708023383515Q248.31991132066202 339.4989829041422 248.0698979008601 339.35727560533905Q247.81988448105818 339.21556830653594 247.54734701373255 339.2414713849963Q247.22452780716125 339.25127978712413 246.98590356546646 339.4330821432426Q246.7472793237717 339.61488449936104 246.6182262369022 339.8167632659387L246.4904335758765 339.7474629201148Q246.55957416182758 339.28770913396954 246.86014049867458 338.91860599068457Q247.16070683552155 338.54950284739954 247.6072043062877 338.31499944940776Q248.05370177705385 338.08049605141593 248.56851906776717 338.0315575735493Q249.08333635848047 337.98261909568265 249.58920100389298 338.1632354170206Q250.09506564930552 338.34385173835847 250.51678884022584 338.79583822643554Q250.93851203114616 339.24782471451266 251.1939924923744 340.03750802299544Q251.4552676718299 340.8443457316023 251.3110179221154 341.6410269308256Q251.16676817240094 342.4377081300489 250.55700035645597 343.0923356023096Q249.947232540511 343.7469630745704 248.81041444670953 344.15572594498303Q247.68256937794985 344.5504311687932 246.73943143341933 344.3969711088262Q245.79629348888884 344.24351104885926 245.07842047212068 343.49620695103334Q244.36054745535256 342.7489028532074 243.90747372629406 341.3996671617647Q243.4884258107139 340.15115982260215 243.50889290139844 339.0036308559788Q243.52935999208296 337.85610188935544 244.0311151999063 336.89259341683857Q244.53287040772963 335.9290849443217 245.53572969434936 335.2126128300453Q246.53858898096905 334.49614071576895 248.0785886400551 334.12540663221245Z\" fill=\"url(#P_g)\" stroke=\"#5a0718\" stroke-width=\".6\" paint-order=\"stroke\"/>\n<g class=\"em-stamen\"><path d=\"M273.7 206.4 L287.7 207.7\" stroke=\"#ffe7a0\" stroke-width=\"2\" stroke-linecap=\"round\"/><circle cx=\"287.7\" cy=\"207.7\" r=\"4.2\" fill=\"url(#P_an)\"/><path d=\"M271.3 219.9 L289.6 225.0\" stroke=\"#ffe7a0\" stroke-width=\"2\" stroke-linecap=\"round\"/><circle cx=\"289.6\" cy=\"225.0\" r=\"4.2\" fill=\"url(#P_an)\"/><path d=\"M266.4 232.6 L287.9 243.2\" stroke=\"#ffe7a0\" stroke-width=\"2\" stroke-linecap=\"round\"/><circle cx=\"287.9\" cy=\"243.2\" r=\"4.2\" fill=\"url(#P_an)\"/><path d=\"M259.3 244.3 L270.5 252.7\" stroke=\"#ffe7a0\" stroke-width=\"2\" stroke-linecap=\"round\"/><circle cx=\"270.5\" cy=\"252.7\" r=\"4.2\" fill=\"url(#P_an)\"/><path d=\"M250.1 254.4 L263.0 268.4\" stroke=\"#ffe7a0\" stroke-width=\"2\" stroke-linecap=\"round\"/><circle cx=\"263.0\" cy=\"268.4\" r=\"4.2\" fill=\"url(#P_an)\"/><path d=\"M239.3 262.7 L252.0 283.1\" stroke=\"#ffe7a0\" stroke-width=\"2\" stroke-linecap=\"round\"/><circle cx=\"252.0\" cy=\"283.1\" r=\"4.2\" fill=\"url(#P_an)\"/><path d=\"M227.1 268.9 L232.2 281.9\" stroke=\"#ffe7a0\" stroke-width=\"2\" stroke-linecap=\"round\"/><circle cx=\"232.2\" cy=\"281.9\" r=\"4.2\" fill=\"url(#P_an)\"/><path d=\"M214.0 272.7 L217.6 291.3\" stroke=\"#ffe7a0\" stroke-width=\"2\" stroke-linecap=\"round\"/><circle cx=\"217.6\" cy=\"291.3\" r=\"4.2\" fill=\"url(#P_an)\"/><path d=\"M200.4 274.0 L200.5 298.0\" stroke=\"#ffe7a0\" stroke-width=\"2\" stroke-linecap=\"round\"/><circle cx=\"200.5\" cy=\"298.0\" r=\"4.2\" fill=\"url(#P_an)\"/><path d=\"M186.8 272.8 L184.3 286.6\" stroke=\"#ffe7a0\" stroke-width=\"2\" stroke-linecap=\"round\"/><circle cx=\"184.3\" cy=\"286.6\" r=\"4.2\" fill=\"url(#P_an)\"/><path d=\"M173.6 269.1 L166.9 286.9\" stroke=\"#ffe7a0\" stroke-width=\"2\" stroke-linecap=\"round\"/><circle cx=\"166.9\" cy=\"286.9\" r=\"4.2\" fill=\"url(#P_an)\"/><path d=\"M161.4 263.1 L148.8 283.6\" stroke=\"#ffe7a0\" stroke-width=\"2\" stroke-linecap=\"round\"/><circle cx=\"148.8\" cy=\"283.6\" r=\"4.2\" fill=\"url(#P_an)\"/><path d=\"M150.4 254.9 L141.0 265.3\" stroke=\"#ffe7a0\" stroke-width=\"2\" stroke-linecap=\"round\"/><circle cx=\"141.0\" cy=\"265.3\" r=\"4.2\" fill=\"url(#P_an)\"/><path d=\"M141.2 244.9 L126.1 256.4\" stroke=\"#ffe7a0\" stroke-width=\"2\" stroke-linecap=\"round\"/><circle cx=\"126.1\" cy=\"256.4\" r=\"4.2\" fill=\"url(#P_an)\"/><path d=\"M133.9 233.3 L112.5 244.1\" stroke=\"#ffe7a0\" stroke-width=\"2\" stroke-linecap=\"round\"/><circle cx=\"112.5\" cy=\"244.1\" r=\"4.2\" fill=\"url(#P_an)\"/><path d=\"M128.9 220.6 L115.5 224.5\" stroke=\"#ffe7a0\" stroke-width=\"2\" stroke-linecap=\"round\"/><circle cx=\"115.5\" cy=\"224.5\" r=\"4.2\" fill=\"url(#P_an)\"/><path d=\"M126.4 207.2 L107.4 209.1\" stroke=\"#ffe7a0\" stroke-width=\"2\" stroke-linecap=\"round\"/><circle cx=\"107.4\" cy=\"209.1\" r=\"4.2\" fill=\"url(#P_an)\"/><path d=\"M126.3 193.6 L102.4 191.5\" stroke=\"#ffe7a0\" stroke-width=\"2\" stroke-linecap=\"round\"/><circle cx=\"102.4\" cy=\"191.5\" r=\"4.2\" fill=\"url(#P_an)\"/><path d=\"M128.7 180.1 L115.2 176.4\" stroke=\"#ffe7a0\" stroke-width=\"2\" stroke-linecap=\"round\"/><circle cx=\"115.2\" cy=\"176.4\" r=\"4.2\" fill=\"url(#P_an)\"/><path d=\"M133.6 167.4 L116.5 159.0\" stroke=\"#ffe7a0\" stroke-width=\"2\" stroke-linecap=\"round\"/><circle cx=\"116.5\" cy=\"159.0\" r=\"4.2\" fill=\"url(#P_an)\"/><path d=\"M140.7 155.7 L121.5 141.3\" stroke=\"#ffe7a0\" stroke-width=\"2\" stroke-linecap=\"round\"/><circle cx=\"121.5\" cy=\"141.3\" r=\"4.2\" fill=\"url(#P_an)\"/><path d=\"M149.9 145.6 L140.4 135.3\" stroke=\"#ffe7a0\" stroke-width=\"2\" stroke-linecap=\"round\"/><circle cx=\"140.4\" cy=\"135.3\" r=\"4.2\" fill=\"url(#P_an)\"/><path d=\"M160.7 137.3 L150.6 121.2\" stroke=\"#ffe7a0\" stroke-width=\"2\" stroke-linecap=\"round\"/><circle cx=\"150.6\" cy=\"121.2\" r=\"4.2\" fill=\"url(#P_an)\"/><path d=\"M172.9 131.1 L164.1 108.8\" stroke=\"#ffe7a0\" stroke-width=\"2\" stroke-linecap=\"round\"/><circle cx=\"164.1\" cy=\"108.8\" r=\"4.2\" fill=\"url(#P_an)\"/><path d=\"M186.0 127.3 L183.4 113.6\" stroke=\"#ffe7a0\" stroke-width=\"2\" stroke-linecap=\"round\"/><circle cx=\"183.4\" cy=\"113.6\" r=\"4.2\" fill=\"url(#P_an)\"/><path d=\"M199.6 126.0 L199.5 107.0\" stroke=\"#ffe7a0\" stroke-width=\"2\" stroke-linecap=\"round\"/><circle cx=\"199.5\" cy=\"107.0\" r=\"4.2\" fill=\"url(#P_an)\"/><path d=\"M213.2 127.2 L217.5 103.6\" stroke=\"#ffe7a0\" stroke-width=\"2\" stroke-linecap=\"round\"/><circle cx=\"217.5\" cy=\"103.6\" r=\"4.2\" fill=\"url(#P_an)\"/><path d=\"M226.4 130.9 L231.4 117.8\" stroke=\"#ffe7a0\" stroke-width=\"2\" stroke-linecap=\"round\"/><circle cx=\"231.4\" cy=\"117.8\" r=\"4.2\" fill=\"url(#P_an)\"/><path d=\"M238.6 136.9 L248.6 120.7\" stroke=\"#ffe7a0\" stroke-width=\"2\" stroke-linecap=\"round\"/><circle cx=\"248.6\" cy=\"120.7\" r=\"4.2\" fill=\"url(#P_an)\"/><path d=\"M249.6 145.1 L265.6 127.2\" stroke=\"#ffe7a0\" stroke-width=\"2\" stroke-linecap=\"round\"/><circle cx=\"265.6\" cy=\"127.2\" r=\"4.2\" fill=\"url(#P_an)\"/><path d=\"M258.8 155.1 L270.0 146.6\" stroke=\"#ffe7a0\" stroke-width=\"2\" stroke-linecap=\"round\"/><circle cx=\"270.0\" cy=\"146.6\" r=\"4.2\" fill=\"url(#P_an)\"/><path d=\"M266.1 166.7 L283.0 158.1\" stroke=\"#ffe7a0\" stroke-width=\"2\" stroke-linecap=\"round\"/><circle cx=\"283.0\" cy=\"158.1\" r=\"4.2\" fill=\"url(#P_an)\"/><path d=\"M271.1 179.4 L294.1 172.7\" stroke=\"#ffe7a0\" stroke-width=\"2\" stroke-linecap=\"round\"/><circle cx=\"294.1\" cy=\"172.7\" r=\"4.2\" fill=\"url(#P_an)\"/><path d=\"M273.6 192.8 L287.6 191.4\" stroke=\"#ffe7a0\" stroke-width=\"2\" stroke-linecap=\"round\"/><circle cx=\"287.6\" cy=\"191.4\" r=\"4.2\" fill=\"url(#P_an)\"/></g>\n<circle cx=\"200\" cy=\"200\" r=\"72\" fill=\"url(#P_cd)\" stroke=\"url(#P_g)\" stroke-width=\"3\"/>\n<path d=\"M184.66736621196225 183.35781741867788H214.24134312696748V187.7229800629591H184.66736621196225ZM169.60755508919203 173.099685204617V198.090241343127H230.28331584470095V173.099685204617ZM191.10598111227705 148.0V156.5120671563484H151.81951731374608V169.93494228751314H248.18048268625395V156.5120671563484H207.4753410283316V148.0ZM178.88352570828962 218.16998950682057V248.18048268625395H192.52465897166843V243.48793284365163H219.69779643231902C220.67995802728228 246.32528856243442 221.4438614900315 249.38090241343127 221.77124868835259 251.78174186778594C228.9737670514166 251.78174186778594 234.64847848898216 251.56348373557188 239.23189926547747 249.1626442812172C243.81532004197274 246.8709338929696 245.1248688352571 242.72402938090244 245.1248688352571 235.8488982161595V201.36411332633787H155.8572927597062V252.0H171.35362014690452V214.3504721930745H229.19202518363068V235.5215110178384C229.19202518363068 236.72193074501575 228.6463798530955 237.04931794333683 227.2277019937041 237.04931794333683H220.89821615949634V218.16998950682057ZM192.52465897166843 228.53725078698847H207.03882476390348V233.12067156348374H192.52465897166843Z\" fill=\"url(#P_g)\"/>";
+  function emblem(p){ return EMBLEM.replaceAll('P_', p + '_'); }
+  $('hdrEmblem').innerHTML = `<svg viewBox="0 0 400 400">${emblem('eh')}</svg>`;
+
+  // ---------- 신목 그리기 (고정 시드) ----------
+  function rng(seed){ return () => { seed |= 0; seed = seed + 0x6D2B79F5 | 0; let t = Math.imul(seed ^ seed >>> 15, 1 | seed); t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t; return ((t ^ t >>> 14) >>> 0) / 4294967296; }; }
+  const svg = $('treeSvg'), NS = 'http://www.w3.org/2000/svg';
+  const el = (tag, attrs, parent=svg) => { const e = document.createElementNS(NS, tag); for (const k in attrs) e.setAttribute(k, attrs[k]); parent.appendChild(e); return e; };
+  const CX = 500, CY = 388, RX = 445, RY = 292;
+  function inCanopy(x, y){ const dx=(x-CX)/RX, dy=(y-CY)/RY; return dx*dx+dy*dy < 1; }
+  const CATKIN_SRC = [];   // 꽃이삭이 매달리는 자리
+
+  function drawTree(){
+    const r = rng(20261119);
+    svg.innerHTML = `
+      <defs>
+        <radialGradient id="halo" cx="50%" cy="50%" r="50%"><stop offset="0" stop-color="#fff6e0" stop-opacity=".5"/><stop offset=".35" stop-color="#f3d27a" stop-opacity=".18"/><stop offset="1" stop-color="#f3d27a" stop-opacity="0"/></radialGradient>
+        <radialGradient id="aura" cx="50%" cy="45%" r="50%"><stop offset="0" stop-color="#ffe9a8" stop-opacity=".26"/><stop offset=".55" stop-color="#3fe0c5" stop-opacity=".1"/><stop offset="1" stop-color="#3fe0c5" stop-opacity="0"/></radialGradient>
+        <radialGradient id="pool" cx="50%" cy="50%" r="50%"><stop offset="0" stop-color="#fff6e0" stop-opacity=".85"/><stop offset=".4" stop-color="#ff7a8c" stop-opacity=".35"/><stop offset="1" stop-color="#3fe0c5" stop-opacity="0"/></radialGradient>
+        <linearGradient id="bark" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#1c1a26"/><stop offset=".35" stop-color="#4a4658"/><stop offset=".6" stop-color="#3a3647"/><stop offset="1" stop-color="#16141f"/></linearGradient>
+        <linearGradient id="ray" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff6e0" stop-opacity=".0"/><stop offset=".5" stop-color="#f3d27a" stop-opacity=".13"/><stop offset="1" stop-color="#f3d27a" stop-opacity="0"/></linearGradient>
+        <radialGradient id="orb" cx="40%" cy="38%" r="65%"><stop offset="0" stop-color="#fffdf3"/><stop offset=".55" stop-color="#f6e4a6"/><stop offset="1" stop-color="#c99a3b"/></radialGradient>
+        <filter id="glow" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="6" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+        <filter id="vein" x="-20%" y="-20%" width="140%" height="140%"><feGaussianBlur stdDeviation="2.2" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+        <filter id="soft" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="16"/></filter>
+        <filter id="leafglow" x="-20%" y="-20%" width="140%" height="140%"><feGaussianBlur stdDeviation="2.5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+        <path id="lf" d="M0 -13 C 3 -12 6 -9 7 -5 L 6.2 -4 L 7.4 -2 L 6.4 -0.6 L 7 1.6 L 5.6 3 L 5.8 5 L 3.6 7 C 2.2 9.5 1 11 0 13 C -1 11 -2.2 9.5 -3.6 7 L -5.8 5 L -5.6 3 L -7 1.6 L -6.4 -0.6 L -7.4 -2 L -6.2 -4 L -7 -5 C -6 -9 -3 -12 0 -13 Z"/>
+        <path id="ringPath" d="M 500 475 m -452 0 a 452 452 0 1 1 904 0 a 452 452 0 1 1 -904 0"/>
+      </defs>`;
+    // 하늘의 작은 별
+    for (let i=0;i<90;i++){ const x=r()*1000, y=r()*300; if (!inCanopy(x,y)) el('circle',{cx:x.toFixed(1),cy:y.toFixed(1),r:(r()*1.5+.4).toFixed(1),fill:'#e9e4ff',opacity:(r()*.6+.2).toFixed(2)}); }
+
+    // 후광 + 빛살
+    el('circle',{cx:500,cy:430,r:500,fill:'url(#halo)',class:'pulse'});
+    const rays = el('g',{class:'rays'});
+    for (let i=0;i<36;i++){ const a = i*10; const w = 8 + (i%3)*9; el('polygon',{points:`${500-w},430 ${500+w},430 500,-160`,fill:'url(#ray)',transform:`rotate(${a} 500 430)`},rays); }
+
+    // 기원문 고리
+    const ringA = el('g',{class:'spin-a',fill:'none'});
+    el('circle',{cx:500,cy:475,r:470,stroke:'#f3d27a','stroke-opacity':.3,'stroke-width':1},ringA);
+    el('circle',{cx:500,cy:475,r:430,stroke:'#f3d27a','stroke-opacity':.18,'stroke-width':1,'stroke-dasharray':'2 10'},ringA);
+    const txt = el('text',{'font-family':'Song Myung, Gowun Batang, serif','font-size':20,fill:'#f3d27a','fill-opacity':.5,'letter-spacing':6},ringA);
+    const tp = el('textPath',{href:'#ringPath',startOffset:'0'},txt);
+    tp.textContent = '수능대박 ✦ 합격기원 ✦ 꿈은 이루어진다 ✦ 끝까지 빛나라 ✦ 너의 노력을 믿는다 ✦ 수능대박 ✦ 합격기원 ✦ 꿈은 이루어진다 ✦ 끝까지 빛나라 ✦ ';
+
+    // 달 성좌: D-day
+    const moon = el('g',{});
+    el('circle',{cx:868,cy:96,r:110,fill:'url(#halo)',class:'pulse'},moon);
+    el('circle',{cx:868,cy:96,r:56,fill:'url(#orb)',filter:'url(#glow)'},moon);
+    el('circle',{cx:868,cy:96,r:69,fill:'none',stroke:'#f3d27a','stroke-opacity':.5,'stroke-width':1},moon);
+    const t1 = el('text',{x:868,y:104,'text-anchor':'middle','font-family':'Song Myung, serif','font-size':31,fill:'#4a3510'},moon); t1.textContent = DDAY;
+    const t2 = el('text',{x:868,y:127,'text-anchor':'middle','font-family':'Gothic A1, sans-serif','font-size':11.5,'font-weight':800,'letter-spacing':2,fill:'#6b5020'},moon); t2.textContent = '수능까지';
+
+    // 신목의 기운
+    el('ellipse',{cx:500,cy:450,rx:470,ry:340,fill:'url(#aura)',class:'pulse'});
+
+    // 땅과 빛의 샘
+    el('path',{d:'M0 905 Q 250 850 500 872 T 1000 890 L1000 1000 L0 1000 Z',fill:'#0b0a26'});
+    el('ellipse',{cx:500,cy:928,rx:360,ry:48,fill:'url(#pool)',filter:'url(#soft)',class:'pulse'});
+
+    // 뿌리
+    const roots = el('g',{fill:'none','stroke-linecap':'round'});
+    const rootVeins = el('g',{fill:'none','stroke-linecap':'round',filter:'url(#vein)'});
+    for (let i=0;i<10;i++){
+      const dir = (i/9 - .5) * 2, sx = 500 + dir*44;
+      const ex = 500 + dir*(190 + r()*110), ey = 905 + r()*36;
+      const d = `M${sx.toFixed(1)} 860 C ${(sx+dir*26).toFixed(1)} 900, ${((sx+ex)/2).toFixed(1)} ${(884+r()*14).toFixed(1)}, ${ex.toFixed(1)} ${ey.toFixed(1)}`;
+      el('path',{d,stroke:'#2a2735','stroke-width':(15-Math.abs(dir)*8).toFixed(1)},roots);
+      el('path',{d,stroke:'#f3d27a','stroke-width':1.1,'stroke-opacity':.6},rootVeins);
+    }
+
+    // 박달나무 줄기: 곧고 단단한 몸통, 비늘처럼 갈라지는 검회색 껍질
+    el('path',{d:'M438 900 C 452 800 458 700 466 600 C 470 548 474 500 480 452 L 520 452 C 526 500 530 548 534 600 C 542 700 548 800 562 900 Z',fill:'url(#bark)'});
+    const flakes = el('g',{});
+    for (let i=0;i<70;i++){
+      const y = 470 + r()*420, half = 20 + (y-452)/448*42;
+      const x = 500 + (r()*2-1)*(half-8), w = 6 + r()*12, h = 3 + r()*5;
+      el('path',{d:`M${(x-w/2).toFixed(1)} ${y.toFixed(1)} q ${(w*.3).toFixed(1)} ${(-h).toFixed(1)} ${w.toFixed(1)} ${(-h*.3).toFixed(1)} q ${(-w*.2).toFixed(1)} ${(h*1.1).toFixed(1)} ${(-w).toFixed(1)} ${(h*.3).toFixed(1)}z`,fill: r()<.5 ? '#6b6680' : '#121019',opacity:(.35+r()*.4).toFixed(2)},flakes);
+    }
+    // 껍질 틈으로 흐르는 금빛
+    const fiss = el('g',{fill:'none',stroke:'#f3d27a','stroke-linecap':'round',filter:'url(#vein)'});
+    for (let i=0;i<5;i++){
+      const x0 = 476 + i*12 + (r()-.5)*4; let d = `M${x0} 890`;
+      for (let y=860; y>=470; y-=30) d += ` L ${(x0 + (r()-.5)*8 - (890-y)*(x0-500)/900).toFixed(1)} ${y}`;
+      el('path',{d,'stroke-width':(i%2?1:1.6),'stroke-opacity':.7},fiss);
+    }
+
+    // 가지: 위로 비스듬히 솟는 굵은 가지
+    const boughs = el('g',{fill:'none','stroke-linecap':'round',stroke:'#2e2a3a'});
+    const bVeins = el('g',{fill:'none','stroke-linecap':'round',stroke:'#f3d27a','stroke-opacity':.5,filter:'url(#vein)'});
+    const tips = [];
+    function limb(x,y,ang,len,w,depth){
+      const x2 = x + Math.cos(ang)*len, y2 = y + Math.sin(ang)*len;
+      const mx = (x+x2)/2 + (r()-.5)*len*.22, my = (y+y2)/2 + (r()-.5)*len*.12;
+      const d = `M${x.toFixed(1)} ${y.toFixed(1)} Q ${mx.toFixed(1)} ${my.toFixed(1)} ${x2.toFixed(1)} ${y2.toFixed(1)}`;
+      el('path',{d,'stroke-width':w.toFixed(1)},boughs);
+      if (w > 5) el('path',{d,'stroke-width':1},bVeins);
+      if (depth===0 || w < 1.6 || !inCanopy(x2,y2)){ tips.push([x2,y2]); return; }
+      const n = r() < .55 ? 2 : 3;
+      for (let i=0;i<n;i++){
+        const spread = (i/(n-1) - .5) * .95;
+        limb(x2,y2, ang + spread + (r()-.5)*.25, len*(.68+r()*.12), w*.62, depth-1);
+      }
+    }
+    // 중심 줄기 꼭대기 + 좌우로 번갈아 뻗는 큰 가지
+    limb(500,460,-Math.PI/2,140,28,5);
+    const L = [[640,-1],[600,1],[560,-1],[525,1],[495,-1],[470,1]];
+    L.forEach(([y,side],i) => {
+      const ang = -Math.PI/2 + side*(.62 + r()*.25 + (i<2?.2:0));
+      limb(500 + side*14, y, ang, 150 - i*8, 19 - i*1.2, 5);
+    });
+
+    // 잎: 달걀 모양에 톱니가 있는 박달나무 잎, 가을빛이 스민 신록
+    const leafCols = ['#173f33','#1f5a44','#2e7d57','#4fa86f','#8fcf73','#e3c25a','#f0a64a'];
+    const back = el('g',{}), front = el('g',{filter:'url(#leafglow)'});
+    const place = (x,y,layer) => {
+      const s = (layer ? .8 + r()*.5 : 1.1 + r()*.6);
+      const c = layer ? leafCols[2 + Math.floor(r()*r()*5)] : leafCols[Math.floor(r()*3)];
+      el('use',{href:'#lf',transform:`translate(${x.toFixed(1)} ${y.toFixed(1)}) rotate(${(r()*360).toFixed(0)}) scale(${s.toFixed(2)})`,fill:c,opacity:(layer ? .75 + r()*.25 : .85).toFixed(2)}, layer ? front : back);
+    };
+    // 가지 끝마다 잎 무리
+    tips.forEach(([tx,ty]) => {
+      for (let k=0;k<7;k++){ const a=r()*6.283, d=r()*34; const x=tx+Math.cos(a)*d, y=ty+Math.sin(a)*d*.8; if (inCanopy(x,y)) place(x,y,0); }
+    });
+    // 수관 전체를 둥글게 채우기
+    for (let i=0;i<900;i++){
+      const a = r()*6.283, rr = Math.sqrt(r());
+      const x = CX + Math.cos(a)*RX*rr*.98, y = CY + Math.sin(a)*RY*rr*.98;
+      place(x, y, rr > .45 || r() < .35 ? 1 : 0);
+      if (y > CY + 60 && r() < .45) CATKIN_SRC.push([x, y]);
+      else if (y > CY && r() < .06) CATKIN_SRC.push([x, y]);
+    }
+    tips.forEach(t => { if (t[1] > CY && r() < .5) CATKIN_SRC.push(t); });
+    // 수관 속 금빛 구슬
+    const orbs = el('g',{filter:'url(#glow)'});
+    for (let i=0;i<60;i++){
+      const a = r()*6.283, rr = Math.sqrt(r());
+      el('circle',{cx:(CX+Math.cos(a)*RX*rr*.95).toFixed(1),cy:(CY+Math.sin(a)*RY*rr*.95).toFixed(1),r:(1.5+r()*2.5).toFixed(1),fill:'#fff6d8',opacity:(.5+r()*.5).toFixed(2),class:'pulse'},orbs);
+    }
+    // 수관 아래로 내리는 빛줄기
+    const shafts = el('g',{class:'shafts'});
+    for (let i=0;i<9;i++){
+      const x = 230 + i*68 + (r()-.5)*30, w = 14 + r()*22;
+      el('polygon',{points:`${x-w/2},${CY+RY-60} ${x+w/2},${CY+RY-60} ${x+w*2.2},900 ${x-w*2.2},900`,fill:'url(#ray)',opacity:.9},shafts);
+    }
+
+    // 뿌리의 인장: 동백꽃으로 피어난 교표
+    const seal = el('g',{});
+    el('circle',{cx:500,cy:862,r:120,fill:'url(#halo)',class:'pulse'},seal);
+    const sr = el('g',{class:'spin-seal',fill:'none'},seal);
+    el('circle',{cx:500,cy:862,r:98,stroke:'#f3d27a','stroke-opacity':.4,'stroke-width':1,'stroke-dasharray':'2 8'},sr);
+    for (let i=0;i<8;i++){ const a=i*Math.PI/4; el('circle',{cx:(500+Math.cos(a)*98).toFixed(1),cy:(862+Math.sin(a)*98).toFixed(1),r:2.6,fill:'#fff6e0'},sr); }
+    const em = el('svg',{x:410,y:772,width:180,height:180,viewBox:'0 0 400 400',class:'bloom'},seal);
+    em.innerHTML = emblem('et');
+  }
+  drawTree();
+
+  // ---------- 꽃이삭과 빛실 (캔버스) ----------
+  (function catkins(){
+    const cv = $('tendrils'), ctx = cv.getContext('2d'); if (!ctx) return;
+    const r = rng(5150);
+    const T = [];
+    CATKIN_SRC.forEach(([x,y]) => {
+      const long = r() < .22;     // 일부는 길게 늘어지는 빛실
+      const len = long ? Math.min(860 - y, 120 + r()*220) : 26 + r()*46;
+      if (len < 18) return;
+      T.push({x, y, len, long, ph:r()*6.28, amp: long ? 5 + r()*8 : 2 + r()*3,
+        c: long ? (r()<.5 ? [159,245,228] : [255,233,168]) : (r()<.75 ? [255,214,120] : [255,170,110]),
+        a: long ? .22 + r()*.2 : .8, n: long ? 0 : 7 + Math.floor(r()*5)});
+    });
+    const spr = document.createElement('canvas'); spr.width = spr.height = 32;
+    const sc = spr.getContext('2d'), g = sc.createRadialGradient(16,16,0,16,16,16);
+    g.addColorStop(0,'rgba(255,250,230,1)'); g.addColorStop(.3,'rgba(255,214,120,.75)'); g.addColorStop(1,'rgba(255,190,90,0)');
+    sc.fillStyle = g; sc.fillRect(0,0,32,32);
+    function size(){ const dpr = Math.min(2, devicePixelRatio||1), W = cv.clientWidth; cv.width = W*dpr; cv.height = W*dpr; ctx.setTransform(dpr*W/1000,0,0,dpr*W/1000,0,0); }
+    size(); addEventListener('resize', size);
+    let last = 0;
+    function frame(t){
+      if (!reduced) requestAnimationFrame(frame);
+      if (!reduced && t - last < 33) return; last = t;
+      ctx.clearRect(0,0,1000,1000);
+      ctx.globalCompositeOperation = 'lighter';
+      for (const d of T){
+        const sway = Math.sin(t*.0007 + d.ph) * d.amp;
+        const ex = d.x + sway, ey = d.y + d.len, mx = d.x + sway*.3, my = d.y + d.len*.55;
+        const [R,G,B] = d.c;
+        if (d.long){
+          const gr = ctx.createLinearGradient(0, d.y, 0, ey);
+          gr.addColorStop(0, `rgba(${R},${G},${B},0)`); gr.addColorStop(1, `rgba(${R},${G},${B},${d.a.toFixed(2)})`);
+          ctx.strokeStyle = gr; ctx.lineWidth = 1;
+          ctx.beginPath(); ctx.moveTo(d.x, d.y); ctx.quadraticCurveTo(mx, my, ex, ey); ctx.stroke();
+          ctx.globalAlpha = .5 + .5*Math.sin(t*.002 + d.ph); ctx.drawImage(spr, ex-5, ey-5, 10, 10); ctx.globalAlpha = 1;
+        } else {
+          // 박달나무 꽃이삭: 알알이 꿰어 늘어진 금빛 구슬
+          ctx.strokeStyle = `rgba(${R},${G},${B},.35)`; ctx.lineWidth = 1.2;
+          ctx.beginPath(); ctx.moveTo(d.x, d.y); ctx.quadraticCurveTo(mx, my, ex, ey); ctx.stroke();
+          for (let i=1;i<=d.n;i++){
+            const b = i/d.n, bx = (1-b)*(1-b)*d.x + 2*(1-b)*b*mx + b*b*ex, by = (1-b)*(1-b)*d.y + 2*(1-b)*b*my + b*b*ey;
+            const sz = 4.2 + 2.2*Math.sin(b*Math.PI);
+            ctx.globalAlpha = .55 + .35*Math.sin(t*.0018 + d.ph + i*.6);
+            ctx.drawImage(spr, bx-sz, by-sz, sz*2, sz*2);
+          }
+          ctx.globalAlpha = 1;
+        }
+      }
+    }
+    requestAnimationFrame(frame);
+  })();
+
+  // ---------- 떠오르는 빛가루 ----------
+  (function motes(){
+    const cv = $('motes'), ctx = cv.getContext('2d'); if (!ctx) return;
+    let W=0,H=0,dpr=1; const P=[];
+    function size(){ dpr = Math.min(2, devicePixelRatio||1); W = cv.clientWidth; H = cv.clientHeight; cv.width = W*dpr; cv.height = H*dpr; ctx.setTransform(dpr,0,0,dpr,0,0); }
+    size(); addEventListener('resize', size);
+    const N = reduced ? 30 : 70;
+    for (let i=0;i<N;i++) P.push({x:Math.random(), y:Math.random(), r:Math.random()*1.8+.5, s:Math.random()*.00035+.0001, ph:Math.random()*6.28, hue:Math.random()<.75?'243,210,122':'143,240,210'});
+    function draw(t){
+      ctx.clearRect(0,0,W,H);
+      for (const p of P){
+        if (!reduced){ p.y -= p.s; p.x += Math.sin(t/3000 + p.ph)*.00012; if (p.y < -.02){ p.y = 1.02; p.x = Math.random(); } }
+        const a = .35 + .45*Math.sin(t/900 + p.ph*3);
+        const x = p.x*W, y = p.y*H, g = ctx.createRadialGradient(x,y,0,x,y,p.r*6);
+        g.addColorStop(0,`rgba(${p.hue},${a.toFixed(2)})`); g.addColorStop(1,`rgba(${p.hue},0)`);
+        ctx.fillStyle = g; ctx.beginPath(); ctx.arc(x,y,p.r*6,0,6.283); ctx.fill();
+      }
+      if (!reduced) requestAnimationFrame(draw);
+    }
+    requestAnimationFrame(draw);
+  })();
+
+  // 열매 자리(나무) / 별 자리(하늘)
+  function makeSlots(seed, n, minD, test, box){
+    const r = rng(seed), pts = [];
+    for (let k=0; k<20000 && pts.length<n; k++){
+      const x = box[0] + r()*(box[2]-box[0]), y = box[1] + r()*(box[3]-box[1]);
+      if (!test(x,y)) continue;
+      if (pts.every(p => (p[0]-x)**2 + (p[1]-y)**2 > minD*minD)) pts.push([x,y]);
+    }
+    return pts;
+  }
+  const FRUIT_SLOTS = makeSlots(123, 340, 38, (x,y) => { const dx=(x-CX)/(RX-26), dy=(y-CY)/(RY-22); return dx*dx+dy*dy<1; }, [CX-RX, CY-RY, CX+RX, CY+RY]);
+  const STAR_SLOTS = makeSlots(77, 60, 48, (x,y) => { const dx=(x-CX)/RX, dy=(y-CY)/RY; return dx*dx+dy*dy > 1.1 && (x-868)**2+(y-96)**2 > 115*115 && y < 560; }, [30, 20, 970, 560]);
+
+  // ---------- 상태 ----------
+  let db = null, uid = null, isAdmin = false;
+  try { uid = localStorage.getItem('wishTree.myId') || null; } catch(_){}
+  let wishes = [];
+  let firstSnap = true, filter = 'all', openId = null, delArmed = false;
+  const seen = new Set();
+
+  const pick = $('fruitPick');
+  Object.entries(FRUITS).forEach(([k,f],i) => {
+    pick.insertAdjacentHTML('beforeend', `<input type="radio" name="fruit" id="fr-${k}" value="${k}"><label for="fr-${k}"><span class="dot" style="--c:${f.color}"></span>${f.name}<small>${f.meaning}</small></label>`);
+  });
+
+  const FILTERS = [['all','전체'],['1','1반'],['2','2반'],['3','3반'],['4','4반'],['5','5반'],['6','6반'],['0','응원']];
+  $('filters').innerHTML = FILTERS.map(([v,l]) => `<button type="button" class="chip" data-f="${v}" aria-pressed="${v==='all'}">${l}</button>`).join('');
+  $('filters').addEventListener('click', e => {
+    const b = e.target.closest('[data-f]'); if (!b) return;
+    filter = b.dataset.f;
+    $('filters').querySelectorAll('[data-f]').forEach(x => x.setAttribute('aria-pressed', String(x===b)));
+    render();
+  });
+
+  const clsLabel = c => c === '0' || c === 0 ? '응원' : (c ? c + '반' : '');
+  const whoLabel = w => [clsLabel(w.cls), w.name || '익명'].filter(Boolean).join(' · ');
+  const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+
+  function clean(d, id){
+    const text = String(d.text||'').slice(0,60).trim(); if (!text) return null;
+    const kind = d.kind === 'cheer' ? 'cheer' : 'wish';
+    const fruit = FRUITS[d.fruit] ? d.fruit : 'sagwa';
+    return {id, text, name:String(d.name||'').slice(0,12), cls:String(d.cls ?? ''), fruit, kind, ts:Number(d.ts)||0};
+  }
+
+  // ---------- 그리기 ----------
+  function render(){
+    const fruitsEl = $('fruits');
+    const trees = wishes.filter(w => w.kind==='wish').sort((a,b)=>a.ts-b.ts || (a.id<b.id?-1:1));
+    const stars = wishes.filter(w => w.kind==='cheer').sort((a,b)=>a.ts-b.ts || (a.id<b.id?-1:1));
+    let html = '';
+    const place = (w, slot, isStar, i) => {
+      if (!slot) return '';
+      const cls = ['fruit']; if (isStar) cls.push('star');
+      const isNew = !firstSnap && !seen.has(w.id);
+      if (w.id === uid) cls.push('mine');
+      if (isNew) cls.push('new');
+      if (filter !== 'all' && w.cls !== filter) cls.push('dim');
+      const c = isStar ? '' : `--c:${FRUITS[w.fruit].color};`;
+      const pos = `left:${(slot[0]/10).toFixed(2)}%;top:${(slot[1]/10).toFixed(2)}%;`;
+      return (isNew && !reduced ? `<span class="flash" style="${pos}"></span>` : '') +
+        `<button type="button" class="${cls.join(' ')}" data-id="${esc(w.id)}" style="${pos}${c}--d:${(-(i*0.37)%6).toFixed(2)}s" aria-label="${esc(whoLabel(w))}의 소원"></button>`;
+    };
+    trees.forEach((w,i) => html += place(w, FRUIT_SLOTS[i], false, i));
+    stars.forEach((w,i) => html += place(w, STAR_SLOTS[i], true, i));
+    fruitsEl.innerHTML = html;
+    wishes.forEach(w => seen.add(w.id));
+
+    const extra = Math.max(0, trees.length - FRUIT_SLOTS.length);
+    $('basket').hidden = !extra; $('basket').textContent = `빛 바구니에 담긴 열매 ${extra}개`;
+    $('emptyNote').hidden = wishes.length > 0;
+    $('sCount').textContent = trees.length;
+    $('sStar').textContent = stars.length;
+
+    const shown = [...wishes].sort((a,b)=>b.ts-a.ts).filter(w => filter==='all' || w.cls===filter);
+    $('list').innerHTML = shown.length ? shown.map(w => `<li data-id="${esc(w.id)}" tabindex="0"><span class="dot ${w.kind==='cheer'?'star':''}" style="--c:${FRUITS[w.fruit].color}"></span><span class="t">${esc(w.text)}<span class="who">${esc(whoLabel(w))}${w.kind==='wish' ? ' <span class="pass">합격</span>' : ''}</span></span></li>`).join('')
+      : `<li class="list-empty" style="cursor:default">${wishes.length ? '이 반의 소원은 아직 없어요.' : '소원이 도착하면 여기에 최신순으로 쌓여요.'}</li>`;
+  }
+
+  // ---------- 소원 카드 ----------
+  function openWish(id){
+    const w = wishes.find(x => x.id === id); if (!w) return;
+    openId = id; delArmed = false;
+    const f = w.kind==='cheer' ? STAR : FRUITS[w.fruit];
+    $('sheetTag').innerHTML = `<span class="dot ${w.kind==='cheer'?'star':''}" style="--c:${FRUITS[w.fruit].color}"></span>${esc(f.name)} · ${esc(f.meaning)}`;
+    $('sheetQ').textContent = w.text;
+    $('sheetFrom').innerHTML = esc(whoLabel(w)) + (w.kind==='wish' ? ' <span class="pass">합격</span>' : '');
+    $('sheetDel').hidden = !(isAdmin || w.id === uid);
+    $('sheetDel').textContent = '열매 거두기';
+    $('sheetBack').hidden = false;
+    $('sheetClose').focus();
+  }
+  function closeWish(){ $('sheetBack').hidden = true; openId = null; }
+  $('fruits').addEventListener('click', e => { const b = e.target.closest('[data-id]'); if (b) openWish(b.dataset.id); });
+  $('list').addEventListener('click', e => { const b = e.target.closest('[data-id]'); if (b) openWish(b.dataset.id); });
+  $('list').addEventListener('keydown', e => { if (e.key==='Enter'){ const b = e.target.closest('[data-id]'); if (b) openWish(b.dataset.id); } });
+  $('sheetClose').addEventListener('click', closeWish);
+  $('sheetBack').addEventListener('click', e => { if (e.target === $('sheetBack')) closeWish(); });
+  document.addEventListener('keydown', e => { if (e.key==='Escape' && !$('sheetBack').hidden) closeWish(); });
+  $('sheetDel').addEventListener('click', async () => {
+    if (!openId || !db) return;
+    if (!delArmed){ delArmed = true; $('sheetDel').textContent = '정말 거둘까요? 한 번 더 누르세요'; return; }
+    try { await deleteDoc(doc(db, COL, openId)); closeWish(); }
+    catch(e){ $('sheetDel').textContent = '거두지 못했어요'; }
+  });
+
+  // ---------- 배경음악: 페이지 안에서 직접 연주하는 장엄한 테마 ----------
+  const music = (() => {
+    let AC = null, master = null, timers = [], on = false, chordI = 0, voices = [];
+    const N = n => 440 * Math.pow(2, (n - 69) / 12);
+    // D장조 진행: D – Bm – G – A – D – F#m – G – A (각 8초)
+    const CHORDS = [[50,57,62,66,69],[47,54,59,62,66],[43,50,55,59,62],[45,52,57,61,64],[50,57,62,66,69],[54,61,66,69,73],[43,50,55,59,62],[45,52,57,61,64]];
+    const PENT = [74,76,78,81,83,86,88,90,93];
+    function impulse(sec, decay){
+      const len = AC.sampleRate * sec, buf = AC.createBuffer(2, len, AC.sampleRate);
+      for (let c=0;c<2;c++){ const d = buf.getChannelData(c); for (let i=0;i<len;i++) d[i] = (Math.random()*2-1) * Math.pow(1 - i/len, decay); }
+      return buf;
+    }
+    function build(){
+      AC = new (window.AudioContext || window.webkitAudioContext)();
+      master = AC.createGain(); master.gain.value = 0;
+      const comp = AC.createDynamicsCompressor(); comp.threshold.value = -18; comp.ratio.value = 4;
+      const rev = AC.createConvolver(); rev.buffer = impulse(5, 2.2);
+      const wet = AC.createGain(); wet.gain.value = .55; const dry = AC.createGain(); dry.gain.value = .6;
+      master.connect(dry).connect(comp); master.connect(rev).connect(wet).connect(comp); comp.connect(AC.destination);
+    }
+    function pad(midi, t0, dur, gainV){
+      const g = AC.createGain(); g.gain.setValueAtTime(0, t0); g.gain.linearRampToValueAtTime(gainV, t0 + 2.5); g.gain.setValueAtTime(gainV, t0 + dur - 2.5); g.gain.linearRampToValueAtTime(0, t0 + dur);
+      const f = AC.createBiquadFilter(); f.type = 'lowpass'; f.frequency.setValueAtTime(420, t0); f.frequency.linearRampToValueAtTime(900, t0 + dur/2); f.frequency.linearRampToValueAtTime(420, t0 + dur);
+      [-7, 0, 7].forEach(det => { const o = AC.createOscillator(); o.type = 'sawtooth'; o.frequency.value = N(midi); o.detune.value = det; o.connect(f); o.start(t0); o.stop(t0 + dur + .1); });
+      const sub = AC.createOscillator(); sub.type = 'sine'; sub.frequency.value = N(midi); const sg = AC.createGain(); sg.gain.value = .5; sub.connect(sg).connect(f); sub.start(t0); sub.stop(t0 + dur + .1);
+      f.connect(g).connect(master);
+    }
+    function choir(midi, t0, dur, gainV){
+      const o = AC.createOscillator(); o.type = 'triangle'; o.frequency.value = N(midi);
+      const v = AC.createOscillator(); v.frequency.value = 5.2; const vg = AC.createGain(); vg.gain.value = 3; v.connect(vg).connect(o.detune); v.start(t0); v.stop(t0 + dur + .1);
+      const g = AC.createGain(); g.gain.setValueAtTime(0, t0); g.gain.linearRampToValueAtTime(gainV, t0 + 3); g.gain.setValueAtTime(gainV, t0 + dur - 3); g.gain.linearRampToValueAtTime(0, t0 + dur);
+      o.connect(g).connect(master); o.start(t0); o.stop(t0 + dur + .1);
+    }
+    function bell(midi, t0, gainV){
+      const g = AC.createGain(); g.gain.setValueAtTime(0, t0); g.gain.linearRampToValueAtTime(gainV, t0 + .02); g.gain.exponentialRampToValueAtTime(.0001, t0 + 3.5);
+      [[1, 1], [2.76, .35], [5.4, .12]].forEach(([mul, amp]) => { const o = AC.createOscillator(); o.type = 'sine'; o.frequency.value = N(midi) * mul; const og = AC.createGain(); og.gain.value = amp; o.connect(og).connect(g); o.start(t0); o.stop(t0 + 3.6); });
+      g.connect(master);
+    }
+    function timpani(t0){
+      const o = AC.createOscillator(); o.frequency.setValueAtTime(90, t0); o.frequency.exponentialRampToValueAtTime(42, t0 + .5);
+      const g = AC.createGain(); g.gain.setValueAtTime(.9, t0); g.gain.exponentialRampToValueAtTime(.001, t0 + 1.6);
+      o.connect(g).connect(master); o.start(t0); o.stop(t0 + 1.7);
+    }
+    function scheduleChord(){
+      if (!on) return;
+      const t0 = AC.currentTime + .05, dur = 8, ch = CHORDS[chordI % CHORDS.length];
+      ch.forEach((m, i) => pad(m, t0, dur + 1.5, i === 0 ? .16 : .09));
+      choir(ch[2] + 12, t0, dur + 1.5, .05); choir(ch[4], t0, dur + 1.5, .04);
+      timpani(t0); if (chordI % 2 === 1) timpani(t0 + 4);
+      let bt = t0 + .6 + Math.random();
+      while (bt < t0 + dur){ bell(PENT[Math.floor(Math.random()*PENT.length)], bt, .07 + Math.random()*.06); bt += 1.1 + Math.random()*2.2; }
+      chordI++;
+      timers.push(setTimeout(scheduleChord, dur * 1000));
+    }
+    async function start(){
+      if (!AC) build();
+      if (AC.state === 'suspended') await AC.resume();
+      on = true; master.gain.cancelScheduledValues(AC.currentTime); master.gain.setValueAtTime(master.gain.value, AC.currentTime); master.gain.linearRampToValueAtTime(.9, AC.currentTime + 3);
+      scheduleChord();
+    }
+    function stop(){
+      on = false; timers.forEach(clearTimeout); timers = [];
+      if (AC){ master.gain.cancelScheduledValues(AC.currentTime); master.gain.setValueAtTime(master.gain.value, AC.currentTime); master.gain.linearRampToValueAtTime(0, AC.currentTime + 1.5); }
+    }
+    return { start, stop, get on(){ return on; } };
+  })();
+  $('musicBtn').addEventListener('click', async () => {
+    if (music.on){ music.stop(); $('musicBtn').textContent = '♪ 음악'; $('musicBtn').setAttribute('aria-pressed','false'); }
+    else { try { await music.start(); $('musicBtn').textContent = '♪ 음악 끄기'; $('musicBtn').setAttribute('aria-pressed','true'); } catch(_){ $('musicBtn').textContent = '♪ 재생 불가'; } }
+  });
+
+  // ---------- 전광판 모드 ----------
+  let spotTimer = null;
+  function spotlight(w){
+    if (!w) return;
+    $('spotQ').textContent = '“' + w.text + '”';
+    $('spotW').textContent = '✦ ' + whoLabel(w) + ' ✦';
+    $('spotQ').style.animation = 'none'; void $('spotQ').offsetWidth; $('spotQ').style.animation = '';
+  }
+  function rotateSpot(){ if (wishes.length) spotlight(wishes[Math.floor(Math.random()*wishes.length)]); }
+  $('showBtn').addEventListener('click', async () => {
+    const on = document.body.classList.toggle('show');
+    $('showBtn').textContent = on ? '전광판 끄기' : '전광판 모드';
+    clearInterval(spotTimer);
+    if (on){
+      rotateSpot(); spotTimer = setInterval(rotateSpot, 7000);
+      try { if (document.documentElement.requestFullscreen) await document.documentElement.requestFullscreen(); } catch(_){}
+      try { if (navigator.wakeLock) await navigator.wakeLock.request('screen'); } catch(_){}
+    } else {
+      try { if (document.fullscreenElement) await document.exitFullscreen(); } catch(_){}
+    }
+  });
+  document.addEventListener('fullscreenchange', () => {
+    if (!document.fullscreenElement && document.body.classList.contains('show')) { document.body.classList.remove('show'); $('showBtn').textContent = '전광판 모드'; clearInterval(spotTimer); }
+  });
+
+  // ---------- 보내기 폼 ----------
+  // ---------- 반별 명단 ----------
+  function renderNameField(keep){
+    const cls = $('fCls').value, slot = $('nameSlot'), prev = keep ?? ($('fName') ? $('fName').value : '');
+    const list = ROSTER && ROSTER[cls] && Array.isArray(ROSTER[cls].s) ? ROSTER[cls].s : null;
+    const locked = $('fText').disabled;
+    if (!cls){ slot.innerHTML = '<select id="fName" disabled><option value="">반을 먼저 고르세요</option></select>'; return; }
+    if (list){
+      slot.innerHTML = '<select id="fName" required><option value="">이름 선택</option>' +
+        list.map(([n, nm]) => `<option value="${esc(nm)}" data-n="${esc(n)}">${esc(n)}번 ${esc(nm)} ✦ 합격</option>`).join('') + '</select>';
+    } else {
+      slot.innerHTML = '<input id="fName" maxlength="12" placeholder="이름" autocomplete="off" required>';
+    }
+    $('fName').value = prev && [...($('fName').options || [])].some(o => o.value === prev) || !list ? prev : '';
+    $('fName').disabled = locked;
+    updatePass();
+  }
+  function updatePass(){ const v = $('fName') ? $('fName').value.trim() : ''; $('passLine').hidden = !v; $('passName').textContent = v; }
+  $('nameSlot').addEventListener('change', updatePass);
+  $('nameSlot').addEventListener('input', updatePass);
+  $('fCls').addEventListener('change', () => { renderNameField(''); updatePass(); });
+
+  const fText = $('fText');
+  fText.addEventListener('input', () => { $('fCount').textContent = fText.value.length + ' / 50'; });
+  function say(box, kind, text){ const m = $(box); m.hidden = !text; m.className = 'msg ' + kind; m.textContent = text || ''; }
+  const hasBad = s => { const t = s.replace(/\s/g,'').toLowerCase(); return BAD.some(b => t.includes(b)); };
+
+  function lockForm(reason){
+    $('fSubmit').disabled = true;
+    ['fCls','fName','fText'].forEach(id => $(id).disabled = true);
+    pick.querySelectorAll('input').forEach(i => i.disabled = true);
+    say('formMsg','info', reason);
+  }
+
+  function prefillMine(){
+    if (!uid) return;
+    const mine = wishes.find(w => w.id === uid);
+    if (!mine) { $('fSubmit').textContent = '나무에 소원 걸기'; return; }
+    $('fSubmit').textContent = '내 소원 고치기';
+    if (document.activeElement && $('wishForm').contains(document.activeElement)) return;
+    if (!fText.value){
+      fText.value = mine.text; $('fCount').textContent = fText.value.length + ' / 50';
+      if (mine.cls && mine.cls !== '0'){ $('fCls').value = mine.cls; renderNameField(mine.name); }
+      const r = $('fr-' + mine.fruit); if (r) r.checked = true;
+    }
+  }
+
+  $('wishForm').addEventListener('submit', async e => {
+    e.preventDefault();
+    const text = fText.value.trim(), name = $('fName').value.trim(), cls = $('fCls').value;
+    const chosen = (pick.querySelector('input:checked')||{}).value;
+    if (!cls){ $('fCls').focus(); return say('formMsg','err','반을 골라 주세요.'); }
+    if (!name){ $('fName').focus(); return say('formMsg','err','이름을 골라 주세요.'); }
+    if (!chosen) return say('formMsg','err','열매를 하나 골라 주세요.');
+    if (!text){ fText.focus(); return say('formMsg','err','소원을 적어 주세요.'); }
+    if (hasBad(text) || hasBad(name)) return say('formMsg','err','고운 말로 다시 적어 주세요. 친구들이 함께 보는 나무예요.');
+    if (!db) return;
+    const opt = $('fName').selectedOptions ? $('fName').selectedOptions[0] : null;
+    const myId = 'w-' + cls + '-' + (opt && opt.dataset.n ? opt.dataset.n : name);
+    const prev = wishes.find(w => w.id === myId);
+    const fruit = chosen;
+    const doc_ = {text, name, cls, num: opt && opt.dataset.n ? Number(opt.dataset.n) : null, fruit, kind: 'wish', ts: prev ? prev.ts : Date.now()};
+    $('fSubmit').disabled = true;
+    try {
+      await setDoc(doc(db, COL, myId), doc_);
+      uid = myId; try { localStorage.setItem('wishTree.myId', myId); } catch(_){}
+      render();
+      say('formMsg','ok', prev ? '소원을 고쳤어요.' : '소원이 빛의 열매로 맺혔어요! 하얀 테두리가 있는 열매가 내 소원이에요.');
+    } catch(err){
+      say('formMsg','err','잠시 연결이 불안정해요. 조금 뒤에 다시 눌러 주세요.');
+    } finally { if (!$('fText').disabled) $('fSubmit').disabled = false; }
+  });
+
+  // ---------- 선생님 이름 / 응원 한마디 ----------
+  try { $('tName').value = localStorage.getItem('wishTree.teacherName') || ''; } catch(_){}
+  $('tName').addEventListener('change', () => { try { localStorage.setItem('wishTree.teacherName', $('tName').value.trim()); } catch(_){} });
+  async function sendCheer(){
+    if (!db || !isAdmin) return;
+    const text = $('tCheer').value.trim(), name = $('tName').value.trim();
+    if (!name){ $('tName').focus(); return say('tMsg','err','이름을 먼저 적어 주세요.'); }
+    if (!text) return say('tMsg','err','응원 한마디를 적어 주세요.');
+    $('tCheerBtn').disabled = true;
+    try {
+      await setDoc(doc(db, COL, 'c-' + Date.now().toString(36) + '-' + Math.floor(Math.random()*1e4)), {text, name: name.slice(0,12), cls:'0', role: $('tRole').value, fruit:'gyul', kind:'cheer', ts: Date.now()});
+      $('tCheer').value = ''; say('tMsg','ok','응원의 별이 떠올랐어요.');
+    } catch(e){ say('tMsg','err','별을 띄우지 못했어요. 잠시 뒤 다시 눌러 주세요.'); }
+    finally { $('tCheerBtn').disabled = false; }
+  }
+  $('tRole').addEventListener('change', () => { $('tName').placeholder = $('tRole').value === 'parent' ? '예) 3반 김은찬 어머니' : '예) 박정민 선생님'; });
+  $('tCheerBtn').addEventListener('click', sendCheer);
+  $('tCheer').addEventListener('keydown', e => { if (e.key === 'Enter' && !e.isComposing){ e.preventDefault(); sendCheer(); } });
+
+  render();
+
+  // ---------- 암호 ----------
+  function openAdmin(){ isAdmin = true; $('gate').hidden = true; $('adminBody').hidden = false; try { sessionStorage.setItem('wishTree.admin','1'); } catch(_){} }
+  try { if (sessionStorage.getItem('wishTree.admin') === '1') openAdmin(); } catch(_){}
+  const tryPw = () => { if ($('pw').value.trim() === ADMIN_PW) openAdmin(); else { $('pwMsg').hidden = false; $('pwMsg').textContent = '암호가 맞지 않아요.'; } };
+  $('pwBtn').addEventListener('click', tryPw);
+  $('pw').addEventListener('keydown', e => { if (e.key === 'Enter'){ e.preventDefault(); tryPw(); } });
+
+  // ---------- 연결 ----------
+  renderNameField();
+  try {
+    db = getFirestore(initializeApp(firebaseConfig));
+    $('fSubmit').disabled = false;
+    onSnapshot(query(collection(db, COL), limit(1000)), snap => {
+      const prevIds = new Set(wishes.map(w => w.id));
+      wishes = snap.docs.map(d => clean(d.data()||{}, d.id)).filter(Boolean);
+      const fresh = firstSnap ? [] : wishes.filter(w => !prevIds.has(w.id));
+      render();
+      prefillMine();
+      if (fresh.length){
+        const w = fresh[fresh.length-1];
+        $('ticker').innerHTML = `✦ <b>${esc(whoLabel(w))}</b>의 ${w.kind==='cheer'?'응원의 별이 떠올랐어요':'소원이 빛의 열매로 맺혔어요'} ✦`;
+        if (document.body.classList.contains('show')) spotlight(w);
+      }
+      if (openId && !wishes.some(w => w.id === openId)) closeWish();
+      firstSnap = false;
+    }, () => { $('ticker').textContent = '연결이 끊겼어요. 새로고침해 주세요.'; });
+  } catch(e){
+    lockForm('소원나무에 연결하지 못했어요. 인터넷 연결을 확인하고 새로고침해 주세요.');
+  }
+})();
+</script>
+</body>
+</html>
